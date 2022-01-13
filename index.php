@@ -53,10 +53,10 @@ foreach ($events as $event) {
         //$message = 'スタンプ有り難う';
         //$response = $bot->replyText($replyToken, $message);
         return;
-        // メッセージを返信
+        // メッセージを返信(オウム返し)
     case($event instanceof TextMessage):
         $message = $event->getText();
-        $response = $bot->replyMessage($reply_token, $message);
+        $response = $bot->replyText($reply_token, $message);
         return;
     }
 }
