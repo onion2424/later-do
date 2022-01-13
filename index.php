@@ -63,8 +63,12 @@ foreach ($events as $event) {
             $sql = 'CALL proc1(?, ?)';
             $stmt = $conn->prepare($sql);
 
-            $stmt->bindParam(1, 100, PDO::PARAM_INT);
-            $stmt->bindParam(2, 'かきくけこ', PDO::PARAM_STR);
+
+            //変数を入れないといけない
+            $id = 100;
+            $task = 'かきくけこ';
+            $stmt->bindParam(1, $id, PDO::PARAM_INT);
+            $stmt->bindParam(2, $task, PDO::PARAM_STR);
 
             $stmt->execute();
 
