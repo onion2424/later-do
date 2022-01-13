@@ -52,7 +52,8 @@ foreach ($events as $event) {
         return;
         // メッセージを返信
     case($event instanceof TextMessage):
-        $smessage = $event->getText();
+        $message = $event->getText();
+        //$message = 'おためし';
         $response = $bot->replyMessage($reply_token, $message);
         return;
     }
