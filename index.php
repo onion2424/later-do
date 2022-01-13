@@ -52,9 +52,9 @@ foreach ($events as $event) {
         return;
         // メッセージを返信
     case($event instanceof TextMessage):
-        $message = $event->getText();
-        //$message = 'おためし';
-        $response = $bot->replyMessage($reply_token, $message);
+        //$message = $event->getText();
+        $message = 'おためし';
+        $response = $bot->replyText($reply_token, $message);
         return;
     }
 }
