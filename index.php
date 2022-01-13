@@ -11,6 +11,9 @@ use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\Event\FollowEvent;
 use LINE\LINEBot\Event\UnFollowEvent;
 
+//logを出す
+error_log("hello! LineBot!!");
+
 //先ほど取得したチャネルシークレットとチャネルアクセストークンを以下の変数にセット
 $channel_access_token = 'tSiHKbZECWm5IWDlEb1LB4mppPyavQ+QTkghN2A/0YfJn0mrdBPStOOwVXkmLrrbXp74da7oKUBl21V1BI4KF2Lh1mxnjbB4zRp1J6MTOVYXv0jMnsnxa4bh/+7BAPdVOyYdk9JZIp+6tehysDXl/wdB04t89/1O/w1cDnyilFU=';
 $channel_secret = '88b837aed76716fe5d0a55553b914d9d';
@@ -32,7 +35,7 @@ $events = $bot->parseEventRequest($http_request_body, $signature);
 //返信先Token取得
 $reply_token = $event->getReplyToken();
 
-foreach ($events as $event) {
+//foreach ($events as $event) {
     
     // switch($event){
     // //友だち登録時/ブロック解除時
@@ -57,6 +60,4 @@ foreach ($events as $event) {
     //     $response = $bot->replyText($reply_token, $message);
     //     return;
     // }
-    $message = 'おためし';
-    $response = $bot->replyText($reply_token, $message);
-}
+//}
