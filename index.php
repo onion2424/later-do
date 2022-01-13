@@ -32,32 +32,31 @@ $http_request_body = file_get_contents('php://input');
 //署名をチェックし、正当であればリクエストをパースし配列へ、不正であれば例外処理
 $events = $bot->parseEventRequest($http_request_body, $signature);
 
-//返信先Token取得
-$reply_token = $event->getReplyToken();
 
-//foreach ($events as $event) {
-    
-    // switch($event){
-    // //友だち登録時/ブロック解除時
-    // case($event instanceof FollowEvent):
-    //     //$message = '友だち登録ありがとう';
-    //     //$response = $bot->replyText($replyToken, $message);
-    //     return;
-    
-    // //フォロー解除イベント(ブロック時)
-    // case($event instanceof UnfollowEvent):
-    //     return;
 
-    // //スタンプ
-    // case($event instanceOf StickerMessage):
-    //     //$message = 'スタンプ有り難う';
-    //     //$response = $bot->replyText($replyToken, $message);
-    //     return;
-    //     // メッセージを返信
-    // case($event instanceof TextMessage):
-    //     //$message = $event->getText();
-    //     $message = 'おためし';
-    //     $response = $bot->replyText($reply_token, $message);
-    //     return;
-    // }
-//}
+foreach ($events as $event) {
+    //返信先Token取得
+    $reply_token = $event->getReplyToken();
+    switch($event){
+    //友だち登録時/ブロック解除時
+    case($event instanceof FollowEvent):
+        //$message = '友だち登録ありがとう';
+        //$response = $bot->replyText($replyToken, $message);
+        return;
+    
+    //フォロー解除イベント(ブロック時)
+    case($event instanceof UnfollowEvent):
+        return;
+
+    //スタンプ
+    case($event instanceOf StickerMessage):
+        //$message = 'スタンプ有り難う';
+        //$response = $bot->replyText($replyToken, $message);
+        return;
+        // メッセージを返信
+    case($event instanceof TextMessage):
+        $message = $event->getText();
+        $response = $bot->replyMessage($reply_token, $message);
+        return;
+    }
+}
