@@ -37,6 +37,7 @@ $events = $bot->parseEventRequest($http_request_body, $signature);
 foreach ($events as $event) {
     //返信先Token取得
     $reply_token = $event->getReplyToken();
+    error_log("既読!");
     switch ($event) {
             //友だち登録時/ブロック解除時
         case ($event instanceof FollowEvent):
@@ -52,7 +53,7 @@ foreach ($events as $event) {
         case ($event instanceof StickerMessage):
             //$message = 'スタンプ有り難う';
             //$response = $bot->replyText($replyToken, $message);
-
+            error_log("Stamp");
             $url = parse_url(getenv('DATABASE_URL'));
             $url = parse_url(getenv('DATABASE_URL'));
 
