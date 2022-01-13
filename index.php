@@ -53,14 +53,20 @@ foreach ($events as $event) {
         case ($event instanceof StickerMessage):
             //$message = 'スタンプ有り難う';
             //$response = $bot->replyText($replyToken, $message);
-            error_log("Stamp");
+            error_log("Stump");
             $url = parse_url(getenv('DATABASE_URL'));
             $url = parse_url(getenv('DATABASE_URL'));
 
             $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
 
-            $pdo = new PDO($dsn, $url['user'], $url['pass']);
-            error_log($pdo->getAttribute(PDO::ATTR_SERVER_VERSION));
+            $conn = new PDO($dsn, $url['user'], $url['pass']);
+            $sql = 'CALL proc1(?, ?)';
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bindParam(1, 100, PDO::PARAM_INT);
+            $stmt->bindParam(2, 'かきくけこ', PDO::PARAM_STR);
+
+            $stmt->execute();
 
             return;
             // メッセージを返信(オウム返し)
