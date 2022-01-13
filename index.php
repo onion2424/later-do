@@ -37,26 +37,35 @@ $events = $bot->parseEventRequest($http_request_body, $signature);
 foreach ($events as $event) {
     //返信先Token取得
     $reply_token = $event->getReplyToken();
-    switch($event){
-    //友だち登録時/ブロック解除時
-    case($event instanceof FollowEvent):
-        //$message = '友だち登録ありがとう';
-        //$response = $bot->replyText($replyToken, $message);
-        return;
-    
-    //フォロー解除イベント(ブロック時)
-    case($event instanceof UnfollowEvent):
-        return;
+    switch ($event) {
+            //友だち登録時/ブロック解除時
+        case ($event instanceof FollowEvent):
+            //$message = '友だち登録ありがとう';
+            //$response = $bot->replyText($replyToken, $message);
+            return;
 
-    //スタンプ
-    case($event instanceOf StickerMessage):
-        //$message = 'スタンプ有り難う';
-        //$response = $bot->replyText($replyToken, $message);
-        return;
-        // メッセージを返信(オウム返し)
-    case($event instanceof TextMessage):
-        $message = $event->getText();
-        $response = $bot->replyText($reply_token, $message);
-        return;
+            //フォロー解除イベント(ブロック時)
+        case ($event instanceof UnfollowEvent):
+            return;
+
+            //スタンプ
+        case ($event instanceof StickerMessage):
+            //$message = 'スタンプ有り難う';
+            //$response = $bot->replyText($replyToken, $message);
+
+            $url = parse_url(getenv('DATABASE_URL'));
+            $url = parse_url(getenv('DATABASE_URL'));
+
+            $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+
+            $pdo = new PDO($dsn, $url['user'], $url['pass']);
+            error_log($pdo->getAttribute(PDO::ATTR_SERVER_VERSION));
+
+            return;
+            // メッセージを返信(オウム返し)
+        case ($event instanceof TextMessage):
+            $message = $event->getText();
+            $response = $bot->replyText($reply_token, $message);
+            return;
     }
 }
