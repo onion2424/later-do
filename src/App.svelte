@@ -12,7 +12,7 @@ import { dataset_dev } from 'svelte/internal';
 		divPage.appendChild(pElement);
 
 		//LIFFで立ち上げているかどうかの判定
-		if (liff.isInClient()) {
+		//if (liff.isInClient()) {
 			//LIFFで立ち上げた場合のメッセージ
 			pElement.innerHTML = "これはLIFF画面です";
 
@@ -30,9 +30,9 @@ import { dataset_dev } from 'svelte/internal';
 					alert(data.name);
 				}).catch(e=>alert('認証に失敗しました'));
 			});
-		} else {
-			pElement.innerHTML = "これはLIFF画面じゃありません";
-		}
+		//} else {
+		//	pElement.innerHTML = "これはLIFF画面じゃありません";
+		//}
 	};
 </script>
 
