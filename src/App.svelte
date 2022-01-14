@@ -4,16 +4,16 @@
 	//ロード時にユーザ情報をサーバに送る
 	window.onload = () => {
 		const myLiffId = "1656807318-km8WVpYe";
-		//const divPage = document.getElementById("liff-page");
+		const divPage = document.getElementById("liff-page");
 		const liff = (window as any).liff;
 		// p要素の取得
-		//const pElement = document.getElementById("liff-message");
-		//divPage.appendChild(pElement);
+		const pElement = document.getElementById("liff-message");
+		divPage.appendChild(pElement);
 
 		//LIFFで立ち上げているかどうかの判定
 		if (liff.isInClient()) {
 			//LIFFで立ち上げた場合のメッセージ
-			//pElement.innerHTML = "これはLIFF画面です";
+			pElement.innerHTML = "これはLIFF画面です";
 
 			//LIFF初期化
 			liff.init({
@@ -25,13 +25,13 @@
 					const lineId = profile.userId;
 
 					alert(lineId);
-					//const pElement2 = document.createElement("p");
-					//pElement2.innerHTML = `あなたの名前は${name}です。LINE IDは${lineId}です。`;
-					//divPage.appendChild(pElement2);
+					const pElement2 = document.createElement("p");
+					pElement2.innerHTML = `あなたの名前は${name}です。LINE IDは${lineId}です。`;
+					divPage.appendChild(pElement2);
 				});
 			});
 		} else {
-			//pElement.innerHTML = "これはLIFF画面じゃありません";
+			pElement.innerHTML = "これはLIFF画面じゃありません";
 		}
 	};
 </script>
