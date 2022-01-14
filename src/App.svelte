@@ -34,7 +34,7 @@
 			axios({
 				method: "POST",
 				url: "/id_api.php",
-				headers: { "Content-Type": "application/json" },
+				headers: { "Content-Type": 'application/x-www-form-urlencoded' },
 				responseType: "json",
 				data: {id_token: idToken}
 			}).then((response) => console.log("response body:", response.data));
