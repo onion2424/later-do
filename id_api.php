@@ -34,6 +34,7 @@ $userData = json_decode($response, true);
 
 error_log($response);
 
-echo 'name : ', $userData['name'];
+//echo 'name : ', $userData['name'];
+echo 'name : ', 'あいうえお';
 
 ?>
