@@ -23,7 +23,7 @@ curl_close($ch);
 //連想配列に戻す
 $userData = json_decode($response, true);
 
-error_log($userData);
+error_log($response);
 
 echo 'name : ', $userData['name'];
 
