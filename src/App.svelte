@@ -36,7 +36,7 @@
 				url: "/id_api.php",
 				headers: { "Content-Type": 'application/x-www-form-urlencoded' },
 				responseType: "json",
-				data: {body: JSON.stringify(idToken)}
+				data: JSON.stringify({id_token: idToken})
 			}).then((response) => console.log("response body:", response.data));
 		});
 		//} else {
