@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let name: string;
-
+	import axios from 'axios';
+import { dataset_dev } from 'svelte/internal';
 	//ロード時にユーザ情報をサーバに送る
 	window.onload = () => {
 		const myLiffId = "1656807318-km8WVpYe";
@@ -19,16 +20,15 @@
 			liff.init({
 				liffId: myLiffId,
 			}).then(() => {
-				//プロフィール情報の取得
-				liff.getProfile().then((profile) => {
-					const name = profile.displayName;
-					const lineId = profile.userId;
+				
+				//idTokenを取得
+				const idToken = liff.getIDToken();
 
-					alert(lineId);
-					const pElement2 = document.createElement("p");
-					pElement2.innerHTML = `あなたの名前は${name}です。LINE IDは${lineId}です。`;
-					divPage.appendChild(pElement2);
-				});
+				axios.post('/id_api', {token : idToken})
+				.then(response => {
+					let data = response.data;
+					alert(data.name);
+				}).catch(e=>alert('認証に失敗しました'));
 			});
 		} else {
 			pElement.innerHTML = "これはLIFF画面じゃありません";
