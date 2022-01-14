@@ -63,18 +63,22 @@ foreach ($events as $event) {
             $stmt = $conn->prepare($sql);
 
 
-            //変数を入れないといけない
-            $id = 100;
-            $task = 'かきくけこ';
-            $stmt->bindParam(1, $id, PDO::PARAM_INT);
-            $stmt->bindParam(2, $task, PDO::PARAM_STR);
+            ////変数を入れないといけない
+            // $id = 100;
+            // $task = 'かきくけこ';
+            // $stmt->bindParam(1, $id, PDO::PARAM_INT);
+            // $stmt->bindParam(2, $task, PDO::PARAM_STR);
 
-            $stmt->execute();
+            // $stmt->execute();
+
+            //ユーザ登録テスト
+            //$id = $event->getUserId();
+            error_log($id);
 
             return;
             // メッセージを返信(オウム返し)
         case ($event instanceof TextMessage):
-            $message = $event->getText();
+            $message = $event->getUserId();
             $response = $bot->replyText($reply_token, $message);
             return;
     }
