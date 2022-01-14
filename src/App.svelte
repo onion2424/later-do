@@ -26,7 +26,8 @@
 			//jsonでPOSTを送ってbodyにとりにいく
 			axios.post('/id_api.php', JSON.stringify({ id_token: idToken }))
 			.then((res) => {
-				let data = JSON.parse(res.data);
+				//ディープコピーをする
+				let data = JSON.parse(JSON.stringify(res.data));
 				alert(data?.name || 'nothing');
 			}).catch(e => {
 				alert('認証に失敗しました。');
