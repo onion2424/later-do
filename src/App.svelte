@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let name: string;
-	import axios from 'axios';
-import { dataset_dev } from 'svelte/internal';
+	import axios from "axios";
+	import { dataset_dev } from "svelte/internal";
 	//ロード時にユーザ情報をサーバに送る
 	window.onload = () => {
 		const myLiffId = "1656807318-km8WVpYe";
@@ -13,23 +13,32 @@ import { dataset_dev } from 'svelte/internal';
 
 		//LIFFで立ち上げているかどうかの判定
 		//if (liff.isInClient()) {
-			//LIFFで立ち上げた場合のメッセージ
-			pElement.innerHTML = "これはLIFF画面です";
+		//LIFFで立ち上げた場合のメッセージ
+		pElement.innerHTML = "これはLIFF画面です";
 
-			//LIFF初期化
-			liff.init({
-				liffId: myLiffId,
-			}).then(() => {
-				
-				//idTokenを取得
-				const idToken = liff.getIDToken();
-				alert(JSON.stringify(idToken));
-				axios.post('/id_api.php', {id_token : idToken})
-				.then(response => {
-					let data = response.data;
-					alert(data.name);
-				}).catch(e=>alert('認証に失敗しました'));
-			});
+		//LIFF初期化
+		liff.init({
+			liffId: myLiffId,
+		}).then(() => {
+			//idTokenを取得
+			const idToken = liff.getIDToken();
+			// axios
+			// 	.post("/id_api.php", { id_token: idToken })
+			// 	.then((response) => {
+			// 		let data = response.data;
+			// 		alert(data.name);
+			// 	})
+			// 	.catch((e) => alert("認証に失敗しました"));
+			
+			//最大限書いた
+			axios({
+				method: "POST",
+				url: "/id_api.php",
+				headers: { "Content-Type": "application/json" },
+				responseType: "json",
+				data: {id_token: idToken}
+			}).then((response) => console.log("response body:", response.data));
+		});
 		//} else {
 		//	pElement.innerHTML = "これはLIFF画面じゃありません";
 		//}
@@ -41,7 +50,6 @@ import { dataset_dev } from 'svelte/internal';
 		<h1>ようこそLIFFの世界へ</h1>
 		<p id="liff-message" />
 	</div>
-
 </main>
 
 <style lang="scss">
