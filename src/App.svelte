@@ -30,14 +30,9 @@
 			// 	})
 			// 	.catch((e) => alert("認証に失敗しました"));
 			
-			//最大限書いた
-			axios({
-				method: "POST",
-				url: "/id_api.php",
-				headers: { "Content-Type": 'application/x-www-form-urlencoded' },
-				responseType: "json",
-				data: {body : JSON.stringify({id_token: idToken})}
-			}).then((response) => console.log("response body:", response.data));
+			//bodyにとりにいく
+			axios.post('/id_api.php', JSON.stringify({ id_token: idToken }))
+			.then((res) => alert(res.data?.name || 'nothing'));
 		});
 		//} else {
 		//	pElement.innerHTML = "これはLIFF画面じゃありません";
