@@ -3,10 +3,17 @@ $ch = curl_init();
 
 $url = 'https://api.line.me/oauth2/v2.1/verify';
 
-error_log(json_encode($_POST));
+
+
+//POSTされたJSON文字列を取り出し
+$json = file_get_contents("php://input");
+error_log(json_encode($json));
+//JSON文字列をobjectに変換
+//  =>trueにしないといけない
+$contents = json_decode($json, true);
 
 $data = [
-    'id_token' => json_decode($_POST['body'], true)['id_token'], // LIFFから送信されたIDトークン
+    'id_token' => $contents['id_token'], // LIFFから送信されたIDトークン
     'client_id' => getenv('LOGIN_CHANNEL_ID'), // LIFFアプリを登録したLINEログインチャネルのチャネルID
 ];
 
