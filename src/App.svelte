@@ -24,7 +24,7 @@ import { dataset_dev } from 'svelte/internal';
 				//idTokenを取得
 				const idToken = liff.getIDToken();
 
-				axios.post('/id_api', {token : idToken})
+				axios.post('/id_api.php', {token : idToken})
 				.then(response => {
 					let data = response.data;
 					alert(data.name);
