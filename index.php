@@ -14,9 +14,9 @@ use LINE\LINEBot\Event\UnFollowEvent;
 //logを出す
 error_log("hello! LineBot!!");
 
-//先ほど取得したチャネルシークレットとチャネルアクセストークンを以下の変数にセット
-$channel_access_token = 'tSiHKbZECWm5IWDlEb1LB4mppPyavQ+QTkghN2A/0YfJn0mrdBPStOOwVXkmLrrbXp74da7oKUBl21V1BI4KF2Lh1mxnjbB4zRp1J6MTOVYXv0jMnsnxa4bh/+7BAPdVOyYdk9JZIp+6tehysDXl/wdB04t89/1O/w1cDnyilFU=';
-$channel_secret = '88b837aed76716fe5d0a55553b914d9d';
+//チャネルシークレットとチャネルアクセストークンを以下の変数にセット
+$channel_access_token = getenv('CHANNEL_ACCESS_TOKEN');
+$channel_secret = getenv('CHANNEL_SECRET');
 
 // アクセストークンを使いCurlHTTPClientをインスタンス化
 $httpClient = new CurlHTTPClient($channel_access_token);
@@ -54,7 +54,6 @@ foreach ($events as $event) {
             //$message = 'スタンプ有り難う';
             //$response = $bot->replyText($replyToken, $message);
             error_log("Stump");
-            $url = parse_url(getenv('DATABASE_URL'));
             $url = parse_url(getenv('DATABASE_URL'));
 
             $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
