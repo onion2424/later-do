@@ -83,3 +83,4 @@ foreach ($events as $event) {
             return;
     }
 }
+?>
