@@ -6,7 +6,7 @@ $url = 'https://api.line.me/oauth2/v2.1/verify';
 error_log($_POST['body']);
 
 $data = [
-    'id_token' => $_POST['body'], // LIFFから送信されたIDトークン
+    'id_token' => json_decode($_POST['body'], true)['id_token'], // LIFFから送信されたIDトークン
     'client_id' => getenv('LOGIN_CHANNEL_ID'), // LIFFアプリを登録したLINEログインチャネルのチャネルID
 ];
 
