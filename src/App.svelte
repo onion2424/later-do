@@ -22,17 +22,15 @@
 		}).then(() => {
 			//idTokenを取得
 			const idToken = liff.getIDToken();
-			// axios
-			// 	.post("/id_api.php", { id_token: idToken })
-			// 	.then((response) => {
-			// 		let data = response.data;
-			// 		alert(data.name);
-			// 	})
-			// 	.catch((e) => alert("認証に失敗しました"));
 			
-			//bodyにとりにいく
+			//jsonでPOSTを送ってbodyにとりにいく
 			axios.post('/id_api.php', JSON.stringify({ id_token: idToken }))
-			.then((res) => alert(res.data?.name || 'nothing'));
+			.then((res) => {
+				let data = JSON.parse(res.data);
+				alert(data?.name || 'nothing');
+			}).catch(e => {
+				alert('認証に失敗しました。');
+			});
 		});
 		//} else {
 		//	pElement.innerHTML = "これはLIFF画面じゃありません";
