@@ -51,7 +51,7 @@ $userData = json_decode($response, true);
 //      =>subにセットされている
 if (!isset($userData['sub']) || $userData['sub'] == "") {
 
-    echo '{tasks : [{"task" : "あいうえお"},{ "task" : "かきくけこ"}]}';
+    $aryList = array(array('task' => 'あいうえお'), array('task' => 'かきくけこ'));
 } else { //--------------------データベース接続してデータを取る---------------
     //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
     $url = parse_url(getenv('DATABASE_URL'));
@@ -63,18 +63,21 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     $stmt->bindParam(1, $userData['sub'], PDO::PARAM_STR);
     $stmt->execute();
 
-    echo '{ "tasks" : [';
-    foreach ($stmt as $col) {
-        //結果を表示
-        echo '{ ';
-        echo '"task" : "', $col['task'], '",', PHP_EOL;
-        echo '"time" : "', $col['time'], '",', PHP_EOL;
-        echo '"count : "', $col['count'], '"', PHP_EOL;
-        echo '},';
-    }
-    echo '] }';
-}
+    // echo '{ "tasks" : [';
+    // foreach ($stmt as $col) {
+    //     //結果を表示
+    //     echo '{ ';
+    //     echo '"task" : "', $col['task'], '",', PHP_EOL;
+    //     echo '"time" : "', $col['time'], '",', PHP_EOL;
+    //     echo '"count : "', $col['count'], '"', PHP_EOL;
+    //     echo '},';
+    // }
+    // echo '] }';
+    $aryList = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
-echo '';
+
+}
+return json_encode($aryList, JSON_UNESCAPED_UNICODE);
+
 
 ?>

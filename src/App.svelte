@@ -3,7 +3,7 @@
 	import axios from "axios";
 	import { dataset_dev } from "svelte/internal";
 	//ロード時にユーザ情報をサーバに送る
-	window.onload = () => {
+	window.addEventListener('load',  () => {
 		const myLiffId = "1656807318-km8WVpYe";
 		const divPage = document.getElementById("liff-page");
 		const liff = (window as any).liff;
@@ -37,7 +37,7 @@
 		//} else {
 		//	pElement.innerHTML = "これはLIFF画面じゃありません";
 		//}
-	};
+	});
 </script>
 
 <main>
