@@ -58,7 +58,7 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
     $conn = new PDO($dsn, $url['user'], $url['pass']);
 
-    $sql = 'SELECT GetTasks(?)'; //userIDを入れる
+    $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(1, $userData['sub'], PDO::PARAM_STR);
     $stmt->execute();
@@ -74,7 +74,6 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     // }
     // echo '] }';
     $aryList = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-    error_log(json_encode($aryList, JSON_UNESCAPED_UNICODE));
 
 }
 header("content-type:application/json");
