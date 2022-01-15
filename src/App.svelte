@@ -1,20 +1,25 @@
 <script lang="ts">
-	export let name: string;
 	import axios from "axios";
 	import { dataset_dev } from "svelte/internal";
+
+	//------------プロパティ-------------------
+	let todos = [];
+	let isInClient = false;
+	//--------------関数----------------------
+
+	//** タスク削除   */
+	function deleteTodo(taskNo) {
+		return;
+	}
+
 	//ロード時にユーザ情報をサーバに送る
 	window.addEventListener("load", () => {
 		const myLiffId = "1656807318-km8WVpYe";
-		const divPage = document.getElementById("liff-page");
 		const liff = (window as any).liff;
-		// p要素の取得
-		const pElement = document.getElementById("liff-message");
-		divPage.appendChild(pElement);
 
 		//LIFFで立ち上げているかどうかの判定
-		if (liff.isInClient()) {
+		if ((isInClient = liff.isInClient())) {
 			//LIFFで立ち上げた場合のメッセージ
-			pElement.innerHTML = "これはLIFF画面です";
 
 			//LIFF初期化
 			liff.init({
@@ -25,33 +30,54 @@
 
 				//jsonでPOSTを送ってbodyにとりにいく
 				axios
-					.post("/public/php/id_api.php", JSON.stringify({ id_token: idToken }))
+					.post(
+						"/public/php/id_api.php",
+						JSON.stringify({ id_token: idToken })
+					)
 					.then((res) => {
 						//ディープコピーをする
 						console.log(res.data);
 						let data = JSON.parse(JSON.stringify(res.data));
-						if(data.Status === 'OK'){
-							console.log(data[0]?.task || "nothing");
-						}else{
+						if (data.Status === "OK") {
+							todos = data.Contents;
+						} else {
 							Promise.reject(data.message);
 						}
-						
 					})
 					.catch((e) => {
-						console.error(e);
+						//閉じる
+						Promise.resolve()
+							.then(() => alert(e))
+							.then(() =>
+								window.open("about:blank", "_self").close()
+							);
 					});
 			});
-		} else {
-			pElement.innerHTML = "LINE外からのこのWEBページの利用はできません。<br>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。";
 		}
 	});
 </script>
 
 <main>
-	<div id="liff-page">
-		<h1>ようこそLIFFの世界へ</h1>
-		<p id="liff-message" />
-	</div>
+	{#if isInClient}
+		{#if todos}
+			{#each todos as todo}
+				<div class="task">
+					<div>
+						{todo.task}
+					</div>
+				</div>
+			{/each}
+			<p id="liff-message" />
+		{:else}
+			<p>タスクを追加してね</p>
+		{/if}
+	{:else}
+		<p>
+			LINE外からのこのWEBページの利用はできません。
+			<br
+			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
+		</p>
+	{/if}
 </main>
 
 <style lang="scss">
