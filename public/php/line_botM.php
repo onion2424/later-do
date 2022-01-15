@@ -1,6 +1,6 @@
 <?php
 // Composerでインストールしたライブラリを一括読み込み
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '../../vendor/autoload.php';
 
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
@@ -61,7 +61,7 @@ foreach ($events as $event) {
             return;
             // メッセージを返信(オウム返し)
         case ($event instanceof TextMessage):
-            $message = $event->getUserId();
+            $message = $event->getText();
             $response = $bot->replyText($reply_token, $message);
 
 
