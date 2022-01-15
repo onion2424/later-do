@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/common_class.php';
 
 /************POSTされたデータを取得***********/
 
@@ -49,28 +49,35 @@ $userData = json_decode($response, true);
 /*******:***************返答処理***********************/
 //  userIDが存在するかを確認
 //      =>subにセットされている
+
+$ret = new httpResponse();
+
 if (!isset($userData['sub']) || $userData['sub'] == "") {
 
     $aryList = array(array('task' => 'あいうえお'), array('task' => 'かきくけこ'));
+    $ret->message = "ユーザー認証に失敗しました。";
 } else { //--------------------データベース接続してデータを取る---------------
     //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
-    //  登録してなくてもLINE内でURLを開いたらここを通るのでチェックがいる？ - とりあえず速度優先したいからなしで
+    //  登録してなくてもLINE内でURLを開いたらここを通るのでチェックがいる？ - とりあえず速度優先したいからなし
+    try {
+        $url = parse_url(getenv('DATABASE_URL'));
+        $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+        $conn = new PDO($dsn, $url['user'], $url['pass']);
 
-    $url = parse_url(getenv('DATABASE_URL'));
-    $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-    $conn = new PDO($dsn, $url['user'], $url['pass']);
+        $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(1, $userData['sub'], PDO::PARAM_STR);
+        $stmt->execute();
 
-    $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(1, $userData['sub'], PDO::PARAM_STR);
-    $stmt->execute();
-
-    $aryList = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-
+        $aryList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $ret->Contents = $aryList ? $aryList : array();
+        $ret->Status = httpResponse::STATUS_OK;
+    } catch (PDOException $e) {
+        error_log($ret->getPDOMessage($e));
+        $ret->message = "サーバーとの接続に失敗しました。";
+    }
 }
 
 header("content-type:application/json");
-echo json_encode($aryList, JSON_UNESCAPED_UNICODE);
+echo json_encode($ret, JSON_UNESCAPED_UNICODE);
 exit();
-
-?>

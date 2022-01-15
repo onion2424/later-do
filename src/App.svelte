@@ -30,10 +30,15 @@
 						//ディープコピーをする
 						console.log(res.data);
 						let data = JSON.parse(JSON.stringify(res.data));
-						console.log(data[0]?.task || "nothing");
+						if(data.Status === 'OK'){
+							console.log(data[0]?.task || "nothing");
+						}else{
+							Promise.reject(data.message);
+						}
+						
 					})
 					.catch((e) => {
-						console.error("ユーザ認証に失敗しました。");
+						console.error(e);
 					});
 			});
 		} else {
