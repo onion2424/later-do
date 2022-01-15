@@ -68,7 +68,7 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     //     //結果を表示
     //     echo '{ ';
     //     echo '"task" : "', $col['task'], '",', PHP_EOL;
-    //     echo '"time" : "', $col['time'], '",', PHP_EOL;
+    //     echo '"time" : "', $col['time'], '",', PHP_EOL;s
     //     echo '"count : "', $col['count'], '"', PHP_EOL;
     //     echo '},';
     // }
@@ -77,7 +77,7 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
 
 
 }
-return json_encode($aryList, JSON_UNESCAPED_UNICODE);
+echo json_encode($aryList, JSON_UNESCAPED_UNICODE);
 
 
 ?>
