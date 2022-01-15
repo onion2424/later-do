@@ -51,7 +51,7 @@ $userData = json_decode($response, true);
 //      =>subにセットされている
 if (!isset($userData['sub']) || $userData['sub'] == "") {
 
-    echo '{tasks : "[{"task" : "あいうえお"},{ "task" : "かきくけこ"}]"}';
+    echo '{tasks : [{"task" : "あいうえお"},{ "task" : "かきくけこ"}]}';
 } else { //--------------------データベース接続してデータを取る---------------
     //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
     $url = parse_url(getenv('DATABASE_URL'));
@@ -60,6 +60,8 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
 
     $sql = 'CALL GetTasks(?)'; //userIDを入れる
     $stmt = $conn->prepare($sql);
+    $stmt->bindParam(1, $userData['sub'], PDO::PARAM_STR);
+    $stmt->execute();
 
     echo '{ "tasks" : [';
     foreach ($stmt as $col) {

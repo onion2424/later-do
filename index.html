@@ -1,19 +1,69 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>LIFFのテスト</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>LIFFのテスト</title>
 </head>
+
 <body>
-   
-    
+
+
    <!-- liffを使うためのCDN -->
    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-   
+
    <link rel='stylesheet' href='./public/global.css'>
    <link rel='stylesheet' href='./public/build/bundle.css'>
 
    <script defer src='./public/build/bundle.js'></script>
+
+   <!--vsconsole導入CDN  https://qiita.com/sumihiro3/items/9f4f1adb5d8883d9ceeb-->
+   <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+   <script>
+      // VConsole will be exported to `window.VConsole` by default.
+      var vConsole = new window.VConsole();
+      window.onload = function () {
+         initVConsole();
+         initLiff();
+
+      }
+      // Initialize vConsole
+      function initVConsole() {
+         window.vConsole = new window.VConsole({
+            defaultPlugins: ['system', 'network', 'element', 'storage'],
+            maxLogNumber: 1000,
+            onReady: function () {
+               console.log('vConsole is ready.');
+            },
+            onClearLog: function () {
+               console.log('on clearLog');
+            }
+         });
+      }
+
+      // Initialize LIFF
+      function initLiff() {
+         console.log('going to initialize LIFF');
+         liff.init(
+            data => {
+               console.log('LIFF initialized!');
+               // Now you can call LIFF API
+               const userId = data.context.userId;
+               liff.getProfile().then(profile => {
+                  const userDisplayName = profile.displayName
+                  console.info('User name is', userDisplayName);
+               })
+                  .catch((err) => {
+                     console.error('LIFF getProfile failed', err);
+                  });
+            },
+            err => {
+               console.error('LIFF initialization failed', err);
+            }
+         );
+      }
+   </script>
 </body>
+
 </html>
