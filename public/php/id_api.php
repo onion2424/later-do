@@ -63,13 +63,19 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
         $url = parse_url(getenv('DATABASE_URL'));
         $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
         $conn = new PDO($dsn, $url['user'], $url['pass']);
+        //PDOのエラー時に例外(PDOException)が発生するように設定
+        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
+        //SQL実行
         $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
         $stmt = $conn->prepare($sql);
+
         $stmt->bindParam(1, $userData['sub'], PDO::PARAM_STR);
         $stmt->execute();
 
         $aryList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        //戻り値設定
         $ret->Contents = $aryList ? $aryList : array();
         $ret->Status = httpResponse::STATUS_OK;
     } catch (PDOException $e) {
