@@ -9,8 +9,30 @@
 
 	//** タスク削除   */
 	function deleteTodo(taskNo) {
-		return;
+		//jsonでPOSTを送ってbodyにとりにいく
+		axios.post(
+				"/public/php/id_api.php",
+				JSON.stringify({ id_token: idToken })
+			)
+			.then((res) => {
+				//ディープコピーをする
+				console.log(res.data);
+				let data = JSON.parse(JSON.stringify(res.data));
+				if (data.Status === "OK") {
+					todos = data.Contents;
+				} else {
+					Promise.reject(data.message);
+				}
+			})
+			.catch((e) => {
+				//閉じる
+				Promise.resolve()
+					.then(() => alert(e))
+					.then(() => window.open("about:blank", "_self").close());
+			});
 	}
+
+	//-----------起動時実行-----------------------
 
 	//ロード時にユーザ情報をサーバに送る
 	window.addEventListener("load", () => {
@@ -62,12 +84,12 @@
 		{#if todos}
 			{#each todos as todo}
 				<div class="task">
-					<div>
+					<p>
 						{todo.task}
-					</div>
+					</p>
+					<button on:click={() => deleteTodo(todo.taskNo)} />
 				</div>
 			{/each}
-			<p id="liff-message" />
 		{:else}
 			<p>タスクを追加してね</p>
 		{/if}
