@@ -51,7 +51,7 @@ $userData = json_decode($response, true);
 //      =>subにセットされている
 if (!isset($userData['sub']) || $userData['sub'] == "") {
 
-    echo '{tasks : "[]"}';
+    echo '{tasks : "[{"task" : "あいうえお"},{ "task" : "かきくけこ"}]"}';
 } else { //--------------------データベース接続してデータを取る---------------
     //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
     $url = parse_url(getenv('DATABASE_URL'));
@@ -65,8 +65,9 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     foreach ($stmt as $col) {
         //結果を表示
         echo '{ ';
-        echo '"task" : "', $col['name'], '",', PHP_EOL;
+        echo '"task" : "', $col['task'], '",', PHP_EOL;
         echo '"time" : "', $col['time'], '",', PHP_EOL;
+        echo '"count : "', $col['count'], '"', PHP_EOL;
         echo '},';
     }
     echo '] }';

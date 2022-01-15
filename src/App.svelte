@@ -27,6 +27,7 @@
 			axios.post('/id_api.php', JSON.stringify({ id_token: idToken }))
 			.then((res) => {
 				//ディープコピーをする
+				alert(res.data);
 				let data = JSON.parse(JSON.stringify(res.data));
 				alert(data?.tasks[0].task || 'nothing');
 			}).catch(e => {
