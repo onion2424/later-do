@@ -74,10 +74,11 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     // }
     // echo '] }';
     $aryList = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-
+    error_log(json_encode($aryList, JSON_UNESCAPED_UNICODE));
 
 }
+header("content-type:application/json");
 echo json_encode($aryList, JSON_UNESCAPED_UNICODE);
-
+exit();
 
 ?>
