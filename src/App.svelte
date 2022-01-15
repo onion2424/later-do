@@ -27,11 +27,11 @@
 			axios.post('/id_api.php', JSON.stringify({ id_token: idToken }))
 			.then((res) => {
 				//ディープコピーをする
-				alert(res.data);
+				console.log(res.data);
 				let data = JSON.parse(JSON.stringify(res.data));
-				alert(data?.tasks[0].task || 'nothing');
+				console.log(data[0]?.task || 'nothing');
 			}).catch(e => {
-				alert('認証に失敗しました。');
+				console.error('認証に失敗しました。');
 			});
 		});
 		//} else {
