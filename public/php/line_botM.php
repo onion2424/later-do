@@ -61,22 +61,24 @@ foreach ($events as $event) {
             return;
             // メッセージを返信(オウム返し)
         case ($event instanceof TextMessage):
-            //$message = $event->getUserId();
-            //$response = $bot->replyText($reply_token, $message);
-            $url = parse_url(getenv('DATABASE_URL'));
+            $message = $event->getUserId();
+            $response = $bot->replyText($reply_token, $message);
 
-            $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
 
-            $conn = new PDO($dsn, $url['user'], $url['pass']);
-            $sql = 'CALL proc1(?, ?)'; //userID, メッセージ内容
-            //  パラメータをセットする
-            //  =>変数を入れないといけない
-            $id = $event.getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
-            $task = $event.getText();
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(1, $id, PDO::PARAM_INT);
-            $stmt->bindParam(2, $task, PDO::PARAM_STR);
-            $stmt->execute();
+            // $url = parse_url(getenv('DATABASE_URL'));
+
+            // $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+
+            // $conn = new PDO($dsn, $url['user'], $url['pass']);
+            // $sql = 'CALL proc1(?, ?)'; //userID, メッセージ内容
+            // //  パラメータをセットする
+            // //  =>変数を入れないといけない
+            // $id = $event.getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
+            // $task = $event.getText();
+            // $stmt = $conn->prepare($sql);
+            // $stmt->bindParam(1, $id, PDO::PARAM_INT);
+            // $stmt->bindParam(2, $task, PDO::PARAM_STR);
+            // $stmt->execute();
             return;
     }
 }
