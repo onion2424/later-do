@@ -28,7 +28,7 @@
 			.then((res) => {
 				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
-				alert(data?.name || 'nothing');
+				alert(data?.tasks[0].task || 'nothing');
 			}).catch(e => {
 				alert('認証に失敗しました。');
 			});

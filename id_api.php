@@ -51,7 +51,7 @@ $userData = json_decode($response, true);
 //      =>subにセットされている
 if (!isset($userData['sub']) || $userData['sub'] == "") {
 
-    $ret = '';
+    echo '{tasks : "[]"}';
 } else { //--------------------データベース接続してデータを取る---------------
     //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
     $url = parse_url(getenv('DATABASE_URL'));
@@ -61,15 +61,15 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     $sql = 'CALL GetTasks(?)'; //userIDを入れる
     $stmt = $conn->prepare($sql);
 
-    echo '{';
+    echo '{ "tasks" : [';
     foreach ($stmt as $col) {
         //結果を表示
-        echo '{';
+        echo '{ ';
         echo '"task" : "', $col['name'], '",', PHP_EOL;
         echo '"time" : "', $col['time'], '",', PHP_EOL;
         echo '},';
     }
-    echo '}';
+    echo '] }';
 }
 
 echo '';
