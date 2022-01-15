@@ -54,6 +54,8 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     $aryList = array(array('task' => 'あいうえお'), array('task' => 'かきくけこ'));
 } else { //--------------------データベース接続してデータを取る---------------
     //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
+    //  登録してなくてもLINE内でURLを開いたらここを通るのでチェックがいる？ - とりあえず速度優先したいからなしで
+
     $url = parse_url(getenv('DATABASE_URL'));
     $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
     $conn = new PDO($dsn, $url['user'], $url['pass']);
@@ -63,19 +65,10 @@ if (!isset($userData['sub']) || $userData['sub'] == "") {
     $stmt->bindParam(1, $userData['sub'], PDO::PARAM_STR);
     $stmt->execute();
 
-    // echo '{ "tasks" : [';
-    // foreach ($stmt as $col) {
-    //     //結果を表示
-    //     echo '{ ';
-    //     echo '"task" : "', $col['task'], '",', PHP_EOL;
-    //     echo '"time" : "', $col['time'], '",', PHP_EOL;s
-    //     echo '"count : "', $col['count'], '"', PHP_EOL;
-    //     echo '},';
-    // }
-    // echo '] }';
     $aryList = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 
 }
+
 header("content-type:application/json");
 echo json_encode($aryList, JSON_UNESCAPED_UNICODE);
 exit();

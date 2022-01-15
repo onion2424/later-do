@@ -3,7 +3,7 @@
 	import axios from "axios";
 	import { dataset_dev } from "svelte/internal";
 	//ロード時にユーザ情報をサーバに送る
-	window.addEventListener('load',  () => {
+	window.addEventListener("load", () => {
 		const myLiffId = "1656807318-km8WVpYe";
 		const divPage = document.getElementById("liff-page");
 		const liff = (window as any).liff;
@@ -12,31 +12,33 @@
 		divPage.appendChild(pElement);
 
 		//LIFFで立ち上げているかどうかの判定
-		//if (liff.isInClient()) {
-		//LIFFで立ち上げた場合のメッセージ
-		pElement.innerHTML = "これはLIFF画面です";
+		if (liff.isInClient()) {
+			//LIFFで立ち上げた場合のメッセージ
+			pElement.innerHTML = "これはLIFF画面です";
 
-		//LIFF初期化
-		liff.init({
-			liffId: myLiffId,
-		}).then(() => {
-			//idTokenを取得
-			const idToken = liff.getIDToken();
-			
-			//jsonでPOSTを送ってbodyにとりにいく
-			axios.post('/id_api.php', JSON.stringify({ id_token: idToken }))
-			.then((res) => {
-				//ディープコピーをする
-				console.log(res.data);
-				let data = JSON.parse(JSON.stringify(res.data));
-				console.log(data[0]?.task || 'nothing');
-			}).catch(e => {
-				console.error('認証に失敗しました。');
+			//LIFF初期化
+			liff.init({
+				liffId: myLiffId,
+			}).then(() => {
+				//idTokenを取得
+				const idToken = liff.getIDToken();
+
+				//jsonでPOSTを送ってbodyにとりにいく
+				axios
+					.post("/public/php/id_api.php", JSON.stringify({ id_token: idToken }))
+					.then((res) => {
+						//ディープコピーをする
+						console.log(res.data);
+						let data = JSON.parse(JSON.stringify(res.data));
+						console.log(data[0]?.task || "nothing");
+					})
+					.catch((e) => {
+						console.error("ユーザ認証に失敗しました。");
+					});
 			});
-		});
-		//} else {
-		//	pElement.innerHTML = "これはLIFF画面じゃありません";
-		//}
+		} else {
+			pElement.innerHTML = "LINE外からのこのWEBページの利用はできません。<br>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。";
+		}
 	});
 </script>
 
