@@ -1,4 +1,5 @@
 <?php
+namespace app\src\php\httpResponse;
   class httpResponse {
     const STATUS_OK = "OK";
     const STATUS_NG = "NG";

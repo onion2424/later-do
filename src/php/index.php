@@ -6,13 +6,18 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 $router = new AltoRouter();
 
-// スクリプトを直で呼び出す
+//  '/'はindexを表示
 $router->map('GET|POST', '/', function () {
     require_once __DIR__ . '/../../public/index.html';
 });
 
-// laravelっぽくクラスとメソッドを指定する
-//$router->map('GET', '/', 'isanasan\Router\Http\Handler\Welcome::get', 'welcome');
+// '/task'はtask関連
+$router->map('GET', '/', 'isanasan\Router\Http\Handler\Welcome::get', 'welcome');
+
+//Line_bot
+$router->map('GET|POST', '/line_bot', function(){
+    require_once __DIR__ . '/line_bot.php';
+}, 'line_bot');
 
 $match = $router->match();
 
