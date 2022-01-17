@@ -12,12 +12,12 @@ $router->map('GET|POST', '/', function () {
 });
 
 // '/task'はtask関連
-$router->map('GET', '/', 'isanasan\Router\Http\Handler\Welcome::get', 'welcome');
+//$router->map('GET', '/', 'isanasan\Router\Http\Handler\Welcome::get', 'welcome');
 
 //Line_bot
-$router->map('GET|POST', '/line_bot', function(){
+$router->map('POST', '/line-bot', function(){
     require_once __DIR__ . '/line_bot.php';
-}, 'line_bot');
+}, 'line-bot');
 
 $match = $router->match();
 
