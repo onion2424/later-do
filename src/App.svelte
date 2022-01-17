@@ -34,7 +34,7 @@
 	//ロード時にユーザ情報をサーバに送る
 	window.addEventListener("load", () => {
 		axios
-			.get("/welcome")
+			.get("/Welcome")
 			.then((res) => {
 				//ディープコピーをする
 				console.log(res.data);
