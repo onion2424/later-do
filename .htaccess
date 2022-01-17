@@ -15,5 +15,5 @@
     # public/index.phpへリライト
     RewriteEngine on
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule . /php/index.php [L]
+    RewriteRule . php/index.php [L]
 </IfModule>
