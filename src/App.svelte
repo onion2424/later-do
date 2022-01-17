@@ -11,7 +11,7 @@
 	function deleteTodo(taskNo) {
 		//jsonでPOSTを送ってbodyにとりにいく
 		axios.post(
-				"/public/php/id_api.php",
+				"/delete-task",
 				JSON.stringify({ id_token: idToken })
 			)
 			.then((res) => {
@@ -27,8 +27,8 @@
 			.catch((e) => {
 				//閉じる
 				Promise.resolve()
-					.then(() => alert(e))
-					.then(() => window.open("about:blank", "_self").close());
+					.then(() => alert(e));
+					//.then(() => window.open("about:blank", "_self").close());
 			});
 	}
 
@@ -69,10 +69,10 @@
 					.catch((e) => {
 						//閉じる
 						Promise.resolve()
-							.then(() => alert(e))
-							.then(() =>
-								window.open("about:blank", "_self").close()
-							);
+							.then(() => alert(e));
+							//.then(() =>
+							//	window.open("about:blank", "_self").close()
+							//);
 					});
 			});
 		}

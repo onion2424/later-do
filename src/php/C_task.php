@@ -94,4 +94,8 @@ class task
         echo json_encode($ret, JSON_UNESCAPED_UNICODE);
         exit();
     }
+
+    public function deleteTask(){
+        return;
+    }
 }

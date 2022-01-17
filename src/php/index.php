@@ -14,6 +14,7 @@ $router->map('GET|POST', '/', function () {
 // '/task'はtask関連
 $router->map('POST', '/get-tasks', 'app\src\php\C_task::getTasks', 'get-tasks');
 
+$router->map('POST', '/delete-task', 'app\src\php\C_task::deleteTask', 'delete-tasks');
 
 //Line_bot
 $router->map('POST', '/line-bot', function(){
