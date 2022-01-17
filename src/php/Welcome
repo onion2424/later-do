@@ -1,0 +1,11 @@
+<?php
+
+namespace app\src\php;
+
+class Welcome
+{
+    public function get()
+    {
+        echo 'welcome';
+    }
+}

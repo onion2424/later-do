@@ -12,9 +12,12 @@ $router->map('GET|POST', '/', function () {
 });
 
 // '/task'はtask関連
-$router->map('POST', '/get-tasks', 'app\src\php\C_task::getTasks', 'get-tasks');
+//$router->map('POST', '/get-tasks', 'app\src\php\C_task::getTasks', 'get-tasks');
 
-$router->map('POST', '/delete-task', 'app\src\php\C_task::deleteTask', 'delete-tasks');
+//$router->map('POST', '/delete-task', 'app\src\php\C_task::deleteTask', 'delete-tasks');
+
+//テスト
+$router->map('GET', '/welcome', 'app\src\php\Welcome::get', 'welcome');
 
 //Line_bot
 $router->map('POST', '/line-bot', function(){

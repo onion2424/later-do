@@ -50,21 +50,15 @@
 				//idTokenを取得
 				const idToken = liff.getIDToken();
 
-				//jsonでPOSTを送ってbodyにとりにいく
 				axios
-					.post(
-						"/get-tasks",
-						JSON.stringify({ id_token: idToken })
+					.get(
+						"/welcome"
 					)
 					.then((res) => {
 						//ディープコピーをする
 						console.log(res.data);
 						let data = JSON.parse(JSON.stringify(res.data));
-						if (data.Status === "OK") {
-							todos = data.Contents;
-						} else {
-							Promise.reject(data.message);
-						}
+						alert(data);
 					})
 					.catch((e) => {
 						//閉じる
@@ -74,6 +68,32 @@
 							//	window.open("about:blank", "_self").close()
 							//);
 					});
+
+
+				//jsonでPOSTを送ってbodyにとりにいく
+				// axios
+				// 	.post(
+				// 		"/get-tasks",
+				// 		JSON.stringify({ id_token: idToken })
+				// 	)
+				// 	.then((res) => {
+				// 		//ディープコピーをする
+				// 		console.log(res.data);
+				// 		let data = JSON.parse(JSON.stringify(res.data));
+				// 		if (data.Status === "OK") {
+				// 			todos = data.Contents;
+				// 		} else {
+				// 			Promise.reject(data.message);
+				// 		}
+				// 	})
+				// 	.catch((e) => {
+				// 		//閉じる
+				// 		Promise.resolve()
+				// 			.then(() => alert(e));
+				// 			//.then(() =>
+				// 			//	window.open("about:blank", "_self").close()
+				// 			//);
+				// 	});
 			});
 		}
 	});
