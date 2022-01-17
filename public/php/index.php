@@ -28,8 +28,6 @@ $router->map('POST', '/line-bot', function(){
 
 $match = $router->match();
 
-error_log(var_export($match));
-
 if ($match !== false) {
     if (is_callable($match['target'])) {
         $match['target']();
