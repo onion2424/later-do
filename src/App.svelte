@@ -53,7 +53,7 @@
 				//jsonでPOSTを送ってbodyにとりにいく
 				axios
 					.post(
-						"/public/php/id_api.php",
+						"/get-tasks",
 						JSON.stringify({ id_token: idToken })
 					)
 					.then((res) => {
