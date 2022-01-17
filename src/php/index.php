@@ -12,7 +12,8 @@ $router->map('GET|POST', '/', function () {
 });
 
 // '/task'はtask関連
-//$router->map('GET', '/', 'isanasan\Router\Http\Handler\Welcome::get', 'welcome');
+$router->map('GET', '/', 'app\src\php\Task::getTasks', 'getTasks');
+
 
 //Line_bot
 $router->map('POST', '/line-bot', function(){
@@ -20,6 +21,8 @@ $router->map('POST', '/line-bot', function(){
 }, 'line-bot');
 
 $match = $router->match();
+
+error_log(var_export($match));
 
 if ($match !== false) {
     if (is_callable($match['target'])) {
