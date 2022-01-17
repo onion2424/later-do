@@ -2,6 +2,8 @@
 //require_once __DIR__ . '/common_class.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+
+namespace 
 /************POSTされたデータを取得***********/
 
 //  POSTされたJSON文字列を取り出す
