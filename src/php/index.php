@@ -12,7 +12,7 @@ $router->map('GET|POST', '/', function () {
 });
 
 // '/task'はtask関連
-$router->map('POST', '/get-tasks', 'app\src\php\Task::getTasks', 'get-tasks');
+$router->map('POST', '/get-tasks', 'app\src\php\C_task::getTasks', 'get-tasks');
 
 
 //Line_bot
