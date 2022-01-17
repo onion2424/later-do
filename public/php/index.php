@@ -18,7 +18,7 @@ $router = new AltoRouter();
 
 //テスト
 $router->map('GET', '/Welcome', function () {
-    require_once __DIR__ . '/../../public/index.html';
+    require_once __DIR__ . '/../index.html';
 }, 'welcome');
 
 //Line_bot
