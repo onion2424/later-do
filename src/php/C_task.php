@@ -1,6 +1,6 @@
 <?php
 
-namespace app\src\php\C_task;
+namespace app\src\php;
 require_once __DIR__ . '/common_class.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 
