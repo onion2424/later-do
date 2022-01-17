@@ -10,10 +10,8 @@
 	//** タスク削除   */
 	function deleteTodo(taskNo) {
 		//jsonでPOSTを送ってbodyにとりにいく
-		axios.post(
-				"/delete-task",
-				JSON.stringify({ id_token: idToken })
-			)
+		axios
+			.post("/delete-task", JSON.stringify({ id_token: idToken }))
 			.then((res) => {
 				//ディープコピーをする
 				console.log(res.data);
@@ -26,9 +24,8 @@
 			})
 			.catch((e) => {
 				//閉じる
-				Promise.resolve()
-					.then(() => alert(e));
-					//.then(() => window.open("about:blank", "_self").close());
+				Promise.resolve().then(() => alert(e));
+				//.then(() => window.open("about:blank", "_self").close());
 			});
 	}
 
@@ -36,6 +33,22 @@
 
 	//ロード時にユーザ情報をサーバに送る
 	window.addEventListener("load", () => {
+		axios
+			.get("/welcome")
+			.then((res) => {
+				//ディープコピーをする
+				console.log(res.data);
+				let data = JSON.parse(JSON.stringify(res.data));
+				alert(data);
+			})
+			.catch((e) => {
+				//閉じる
+				Promise.resolve().then(() => alert(e));
+				//.then(() =>
+				//	window.open("about:blank", "_self").close()
+				//);
+			});
+
 		const myLiffId = "1656807318-km8WVpYe";
 		const liff = (window as any).liff;
 
@@ -49,26 +62,6 @@
 			}).then(() => {
 				//idTokenを取得
 				const idToken = liff.getIDToken();
-
-				axios
-					.get(
-						"/welcome"
-					)
-					.then((res) => {
-						//ディープコピーをする
-						console.log(res.data);
-						let data = JSON.parse(JSON.stringify(res.data));
-						alert(data);
-					})
-					.catch((e) => {
-						//閉じる
-						Promise.resolve()
-							.then(() => alert(e));
-							//.then(() =>
-							//	window.open("about:blank", "_self").close()
-							//);
-					});
-
 
 				//jsonでPOSTを送ってbodyにとりにいく
 				// axios
