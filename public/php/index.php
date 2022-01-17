@@ -17,7 +17,9 @@ $router->map('GET|POST', '/', function () {
 //$router->map('POST', '/delete-task', 'app\src\php\C_task::deleteTask', 'delete-tasks');
 
 //テスト
-$router->map('GET', '/Welcome', 'app\public\php\Welcome::get', 'welcome');
+$router->map('GET', '/Welcome', function () {
+    require_once __DIR__ . '/../../public/index.html';
+}, 'welcome');
 
 //Line_bot
 $router->map('POST', '/line-bot', function(){
