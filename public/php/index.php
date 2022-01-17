@@ -7,9 +7,9 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 $router = new AltoRouter();
 
 //  '/'はindexを表示
-$router->map('GET|POST', '/', function () {
-    require_once __DIR__ . '/../../public/index.html';
-});
+// $router->map('GET|POST', '/', function () {
+//     require_once __DIR__ . '/../../public/index.html';
+// });
 
 // '/task'はtask関連
 //$router->map('POST', '/get-tasks', 'app\src\php\C_task::getTasks', 'get-tasks');
