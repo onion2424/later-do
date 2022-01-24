@@ -33,22 +33,6 @@
 
 	//ロード時にユーザ情報をサーバに送る
 	window.addEventListener("load", () => {
-		axios
-			.get("/Welcome")
-			.then((res) => {
-				//ディープコピーをする
-				console.log(res.data);
-				let data = JSON.parse(JSON.stringify(res.data));
-				alert(data);
-			})
-			.catch((e) => {
-				//閉じる
-				Promise.resolve().then(() => alert(e));
-				//.then(() =>
-				//	window.open("about:blank", "_self").close()
-				//);
-			});
-
 		const myLiffId = "1656807318-km8WVpYe";
 		const liff = (window as any).liff;
 
@@ -64,29 +48,29 @@
 				const idToken = liff.getIDToken();
 
 				//jsonでPOSTを送ってbodyにとりにいく
-				// axios
-				// 	.post(
-				// 		"/get-tasks",
-				// 		JSON.stringify({ id_token: idToken })
-				// 	)
-				// 	.then((res) => {
-				// 		//ディープコピーをする
-				// 		console.log(res.data);
-				// 		let data = JSON.parse(JSON.stringify(res.data));
-				// 		if (data.Status === "OK") {
-				// 			todos = data.Contents;
-				// 		} else {
-				// 			Promise.reject(data.message);
-				// 		}
-				// 	})
-				// 	.catch((e) => {
-				// 		//閉じる
-				// 		Promise.resolve()
-				// 			.then(() => alert(e));
-				// 			//.then(() =>
-				// 			//	window.open("about:blank", "_self").close()
-				// 			//);
-				// 	});
+				axios
+					.post(
+						"/get-tasks",
+						JSON.stringify({ id_token: idToken })
+					)
+					.then((res) => {
+						//ディープコピーをする
+						console.log(res.data);
+						let data = JSON.parse(JSON.stringify(res.data));
+						if (data.Status === "OK") {
+							todos = data.Contents;
+						} else {
+							Promise.reject(data.message);
+						}
+					})
+					.catch((e) => {
+						//閉じる
+						Promise.resolve()
+							.then(() => alert(e));
+							//.then(() =>
+							//	window.open("about:blank", "_self").close()
+							//);
+					});
 			});
 		}
 	});
