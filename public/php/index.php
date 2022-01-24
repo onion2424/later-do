@@ -6,22 +6,21 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 $router = new AltoRouter();
 
-//  '/'はindexを表示
-// $router->map('GET|POST', '/', function () {
-//     require_once __DIR__ . '/../../public/index.html';
-// });
+ //'/'はindexを表示
+$router->map('GET|POST', '/', function () {
+    require_once __DIR__ . '/../../public/index.html';
+});
 
 // '/task'はtask関連
-//$router->map('POST', '/get-tasks', 'app\src\php\C_task::getTasks', 'get-tasks');
+$router->map('POST', '/get-tasks', 'app\public\php\C_task::getTasks', 'get-tasks');
+$router->map('POST', '/delete-task', 'app\public\php\C_task::deleteTask', 'delete-tasks');
 
-//$router->map('POST', '/delete-task', 'app\src\php\C_task::deleteTask', 'delete-tasks');
-
-//テスト
+//  テスト
 $router->map('GET', '/Welcome', function () {
-    require_once __DIR__ . '/../index.html';
+    require_once __DIR__ . './../index.html';
 }, 'welcome');
 
-//Line_bot
+//  Line_bot
 $router->map('POST', '/line-bot', function(){
     require_once __DIR__ . '/line_bot.php';
 }, 'line-bot');
