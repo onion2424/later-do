@@ -77,6 +77,7 @@
 </script>
 
 <main>
+	ためし
 	{#if isInClient}
 		{#if todos}
 			{#each todos as todo}
