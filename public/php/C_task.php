@@ -10,7 +10,7 @@ class C_task
     public function getTasks()
     {
         /************POSTされたデータを取得***********/
-
+        error_log("テスト");
         //  POSTされたJSON文字列を取り出す
         $json = file_get_contents("php://input");
         ////error_log(json_encode($json));
