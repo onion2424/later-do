@@ -91,11 +91,10 @@
 						on:slideChange={() => console.log("slide change")}
 						on:swiper={(e) => console.log(e.detail[0])}
 					>
-						<SwiperSlide class="task_contents">{todo.task}</SwiperSlide>
+						<SwiperSlide class="task_contents"
+							>{todo.task}</SwiperSlide
+						>
 						<SwiperSlide class="task_delete">削除</SwiperSlide>
-						<SwiperSlide >スワイプ3</SwiperSlide>
-						<SwiperSlide >スワイプ4</SwiperSlide>
-						<SwiperSlide >スワイプ5</SwiperSlide>
 					</Swiper>
 					<!-- <p>
 						{todo.task}
@@ -135,7 +134,18 @@
 			max-width: none;
 		}
 	}
-	//タスク
-	div.task button {
+	//コンテナ
+	.swiper {
+		width: 100%;
+		background-color: aqua;
+	}
+	/* スライド */
+	.swiper-slide {
+		flex-shrink: 0;
+		width: 100%;
+		height: 100%;
+		position: relative;
+		transition-property: transform;
+		background-color: red;
 	}
 </style>
