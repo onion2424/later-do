@@ -86,15 +86,15 @@
 			{#each todos as todo}
 				<div class="task">
 					<Swiper
-						spaceBetween={0}
-						slidesPerView={1}
 						on:slideChange={() => console.log("slide change")}
 						on:swiper={(e) => console.log(e.detail[0])}
 					>
 						<SwiperSlide class="task_contents"
 							><span>{todo.task}</span></SwiperSlide
 						>
-						<SwiperSlide class="task_delete"><span>削除</span></SwiperSlide>
+						<SwiperSlide class="task_delete"
+							><span>削除</span></SwiperSlide
+						>
 					</Swiper>
 					<!-- <p>
 						{todo.task}
@@ -111,18 +111,17 @@
 			<br
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
-		<Swiper
-		spaceBetween={50}
-		slidesPerView={1}
-		on:slideChange={() => console.log("slide change")}
-		on:swiper={(e) => console.log(e.detail[0])}
-		on:progress={(e) => console.log(e.detail)}
-	>
-		<SwiperSlide class="task_contents"
-			><span>タスク</span></SwiperSlide
-		>
-		<SwiperSlide class="task_delete"><span><img src='./img/btn_check.png' alt = '完了'></span></SwiperSlide>
-	</Swiper>
+		<div class="task">
+			<Swiper on:progress={(e) => console.log(e.detail)}>
+				<SwiperSlide class="task_contents"
+					><span>タスク</span></SwiperSlide
+				>
+				<SwiperSlide class="task_delete"
+					><span></span></SwiperSlide
+				>
+			</Swiper>
+			<div class="task_bottom" ><img src="./img/btn_check.png" alt="完了" /></div>>
+		</div>
 	{/if}
 </main>
 
@@ -146,13 +145,19 @@
 			max-width: none;
 		}
 	}
-	div.task{
-		width:100%;
+	div.task {
+		width: 100%;
 		//左端にする
-		span img{
-			position:absolute;
+		span img {
+			position: absolute;
 			right: 5%;
+			height: 50%;
+		}
+		div.task_bottom {
+			position: absolute;
+			background-color: black;
+			height: 100%;
+			width: 100%;
 		}
 	}
-
 </style>
