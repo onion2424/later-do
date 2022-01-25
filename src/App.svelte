@@ -120,7 +120,7 @@
 			<div class="task_top">
 				<Swiper on:progress={(e) => console.log(e.detail)}>
 					<SwiperSlide class="task_contents"><span>タスク</span></SwiperSlide>
-					<SwiperSlide class="task_delete"><span>a</span>></SwiperSlide>
+					<SwiperSlide class="task_delete"><span></span></SwiperSlide>
 				</Swiper>
 			</div>
 		</div>
