@@ -111,6 +111,17 @@
 			<br
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
+		<Swiper
+		spaceBetween={50}
+		slidesPerView={3}
+		on:slideChange={() => console.log("slide change")}
+		on:swiper={(e) => console.log(e.detail[0])}
+	>
+		<SwiperSlide class="task_contents"
+			><span>タスク</span></SwiperSlide
+		>
+		<SwiperSlide class="task_delete"><span>削除</span></SwiperSlide>
+	</Swiper>
 	{/if}
 </main>
 
@@ -152,9 +163,11 @@
 
 	/*スライド画面毎*/
 	.swiper-slide.task_contents span{
+		display: block;
 		background-color: aqua;
 	}
 	.swiper-slide.task_delete span{
+		display: block;
 		background-color: red;
 	}
 </style>
