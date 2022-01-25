@@ -91,8 +91,11 @@
 						on:slideChange={() => console.log("slide change")}
 						on:swiper={(e) => console.log(e.detail[0])}
 					>
-						<SwiperSlide class="task_contents">{todo.task}}</SwiperSlide>
+						<SwiperSlide class="task_contents">{todo.task}</SwiperSlide>
 						<SwiperSlide class="task_delete">削除</SwiperSlide>
+						<SwiperSlide >スワイプ3</SwiperSlide>
+						<SwiperSlide >スワイプ4</SwiperSlide>
+						<SwiperSlide >スワイプ5</SwiperSlide>
 					</Swiper>
 					<!-- <p>
 						{todo.task}
