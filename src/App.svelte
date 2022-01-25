@@ -86,7 +86,7 @@
 			{#each todos as todo}
 				<div class="task">
 					<Swiper
-						spaceBetween={50}
+						spaceBetween={0}
 						slidesPerView={1}
 						on:slideChange={() => console.log("slide change")}
 						on:swiper={(e) => console.log(e.detail[0])}
@@ -116,6 +116,7 @@
 		slidesPerView={1}
 		on:slideChange={() => console.log("slide change")}
 		on:swiper={(e) => console.log(e.detail[0])}
+		on:progress={(e) => console.log(e.detail)}
 	>
 		<SwiperSlide class="task_contents"
 			><span>タスク</span></SwiperSlide
