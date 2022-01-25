@@ -121,7 +121,7 @@
 		<SwiperSlide class="task_contents"
 			><span>タスク</span></SwiperSlide
 		>
-		<SwiperSlide class="task_delete"><span>削除</span></SwiperSlide>
+		<SwiperSlide class="task_delete"><span><img src='../img/btn_check.png' alt = '完了'></span></SwiperSlide>
 	</Swiper>
 	{/if}
 </main>
@@ -148,6 +148,11 @@
 	}
 	div.task{
 		width:100%;
+		//左端にする
+		span img{
+			position:absolute;
+			right: 5%;
+		}
 	}
 
 </style>
