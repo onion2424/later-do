@@ -29,7 +29,7 @@ $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
 // LINE Messaging APIがリクエストに付与した署名を取得
 //$signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
 $signature = $_SERVER["HTTP_X_LINE_SIGNATURE"];
-error_log($signature);
+
 $http_request_body = file_get_contents('php://input');
 
 //署名をチェックし、正当であればリクエストをパースし配列へ、不正であれば例外処理
@@ -94,15 +94,17 @@ foreach ($events as $event) {
             // メッセージ受信時
         case ($event instanceof TextMessage):
             if($event->getText() == 'ヘルプ'){
+                error_log('ヘルプ');
                 $builder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
                 // ビルダーにメッセージをすべて追加
                  $message = [
-                     ['あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」にお知らせするよ！'],
-                     ['終了したタスクはメニューの一覧から削除できるよ！']
+                     'あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」にお知らせするよ！',
+                     '終了したタスクはメニューの一覧から削除できるよ！'
                  ];
                  foreach($message as $msg){
                     $builder->add(new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message));
                  }
+                //$bot->replyText($reply_token, 'かえる？');
                 $bot->replyMessage($reply_token, $builder);
             }else{
               $message = "タスク登録に失敗しました。もう一度送信してください。";
