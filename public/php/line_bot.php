@@ -93,11 +93,16 @@ foreach ($events as $event) {
             // メッセージ受信時
         case ($event instanceof TextMessage):
             if($event->getText() == 'ヘルプ'){
-                $message = new LINE\LINEBot\MessageBuilder\TextMessageBuilder([
+                $builder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
+                // ビルダーにメッセージをすべて追加
+                $message = [
                     ['type' => 'text', 'text' => 'あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」にお知らせするよ！'],
                     ['type' => 'text', 'text' => '終了したタスクはメニューの一覧から削除できるよ！'],
-                ]);
-                $bot->replyMessage($reply_token, $message);
+                ];
+                foreach($message as $msg){
+                    $builder->add($msg);
+                }
+                $bot->replyMessage($reply_token, $builder);
             }else{
               $message = "タスク登録に失敗しました。もう一度送信してください。";
               try {
