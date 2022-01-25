@@ -2,7 +2,14 @@
     height:100%;
 }
 /* スライド */
-.swiper-slide {
+.swiper-slide{
+    text-align: left;
+}
+.swiper-slide .task_delete{
+    opacity: 0;
+}
+.swiper-slide .task_contents{
+    background-color: aqua;
 }
 
 /*スライドの中身(span)*/

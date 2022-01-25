@@ -169,7 +169,6 @@
 			background-color: $line_color;
 			height: 100%;
 			width: 100%;
-			opacity: 0;
 			img{
 				position:absolute;
 				height:15%;
@@ -179,7 +178,6 @@
 		}
 		div.task_top{
 			height:100%;
-			background-color: aqua;
 		}
 	}
 </style>
