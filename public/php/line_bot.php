@@ -27,7 +27,8 @@ $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
 
 // LINE Messaging APIがリクエストに付与した署名を取得
-$signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
+//$signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
+$signature = $_SERVER["HTTP_X_LINE_SIGNATURE"];
 error_log($signature);
 $http_request_body = file_get_contents('php://input');
 
