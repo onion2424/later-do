@@ -128,6 +128,7 @@
 </main>
 
 <style lang="scss">
+	$line_color:#06c755;
 	main {
 		text-align: center;
 		padding: 1em;
@@ -149,17 +150,19 @@
 	}
 	div.task {
 		position:relative;
-		height:100% / 6;
+		height:calc(100% / 6);
 		width: 100%;
 		div.task_bottom {
 			z-index:-1;
 			position:absolute;
-			background-color: black;
+			background-color: $line_color;
 			height: 100%;
 			width: 100%;
 			img{
+				position:absolute;
+				height:30%;
 				right:5%;
-				height:20px;
+				top:calc(100% - 30% / 2);
 			}
 		}
 	}
