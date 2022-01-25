@@ -114,16 +114,15 @@
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 		<div class="task">
+			<div class="task_bottom">
+				<img src="./img/btn_check.png" alt="完了" />
+			</div>
 			<div class="task_top">
 				<Swiper on:progress={(e) => console.log(e.detail)}>
 					<SwiperSlide class="task_contents"><span>タスク</span></SwiperSlide>
 					<SwiperSlide class="task_delete"><span /></SwiperSlide>
 				</Swiper>
 			</div>
-			<div class="task_bottom">
-				<img src="./img/btn_check.png" alt="完了" />
-			</div>
-			>
 		</div>
 	{/if}
 </main>
