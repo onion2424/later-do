@@ -136,6 +136,7 @@
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
+		height: 100%;
 	}
 
 	h1 {
@@ -162,9 +163,9 @@
 			width: 100%;
 			img{
 				position:absolute;
-				height:30%;
+				height:15%;
 				right:5%;
-				top:calc(100% - 30% / 2);
+				top:calc((100% - 15%) / 2);
 			}
 		}
 	}

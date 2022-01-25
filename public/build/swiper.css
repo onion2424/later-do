@@ -10,13 +10,13 @@
 
 /*スライド画面毎*/
 .swiper-slide.task_contents span{
-    display: block;
+    display: inline-block;
     background-color: aqua;
     height:100%;
     width: 100%;
 }
 .swiper-slide.task_delete span{
-    display: block;
+    display: inline-block;
     opacity: 0;
     height: 100%;
     width: 100%;
