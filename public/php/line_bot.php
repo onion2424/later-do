@@ -15,7 +15,7 @@ use LINE\LINEBot\MessageBuilder;
 
 //logを出す
 error_log("hello! LineBot!!");
-error_log(print_r($_SERVER, true));
+
 //チャネルシークレットとチャネルアクセストークンを以下の変数にセット
 $channel_access_token = getenv('CHANNEL_ACCESS_TOKEN');
 $channel_secret = getenv('CHANNEL_SECRET');
@@ -27,9 +27,8 @@ $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
 
 // LINE Messaging APIがリクエストに付与した署名を取得
-//$signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
-$signature = $request->headers->get(HTTPHeader::LINE_SIGNATURE);
-
+$signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
+error_log($signature);
 $http_request_body = file_get_contents('php://input');
 
 //署名をチェックし、正当であればリクエストをパースし配列へ、不正であれば例外処理
