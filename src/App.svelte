@@ -9,6 +9,7 @@
 	//------------プロパティ-------------------
 	let todos = [];
 	let isInClient = false;
+	let idToken;
 	//--------------関数----------------------
 
 	//** タスク削除   */
@@ -52,7 +53,7 @@
 				liffId: myLiffId,
 			}).then(() => {
 				//idTokenを取得
-				const idToken = liff.getIDToken();
+				idToken = liff.getIDToken();
 
 				//jsonでPOSTを送ってbodyにとりにいく
 				axios
@@ -80,7 +81,6 @@
 </script>
 
 <main>
-	ためし
 	{#if isInClient}
 		{#if todos}
 			{#each todos as todo}
@@ -90,12 +90,12 @@
 				</div>
 				<div class="task_top">
 					<Swiper on:progress={(e) => console.log(e.detail)}
+						on:slideChange={() => {deleteTodo(todo.taskNo)}}
 						allowSlidePrev={false}
-						longSwipesRatio={0.2}
-						shortSwipes={false}
+						longSwipesRatio={0.25}
 						>
 						<SwiperSlide class="task_contents">
-							<span>{todo.nextTime}</span>
+							<span>{todo.time}</span> <!--今日か明日しかないはず(ストアドでねじ曲げる)-->
 							<span>{todo.task}</span>
 						</SwiperSlide>
 						<SwiperSlide class="task_delete"><span></span></SwiperSlide>

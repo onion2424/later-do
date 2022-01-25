@@ -11,7 +11,7 @@
 
     public $message = "";
 
-    public function getPDOMessage(PDOException $e) {
+    static public function getPDOMessage(PDOException $e) {
       return $e->getMessage()." - ".$e->getLine();
     }
   }
