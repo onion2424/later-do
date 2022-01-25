@@ -1,0 +1,21 @@
+.swiper {
+    width: 100%;
+}
+/* スライド */
+.swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+}
+
+/*スライド画面毎*/
+.swiper-slide.task_contents span{
+    display: block;
+    background-color: aqua;
+}
+.swiper-slide.task_delete span{
+    display: block;
+    background-color: red;
+}
