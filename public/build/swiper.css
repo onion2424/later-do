@@ -8,13 +8,11 @@
 /*スライドの中身(span)*/
 .swiper-slide.task_contents span{
     display: inline-block;
-    background-color: aqua;
     height:50%;
     width: 100%;
 }
 .swiper-slide.task_delete span{
     display: inline-block;
-    opacity: 0;
     height: 100%;
     width: 100%;
 }
