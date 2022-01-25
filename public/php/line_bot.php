@@ -11,6 +11,7 @@ use LINE\LINEBot\Event\MessageEvent\StickerMessage;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\Event\FollowEvent;
 use LINE\LINEBot\Event\UnFollowEvent;
+use LINE\LINEBot\MessageBuilder;
 
 //logを出す
 error_log("hello! LineBot!!");
@@ -92,10 +93,10 @@ foreach ($events as $event) {
             // メッセージ受信時
         case ($event instanceof TextMessage):
             if($event->getText() == 'ヘルプ'){
-                $message =  [
+                $message = new LINE\LINEBot\MessageBuilder\MultiMessageBuilder([
                     ['type' => 'text', 'text' => 'あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」にお知らせするよ！'],
                     ['type' => 'text', 'text' => '終了したタスクはメニューの一覧から削除できるよ！'],
-                ];
+                ]);
                 $bot->replyText($reply_token, $message);
             }else{
               $message = "タスク登録に失敗しました。もう一度送信してください。";
