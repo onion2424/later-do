@@ -95,12 +95,13 @@ foreach ($events as $event) {
             if($event->getText() == 'ヘルプ'){
                 $builder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
                 // ビルダーにメッセージをすべて追加
-                // $message = [
-                //     ['あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」にお知らせするよ！'],
-                //     ['終了したタスクはメニューの一覧から削除できるよ！']
-                // ];
-                $message = new \LINE\LineBot\MessageBuilder\TextMessageBuilder('あいうえお');
-                $builder->add($message);
+                 $message = [
+                     ['あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」にお知らせするよ！'],
+                     ['終了したタスクはメニューの一覧から削除できるよ！']
+                 ];
+                 foreach($message as $msg){
+                    $builder->add(new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message));
+                 }
                 $bot->replyMessage($reply_token, $builder);
             }else{
               $message = "タスク登録に失敗しました。もう一度送信してください。";
