@@ -85,10 +85,19 @@
 		{#if todos}
 			{#each todos as todo}
 				<div class="task">
-					<p>
+					<Swiper
+						spaceBetween={50}
+						slidesPerView={3}
+						on:slideChange={() => console.log("slide change")}
+						on:swiper={(e) => console.log(e.detail[0])}
+					>
+						<SwiperSlide class="task_contents">{todo.task}}</SwiperSlide>
+						<SwiperSlide class="task_delete">削除</SwiperSlide>
+					</Swiper>
+					<!-- <p>
 						{todo.task}
 					</p>
-					<button on:click={() => deleteTodo(todo.taskNo)} />
+					<button on:click={() => deleteTodo(todo.taskNo)} />-->
 				</div>
 			{/each}
 		{:else}
@@ -101,17 +110,6 @@
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 	{/if}
-	<Swiper
-		spaceBetween={50}
-		slidesPerView={3}
-		on:slideChange={() => console.log("slide change")}
-		on:swiper={(e) => console.log(e.detail[0])}
-	>
-		<SwiperSlide>Slide 1</SwiperSlide>
-		<SwiperSlide>Slide 2</SwiperSlide>
-		<SwiperSlide>Slide 3</SwiperSlide>
-		<SwiperSlide>Slide 4</SwiperSlide>
-	</Swiper>
 </main>
 
 <style lang="scss">
