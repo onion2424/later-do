@@ -10,6 +10,7 @@
 	let todos = [];
 	let isInClient = false;
 	let idToken;
+	let waitPromise;
 	//--------------関数----------------------
 
 	//** タスク削除   */
@@ -56,7 +57,7 @@
 				idToken = liff.getIDToken();
 
 				//jsonでPOSTを送ってbodyにとりにいく
-				axios
+				waitPromise = axios
 					.post("/get-tasks", JSON.stringify({ id_token: idToken }))
 					.then((res) => {
 						//ディープコピーをする
@@ -82,8 +83,11 @@
 
 <main>
 	{#if isInClient}
+	{#await waitPromise}
+	<p>...タスク取得中</p>
+	{:then}
 		{#if todos}
-			{#each todos as todo}
+			{#each todos as todo (todo.taskNo)}
 			<div class="task">
 				<div class="task_bottom">
 					<img src="./img/btn_check.png" alt="完了" />
@@ -110,7 +114,9 @@
 		{:else}
 			<p>タスクを追加してね</p>
 		{/if}
+	{/await}
 	{:else}
+	
 		<p>
 			LINE外からのこのWEBページの利用はできません。
 			<br

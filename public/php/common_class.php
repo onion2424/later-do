@@ -5,7 +5,7 @@
     const STATUS_NG = "NG";
     
     //ajax通信時にエラー判断
-    public $Status = self::STATUS_OK;
+    public $Status = self::STATUS_NG;
 
     public $Contents;
 

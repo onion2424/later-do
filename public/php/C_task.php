@@ -100,7 +100,7 @@ class C_task
                 $stmt = $conn->prepare($sql);
 
                 $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
-                $stmt->bindParam(1, $contents['taskNo'], \PDO::PARAM_INT);
+                $stmt->bindParam(2, $contents['taskNo'], \PDO::PARAM_INT);
                 $stmt->execute();
 
                 //戻り値設定
