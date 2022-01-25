@@ -1,6 +1,6 @@
 {
     "require": {
-        "linecorp/line-bot-sdk": "^3.6",
+        "linecorp/line-bot-sdk": "^7.3.0",
         "altorouter/altorouter": "^2.0"
     },
     "autoload": {
