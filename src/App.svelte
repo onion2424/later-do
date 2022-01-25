@@ -93,7 +93,10 @@
 						touchRatio={0.2}
 						longSwipesRatio={0.2}
 						>
-						<SwiperSlide class="task_contents"><span>{todo.task}</span></SwiperSlide>
+						<SwiperSlide class="task_contents">
+							<span>{todo.nextTime}</span>
+							<span>{todo.task}</span>
+						</SwiperSlide>
 						<SwiperSlide class="task_delete"><span></span></SwiperSlide>
 					</Swiper>
 				</div>
@@ -121,7 +124,10 @@
 					touchRatio={0.2}
 					longSwipesRatio={0.2}
 					>
-					<SwiperSlide class="task_contents"><span>タスク</span></SwiperSlide>
+					<SwiperSlide class="task_contents">
+						<span class="time">今日 9:00</span>
+						<span>タスク</span>
+					</SwiperSlide>
 					<SwiperSlide class="task_delete"><span></span></SwiperSlide>
 				</Swiper>
 			</div>
@@ -167,6 +173,9 @@
 				right:5%;
 				top:calc((100% - 15%) / 2);
 			}
+		}
+		div.task_top{
+			height:100%;
 		}
 	}
 </style>
