@@ -5,7 +5,7 @@
 	import { Swiper, SwiperSlide } from "swiper/svelte";
 
 	// Import Swiper styles
-	import "swiper/css";
+	import "swiper/scss";
 	//------------プロパティ-------------------
 	let todos = [];
 	let isInClient = false;
@@ -87,7 +87,7 @@
 				<div class="task">
 					<Swiper
 						spaceBetween={50}
-						slidesPerView={3}
+						slidesPerView={1}
 						on:slideChange={() => console.log("slide change")}
 						on:swiper={(e) => console.log(e.detail[0])}
 					>
@@ -113,7 +113,7 @@
 		</p>
 		<Swiper
 		spaceBetween={50}
-		slidesPerView={3}
+		slidesPerView={1}
 		on:slideChange={() => console.log("slide change")}
 		on:swiper={(e) => console.log(e.detail[0])}
 	>
@@ -148,26 +148,5 @@
 	div.task{
 		width:100%;
 	}
-	//コンテナ
-	.swiper {
-		width: 100%;
-	}
-	/* スライド */
-	.swiper-slide {
-		flex-shrink: 0;
-		width: 100%;
-		height: 100%;
-		position: relative;
-		transition-property: transform;
-	}
 
-	/*スライド画面毎*/
-	.swiper-slide.task_contents span{
-		display: block;
-		background-color: aqua;
-	}
-	.swiper-slide.task_delete span{
-		display: block;
-		background-color: red;
-	}
 </style>
