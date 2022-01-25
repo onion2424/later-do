@@ -120,7 +120,7 @@
 			<div class="task_top">
 				<Swiper on:progress={(e) => console.log(e.detail)}>
 					<SwiperSlide class="task_contents"><span>タスク</span></SwiperSlide>
-					<SwiperSlide class="task_delete"><span /></SwiperSlide>
+					<SwiperSlide class="task_delete"><span>a</span>></SwiperSlide>
 				</Swiper>
 			</div>
 		</div>
@@ -159,7 +159,7 @@
 			width: 100%;
 			img{
 				right:5%;
-				height:50%;
+				height:20px;
 			}
 		}
 	}
