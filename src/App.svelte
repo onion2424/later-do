@@ -1,7 +1,23 @@
+<Swiper
+spaceBetween={50}
+slidesPerView={3}
+on:slideChange={() => console.log('slide change')}
+on:swiper={(e) => console.log(e.detail[0])}
+>
+<SwiperSlide>Slide 1</SwiperSlide>
+<SwiperSlide>Slide 2</SwiperSlide>
+<SwiperSlide>Slide 3</SwiperSlide>
+<SwiperSlide>Slide 4</SwiperSlide>
+</Swiper>
+
 <script lang="ts">
 	import axios from "axios";
 	import { dataset_dev } from "svelte/internal";
+    // Import Swiper Svelte components
+    import { Swiper, SwiperSlide } from 'swiper/svelte';
 
+    // Import Swiper styles
+    import 'swiper/css';
 	//------------プロパティ-------------------
 	let todos = [];
 	let isInClient = false;
@@ -98,6 +114,7 @@
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 	{/if}
+	<Swiper/>
 </main>
 
 <style lang="scss">
@@ -119,5 +136,9 @@
 		main {
 			max-width: none;
 		}
+	}
+	//タスク
+	div.task button{
+
 	}
 </style>

@@ -9,7 +9,17 @@ class C_task
 
     public function getTasks()
     {
-        $userData = self::getUserData();
+        /************POSTされたデータを取得***********/
+        //  POSTされたJSON文字列を取り出す
+        $json = file_get_contents("php://input");
+        ////error_log(json_encode($json));
+
+
+        //  JSON文字列をobjectに変換
+        //      =>trueにしないといけない
+        $contents = json_decode($json, true);
+        //ユーザーデータ取得
+        $userData = self::getUserData($contents['id_token']);
 
         /*******:***************返答処理***********************/
         //  userIDが存在するかを確認
@@ -19,7 +29,8 @@ class C_task
 
         if (!isset($userData['sub']) || $userData['sub'] == "") {
 
-            $aryList = array(array('task' => 'あいうえお'), array('task' => 'かきくけこ'));
+            //返答の形式
+            //$aryList = array(array('task' => 'あいうえお'), array('task' => 'かきくけこ'));
             $ret->message = "ユーザー認証に失敗しました。";
         } else { //--------------------データベース接続してデータを取る---------------
             //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
@@ -55,12 +66,6 @@ class C_task
     }
 
     public function deleteTask(){
-        return;
-    }
-
-
-    //API通信でLINEのユーザデータを取得
-    static private function getUserData(){
         /************POSTされたデータを取得***********/
         //  POSTされたJSON文字列を取り出す
         $json = file_get_contents("php://input");
@@ -70,6 +75,56 @@ class C_task
         //  JSON文字列をobjectに変換
         //      =>trueにしないといけない
         $contents = json_decode($json, true);
+        //ユーザーデータ取得
+        $userData = self::getUserData($contents['id_token']);
+
+        /*******:***************返答処理***********************/
+        //  userIDが存在するかを確認
+        //      =>subにセットされている
+
+        $ret = new \httpResponse();
+
+        if (!isset($userData['sub']) || $userData['sub'] == "") {
+
+            $ret->message = "ユーザー認証に失敗しました。";
+        } else { //--------------------データベース接続してデータを取る---------------
+            try {
+                $url = parse_url(getenv('DATABASE_URL'));
+                $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+                $conn = new \PDO($dsn, $url['user'], $url['pass']);
+                //PDOのエラー時に例外(PDOException)が発生するように設定
+                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+                //SQL実行
+                $sql = 'CALL DELETETASK(?, ?)'; //userID, TaskNo
+                $stmt = $conn->prepare($sql);
+
+                $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
+                $stmt->bindParam(1, $contents['taskNo'], \PDO::PARAM_INT);
+                $stmt->execute();
+
+                //戻り値設定
+                if($stmt -> rowCount() == 1){
+                    $ret->Status = \httpResponse::STATUS_OK;
+                }else{
+                    $ret->message = "削除に失敗しました。";
+                }
+                
+            } catch (\PDOException $e) {
+                error_log($ret->getPDOMessage($e));
+                $ret->message = "サーバーとの接続に失敗しました。";
+            }
+        }
+
+        //戻り値設定
+        header("content-type:application/json");
+        echo json_encode($ret, JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+
+
+    //API通信でLINEのユーザデータを取得
+    static private function getUserData($id_token){
 
 
         /***********::messagingAPI通信:**************/
@@ -78,7 +133,7 @@ class C_task
 
         //  APIのために基本情報をセット
         $data = [
-            'id_token' => $contents['id_token'], // LIFFから送信されたIDトークン
+            'id_token' => $id_token, // LIFFから送信されたIDトークン
             'client_id' => getenv('LOGIN_CHANNEL_ID'), // LIFFアプリを登録したLINEログインチャネルのチャネルID
         ];
 
