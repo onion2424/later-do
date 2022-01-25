@@ -5,7 +5,7 @@
 	import { Swiper, SwiperSlide } from "swiper/svelte";
 
 	// Import Swiper styles
-	import "swiper/scss";
+	import "swiper/css";
 	//------------プロパティ-------------------
 	let todos = [];
 	let isInClient = false;
