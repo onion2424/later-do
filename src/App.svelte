@@ -11,7 +11,7 @@
 	function deleteTodo(taskNo) {
 		//jsonでPOSTを送ってbodyにとりにいく
 		axios
-			.post("/delete-task", JSON.stringify({ id_token: idToken }))
+			.post("/delete-task", JSON.stringify({ id_token: idToken, taskNo: taskNo }))
 			.then((res) => {
 				//ディープコピーをする
 				console.log(res.data);
