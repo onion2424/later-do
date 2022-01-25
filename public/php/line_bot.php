@@ -50,7 +50,7 @@ foreach ($events as $event) {
             try {
                 $conn = new PDO($dsn, $url['user'], $url['pass']);
                 $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                $id = $event.getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
+                $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
                 $sql = 'CALL userDeposit(?)';
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(1, $id, PDO::PARAM_STR);
@@ -75,7 +75,7 @@ foreach ($events as $event) {
             try {
                 $conn = new PDO($dsn, $url['user'], $url['pass']);
                 $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                $id = $event.getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
+                $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
                 $sql = 'CALL userDelete(?)'; //userID
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(1, $id, PDO::PARAM_STR);
@@ -91,8 +91,7 @@ foreach ($events as $event) {
 
             // メッセージ受信時
         case ($event instanceof TextMessage):
-            $task = $event.getText();
-            if($task == 'ヘルプ'){
+            if($event->getText() == 'ヘルプ'){
                 $bot->replyText($reply_token, 'ヘルプするよ!');
                 $bot->replyText($reply_token, 'わかったかな?');
             }else{
@@ -100,10 +99,11 @@ foreach ($events as $event) {
               try {
                   $conn = new PDO($dsn, $url['user'], $url['pass']);
                   $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                  $id = $event.getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
+                  $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
                   $sql = 'CALL setTask(?, ?)'; //userID, メッセージ内容
                   //  パラメータをセットする
                   //  =>変数を入れないといけない
+                  $task = $event->getText();
                   $stmt = $conn->prepare($sql);
                   $stmt->bindParam(1, $id, PDO::PARAM_STR);
                   $stmt->bindParam(2, $task, PDO::PARAM_STR);
