@@ -96,7 +96,7 @@ foreach ($events as $event) {
                     ['type' => 'text', 'text' => 'あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」にお知らせするよ！'],
                     ['type' => 'text', 'text' => '終了したタスクはメニューの一覧から削除できるよ！'],
                 ];
-                $bot->replyText($reply_token, $message);
+                $bot->replyMessage($reply_token, $message);
             }else{
               $message = "タスク登録に失敗しました。もう一度送信してください。";
               try {

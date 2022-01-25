@@ -16,6 +16,7 @@
 	//** タスク削除   */
 	function deleteTodo(taskNo) {
 		//jsonでPOSTを送ってbodyにとりにいく
+		console.log(taskNo);
 		axios
 			.post(
 				"/delete-task",
