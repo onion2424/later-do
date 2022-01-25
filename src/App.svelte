@@ -16,7 +16,6 @@
 	//** タスク削除   */
 	function deleteTodo(taskNo) {
 		//jsonでPOSTを送ってbodyにとりにいく
-		console.log(taskNo);
 		axios
 			.post(
 				"/delete-task",
@@ -27,9 +26,11 @@
 				console.log(res.data);
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					todos = data.Contents;
+					//	消したやつ以外にする
+					//	複数端末での同時使用を想定していないのでデータを取り直すことはしない
+					todos = todos.filter((val)=>!val.taskno == taskNo);
 				} else {
-					Promise.reject(data.message);
+					throw data.message;
 				}
 			})
 			.catch((e) => {
@@ -67,15 +68,15 @@
 						if (data.Status === "OK") {
 							todos = data.Contents;
 						} else {
-							Promise.reject(data.message);
+							throw data.message;
 						}
 					})
 					.catch((e) => {
 						//閉じる
-						Promise.resolve().then(() => alert(e));
-						//.then(() =>
-						//	window.open("about:blank", "_self").close()
-						//);
+						Promise.resolve().then(() => alert(e))
+						.then(() =>
+							window.open("about:blank", "_self").close()
+						);
 					});
 			});
 		}
@@ -88,14 +89,14 @@
 	<p>...タスク取得中</p>
 	{:then}
 		{#if todos}
-			{#each todos as todo (todo.taskNo)}
+			{#each todos as todo (todo.taskno)}
 			<div class="task">
 				<div class="task_bottom">
 					<img src="./img/btn_check.png" alt="完了" />
 				</div>
 				<div class="task_top">
 					<Swiper on:progress={(e) => console.log(e.detail)}
-						on:slideChange={() => {deleteTodo(todo.taskNo)}}
+						on:slideChange={() => {deleteTodo(todo.taskno)}}
 						allowSlidePrev={false}
 						longSwipesRatio={0.25}
 						>
