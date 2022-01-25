@@ -100,7 +100,7 @@ foreach ($events as $event) {
                   $conn = new PDO($dsn, $url['user'], $url['pass']);
                   $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                   $id = $event.getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
-                  $sql = 'CALL proc1(?, ?)'; //userID, メッセージ内容
+                  $sql = 'CALL setTask(?, ?)'; //userID, メッセージ内容
                   //  パラメータをセットする
                   //  =>変数を入れないといけない
                   $task = $event.getText();
