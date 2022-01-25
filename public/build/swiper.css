@@ -5,10 +5,10 @@
 .swiper-slide{
     text-align: left;
 }
-.swiper-slide .task_delete{
+.swiper-slide.task_delete{
     opacity: 0;
 }
-.swiper-slide .task_contents{
+.swiper-slide.task_contents{
     background-color: aqua;
 }
 
@@ -18,11 +18,13 @@
     height:50%;
     width: 100%;
 }
+
+.swiper-slide.task_contents span.time{
+    color:#06c755;
+}
+
 .swiper-slide.task_delete span{
     display: inline-block;
     height: 100%;
     width: 100%;
-}
-.swiper-slide.task_contents span.time{
-    color:#06c755;
 }
