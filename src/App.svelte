@@ -1,23 +1,11 @@
-<Swiper
-spaceBetween={50}
-slidesPerView={3}
-on:slideChange={() => console.log('slide change')}
-on:swiper={(e) => console.log(e.detail[0])}
->
-<SwiperSlide>Slide 1</SwiperSlide>
-<SwiperSlide>Slide 2</SwiperSlide>
-<SwiperSlide>Slide 3</SwiperSlide>
-<SwiperSlide>Slide 4</SwiperSlide>
-</Swiper>
-
 <script lang="ts">
 	import axios from "axios";
 	import { dataset_dev } from "svelte/internal";
-    // Import Swiper Svelte components
-    import { Swiper, SwiperSlide } from 'swiper/svelte';
+	// Import Swiper Svelte components
+	import { Swiper, SwiperSlide } from "swiper/svelte";
 
-    // Import Swiper styles
-    import 'swiper/css';
+	// Import Swiper styles
+	import "swiper/css";
 	//------------プロパティ-------------------
 	let todos = [];
 	let isInClient = false;
@@ -27,7 +15,10 @@ on:swiper={(e) => console.log(e.detail[0])}
 	function deleteTodo(taskNo) {
 		//jsonでPOSTを送ってbodyにとりにいく
 		axios
-			.post("/delete-task", JSON.stringify({ id_token: idToken, taskNo: taskNo }))
+			.post(
+				"/delete-task",
+				JSON.stringify({ id_token: idToken, taskNo: taskNo })
+			)
 			.then((res) => {
 				//ディープコピーをする
 				console.log(res.data);
@@ -65,10 +56,7 @@ on:swiper={(e) => console.log(e.detail[0])}
 
 				//jsonでPOSTを送ってbodyにとりにいく
 				axios
-					.post(
-						"/get-tasks",
-						JSON.stringify({ id_token: idToken })
-					)
+					.post("/get-tasks", JSON.stringify({ id_token: idToken }))
 					.then((res) => {
 						//ディープコピーをする
 						console.log(res.data);
@@ -81,11 +69,10 @@ on:swiper={(e) => console.log(e.detail[0])}
 					})
 					.catch((e) => {
 						//閉じる
-						Promise.resolve()
-							.then(() => alert(e));
-							//.then(() =>
-							//	window.open("about:blank", "_self").close()
-							//);
+						Promise.resolve().then(() => alert(e));
+						//.then(() =>
+						//	window.open("about:blank", "_self").close()
+						//);
 					});
 			});
 		}
@@ -114,7 +101,17 @@ on:swiper={(e) => console.log(e.detail[0])}
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 	{/if}
-	<Swiper/>
+	<Swiper
+		spaceBetween={50}
+		slidesPerView={3}
+		on:slideChange={() => console.log("slide change")}
+		on:swiper={(e) => console.log(e.detail[0])}
+	>
+		<SwiperSlide>Slide 1</SwiperSlide>
+		<SwiperSlide>Slide 2</SwiperSlide>
+		<SwiperSlide>Slide 3</SwiperSlide>
+		<SwiperSlide>Slide 4</SwiperSlide>
+	</Swiper>
 </main>
 
 <style lang="scss">
@@ -138,7 +135,6 @@ on:swiper={(e) => console.log(e.detail[0])}
 		}
 	}
 	//タスク
-	div.task button{
-
+	div.task button {
 	}
 </style>
