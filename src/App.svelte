@@ -116,14 +116,12 @@
 		<div class="task">
 			<div class="task_bottom">
 				<img src="./img/btn_check.png" alt="完了" />
-				<div class="task_top">
-					<Swiper on:progress={(e) => console.log(e.detail)}>
-						<SwiperSlide class="task_contents"
-							><span>タスク</span></SwiperSlide
-						>
-						<SwiperSlide class="task_delete"><span /></SwiperSlide>
-					</Swiper>
-				</div>
+			</div>
+			<div class="task_top">
+				<Swiper on:progress={(e) => console.log(e.detail)}>
+					<SwiperSlide class="task_contents"><span>タスク</span></SwiperSlide>
+					<SwiperSlide class="task_delete"><span /></SwiperSlide>
+				</Swiper>
 			</div>
 		</div>
 	{/if}
@@ -150,18 +148,18 @@
 		}
 	}
 	div.task {
+		position:relative;
+		height:100% / 6;
 		width: 100%;
-		div.task_top {
-			position: absolute;
-		}
 		div.task_bottom {
-			position: relative;
+			z-index:-1;
+			position:absolute;
 			background-color: black;
 			height: 100%;
 			width: 100%;
-			img {
-				right: 5%;
-				height: 50%;
+			img{
+				right:5%;
+				height:50%;
 			}
 		}
 	}
