@@ -93,7 +93,7 @@ foreach ($events as $event) {
             // メッセージ受信時
         case ($event instanceof TextMessage):
             if($event->getText() == 'ヘルプ'){
-                $message = new LINE\LINEBot\MessageBuilder\MultiMessageBuilder([
+                $message = new LINE\LINEBot\MessageBuilder\TextMessageBuilder([
                     ['type' => 'text', 'text' => 'あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」にお知らせするよ！'],
                     ['type' => 'text', 'text' => '終了したタスクはメニューの一覧から削除できるよ！'],
                 ]);
