@@ -91,7 +91,8 @@ foreach ($events as $event) {
 
             // メッセージ受信時
         case ($event instanceof TextMessage):
-            if($event.getText() == 'ヘルプ'){
+            $task = $event.getText();
+            if($task == 'ヘルプ'){
                 $bot->replyText($reply_token, 'ヘルプするよ!');
                 $bot->replyText($reply_token, 'わかったかな?');
             }else{
@@ -103,7 +104,6 @@ foreach ($events as $event) {
                   $sql = 'CALL setTask(?, ?)'; //userID, メッセージ内容
                   //  パラメータをセットする
                   //  =>変数を入れないといけない
-                  $task = $event.getText();
                   $stmt = $conn->prepare($sql);
                   $stmt->bindParam(1, $id, PDO::PARAM_STR);
                   $stmt->bindParam(2, $task, PDO::PARAM_STR);
