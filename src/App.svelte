@@ -84,25 +84,24 @@
 	{#if isInClient}
 		{#if todos}
 			{#each todos as todo}
-				<div class="task">
-					<div class="task_top">
-						<Swiper
-							on:slideChange={() => console.log("slide change")}
-							on:swiper={(e) => console.log(e.detail[0])}
+			<div class="task">
+				<div class="task_bottom">
+					<img src="./img/btn_check.png" alt="完了" />
+				</div>
+				<div class="task_top">
+					<Swiper on:progress={(e) => console.log(e.detail)}
+						touchRatio={0.2}
+						longSwipesRatio={0.2}
 						>
-							<SwiperSlide class="task_contents"
-								><span>{todo.task}</span></SwiperSlide
-							>
-							<SwiperSlide class="task_delete"
-								><span>削除</span></SwiperSlide
-							>
-						</Swiper>
-					</div>
+						<SwiperSlide class="task_contents"><span>{todo.task}</span></SwiperSlide>
+						<SwiperSlide class="task_delete"><span></span></SwiperSlide>
+					</Swiper>
+				</div>
+			</div>
 					<!-- <p>
 						{todo.task}
 					</p>
 					<button on:click={() => deleteTodo(todo.taskNo)} />-->
-				</div>
 			{/each}
 		{:else}
 			<p>タスクを追加してね</p>
@@ -118,7 +117,10 @@
 				<img src="./img/btn_check.png" alt="完了" />
 			</div>
 			<div class="task_top">
-				<Swiper on:progress={(e) => console.log(e.detail)}>
+				<Swiper on:progress={(e) => console.log(e.detail)}
+					touchRatio={0.2}
+					longSwipesRatio={0.2}
+					>
 					<SwiperSlide class="task_contents"><span>タスク</span></SwiperSlide>
 					<SwiperSlide class="task_delete"><span></span></SwiperSlide>
 				</Swiper>
