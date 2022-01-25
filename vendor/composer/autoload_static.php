@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitff76228e52d9b65b8a3395f36622adcb
 {
     public static $prefixLengthsPsr4 = array (
+        'a' => 
+        array (
+            'app\\' => 4,
+        ),
         'L' => 
         array (
             'LINE\\' => 5,
@@ -14,6 +18,10 @@ class ComposerStaticInitff76228e52d9b65b8a3395f36622adcb
     );
 
     public static $prefixDirsPsr4 = array (
+        'app\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/',
+        ),
         'LINE\\' => 
         array (
             0 => __DIR__ . '/..' . '/linecorp/line-bot-sdk/src',
