@@ -121,7 +121,7 @@
 		<SwiperSlide class="task_contents"
 			><span>タスク</span></SwiperSlide
 		>
-		<SwiperSlide class="task_delete"><span><img src='../img/btn_check.png' alt = '完了'></span></SwiperSlide>
+		<SwiperSlide class="task_delete"><span><img src='./img/btn_check.png' alt = '完了'></span></SwiperSlide>
 	</Swiper>
 	{/if}
 </main>
