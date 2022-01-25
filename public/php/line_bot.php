@@ -104,8 +104,8 @@ foreach ($events as $event) {
                  foreach($message as $msg){
                     $builder->add(new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message));
                  }
-                //$bot->replyText($reply_token, 'かえる？');
-                $bot->replyMessage($reply_token, $builder);
+                $bot->replyText($reply_token, 'かえる？');
+                //$bot->replyMessage($reply_token, $builder);
             }else{
               $message = "タスク登録に失敗しました。もう一度送信してください。";
               try {
