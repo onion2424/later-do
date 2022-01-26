@@ -39,7 +39,9 @@ try {
             $response = $bot->pushMessage($to, $builder);
         }
         //  送れたかどうかに関わらず更新
-
+        $sql = 'CALL SetNextTime()';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
     }
 } catch (\PDOException $e) {
     error_log(\HttpResponse::getPDOMessage($e));
