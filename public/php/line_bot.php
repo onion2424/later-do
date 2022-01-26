@@ -55,12 +55,10 @@ foreach ($events as $event) {
                 $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
                 $sql = 'CALL userDeposit(?)';
                 $stmt = $conn->prepare($sql);
-                $cnt = 0;
-                $stmt->bindParam(1, $cnt, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 3);
-                $stmt->bindParam(2, $id, PDO::PARAM_STR);
-                $stmt->execute();
+                $stmt->bindParam(1, $id, PDO::PARAM_STR);
+                
                 //失敗したらログを残す
-                if ($cnt != 1) {
+                if ($stmt->execute()) {
                     error_log('ユーザ登録に失敗 : ' + $id);
                 } else {
                     $message = 'お友達登録ありがとう!';
@@ -82,12 +80,10 @@ foreach ($events as $event) {
                 $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
                 $sql = 'CALL userDelete(?)'; //userID
                 $stmt = $conn->prepare($sql);
-                $cnt = 0;
-                $stmt->bindParam(1, $cnt, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 3);
-                $stmt->bindParam(2, $id, PDO::PARAM_STR);
-                $stmt->execute();
-                //失敗したらログを残す
-                if ($cnt != 1) {
+                $stmt->bindParam(1, $id, PDO::PARAM_STR);
+                
+                //実行 - 失敗したらログを残す
+                if ($stmt->execute()) {
                     error_log('ユーザ削除に失敗 : ' + $id);
                 }
             } catch (\PDOException $e) {
@@ -106,6 +102,7 @@ foreach ($events as $event) {
                      '終了したタスクはメニューの一覧から削除できるよ！'
                  ];
                  foreach($message as $msg){
+                    error_log($msg);
                     $builder->add(new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message));
                  }
                 $bot->replyText($reply_token, 'かえる？');
@@ -119,15 +116,13 @@ foreach ($events as $event) {
                   $sql = 'CALL setTask(?, ?)'; //userID, メッセージ内容
                   //  パラメータをセットする
                   //  =>変数を入れないといけない
-                  $cnt = 0;
                   $task = $event->getText();
                   $stmt = $conn->prepare($sql);
-                  $stmt->bindParam(1, $cnt, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 3);
-                  $stmt->bindParam(2, $id, PDO::PARAM_STR);
-                  $stmt->bindParam(3, $task, PDO::PARAM_STR);
+                  $stmt->bindParam(1, $id, PDO::PARAM_STR);
+                  $stmt->bindParam(2, $task, PDO::PARAM_STR);
                   
-                  $stmt->execute();
-                  if ($cnt == 1) {
+                  //SQL実行
+                  if ($stmt->execute()) {
                       $message = "登録完了!";
                   }
               } catch (\PDOException $e) {

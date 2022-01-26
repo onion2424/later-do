@@ -93,29 +93,29 @@
 				{#each todos as todo (todo.taskno)}
 					<div class="task">
 						<div class="task_wrapper">
-						<div class="task_bottom">
-							<img src="./img/btn_check.png" alt="完了" />
-						</div>
-						<div class="task_top">
-							<Swiper
-								on:progress={(e) => console.log(e.detail)}
-								on:slideChange={() => {
-									deleteTodo(todo.taskno);
-								}}
-								allowSlidePrev={false}
-								longSwipesRatio={0.25}
-								shortSwipes={false}
-							>
-								<SwiperSlide class="task_contents">
-									<span>{todo.time}</span>
-									<!--今日か明日しかないはず(ストアドでねじ曲げる)-->
-									<span>{todo.task}</span>
-								</SwiperSlide>
-								<SwiperSlide class="task_delete"
-									><span /></SwiperSlide
+							<div class="task_bottom">
+								<img src="./img/btn_check.png" alt="完了" />
+							</div>
+							<div class="task_top">
+								<Swiper
+									on:progress={(e) => console.log(e.detail)}
+									on:slideChange={() => {
+										deleteTodo(todo.taskno);
+									}}
+									allowSlidePrev={false}
+									longSwipesRatio={0.25}
+									shortSwipes={false}
 								>
-							</Swiper>
-						</div>
+									<SwiperSlide class="task_contents">
+										<span>{todo.time}</span>
+										<!--今日か明日しかないはず(ストアドでねじ曲げる)-->
+										<span>{todo.task}</span>
+									</SwiperSlide>
+									<SwiperSlide class="task_delete"
+										><span /></SwiperSlide
+									>
+								</Swiper>
+							</div>
 						</div>
 					</div>
 					<!-- <p>
@@ -143,7 +143,6 @@
 						on:progress={(e) => console.log(e.detail)}
 						allowSlidePrev={false}
 						longSwipesRatio={0.2}
-						
 					>
 						<SwiperSlide class="task_contents">
 							<span class="time">今日 9:00</span>
@@ -179,19 +178,19 @@
 	div.task {
 		height: calc(100% / 6);
 		width: 100%;
-		padding: 2% 2%; 
+		padding: 2% 2%;
 		box-sizing: border-box;
 		/* 表示部分	*/
-		div.task_wrapper{
+		div.task_wrapper {
 			position: relative;
-			height:100%;
-			width:100%;
+			height: 100%;
+			width: 100%;
 		}
 
 		div.task_bottom {
 			z-index: -1;
 			position: absolute;
-			background-color: #BBFF99;
+			background-color: #bbff99;
 			height: 100%;
 			width: calc(100% + 3px); /*少しはみ出させる*/
 			img {
