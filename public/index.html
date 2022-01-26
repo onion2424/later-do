@@ -4,7 +4,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>LIFFのテスト</title>
+   <title>あとでやるちゃん- 一覧表示 -</title>
 </head>
 
 <body>
@@ -27,24 +27,25 @@
    <!--vsconsole導入CDN  https://qiita.com/sumihiro3/items/9f4f1adb5d8883d9ceeb-->
    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
    <script>
+      //DEBUG用のvsConsole
       // VConsole will be exported to `window.VConsole` by default.
       //var vConsole = new window.VConsole();
-      window.addEventListener('load', function () {
-         initVConsole();
-      });
-      // Initialize vConsole
-      function initVConsole() {
-         window.vConsole = new window.VConsole({
-            defaultPlugins: ['system', 'network', 'element', 'storage'],
-            maxLogNumber: 1000,
-            onReady: function () {
-               console.log('vConsole is ready.');
-            },
-            onClearLog: function () {
-               console.log('on clearLog');
-            }
-         });
-      }
+      // window.addEventListener('load', function () {
+      //    initVConsole();
+      // });
+      // // Initialize vConsole
+      // function initVConsole() {
+      //    window.vConsole = new window.VConsole({
+      //       defaultPlugins: ['system', 'network', 'element', 'storage'],
+      //       maxLogNumber: 1000,
+      //       onReady: function () {
+      //          console.log('vConsole is ready.');
+      //       },
+      //       onClearLog: function () {
+      //          console.log('on clearLog');
+      //       }
+      //    });
+      // }
 
    </script>
 </body>
