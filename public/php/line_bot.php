@@ -59,9 +59,9 @@ foreach ($events as $event) {
                 
                 //失敗したらログを残す
                 if ($stmt->execute()) {
-                    error_log('ユーザ登録に失敗 : ' + $id);
-                } else {
                     $message = 'お友達登録ありがとう！使い方が分からなければ「ヘルプ」と送ってね！';
+                } else {
+                    error_log('ユーザ登録に失敗 : ' . $id);
                 }
             } catch (\PDOException $e) {
                 error_log(\httpResponse::getPDOMessage($e));
@@ -83,8 +83,8 @@ foreach ($events as $event) {
                 $stmt->bindParam(1, $id, PDO::PARAM_STR);
                 
                 //実行 - 失敗したらログを残す
-                if ($stmt->execute()) {
-                    error_log('ユーザ削除に失敗 : ' + $id);
+                if (!$stmt->execute()) {
+                    error_log('ユーザ削除に失敗 : ' . $id);
                 }
             } catch (\PDOException $e) {
                 error_log(\httpResponse::getPDOMessage($e));
