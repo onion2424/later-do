@@ -89,7 +89,7 @@
 		{#await waitPromise}
 			<p>...タスク取得中</p>
 		{:then}
-			{#if todos}
+			{#if todos.length > 0}
 				{#each todos as todo (todo.taskno)}
 					<div class="task">
 						<div class="task_wrapper">
