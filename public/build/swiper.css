@@ -11,7 +11,7 @@
 .swiper-slide.task_contents{
     background-color: white;
     /*角丸*/
-    border-radius: 5px;
+    border-radius: 0 5px 5px 0;
 }
 
 /*スライドの中身(span)*/

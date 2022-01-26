@@ -14,7 +14,7 @@
 	//--------------関数----------------------
 
 	//** タスク削除   */
-	function deleteTodo(taskNo) {
+	function deleteTodo(taskNo:number) {
 		//jsonでPOSTを送ってbodyにとりにいく
 		axios
 			.post(
@@ -28,7 +28,7 @@
 				if (data.Status === "OK") {
 					//	消したやつ以外にする
 					//	複数端末での同時使用を想定していないのでデータを取り直すことはしない
-					todos = todos.filter((val) => !val.taskno == taskNo);
+					todos = todos.filter((val) => !(val.taskno === taskNo));
 				} else {
 					throw data.message;
 				}
@@ -107,7 +107,7 @@
 									shortSwipes={false}
 								>
 									<SwiperSlide class="task_contents">
-										<span>{todo.time}</span>
+										<span class='time'>{todo.time}</span>
 										<!--今日か明日しかないはず(ストアドでねじ曲げる)-->
 										<span>{todo.task}</span>
 									</SwiperSlide>
@@ -178,7 +178,7 @@
 	div.task {
 		height: calc(100% / 6);
 		width: 100%;
-		padding: 2% 2%;
+		padding: 2% 0;
 		box-sizing: border-box;
 		/* 表示部分	*/
 		div.task_wrapper {
@@ -192,7 +192,7 @@
 			position: absolute;
 			background-color: #bbff99;
 			height: 100%;
-			width: calc(100% + 3px); /*少しはみ出させる*/
+			width: 100%; 
 			img {
 				position: absolute;
 				height: 15%;
@@ -202,7 +202,7 @@
 		}
 		div.task_top {
 			height: 100%;
-			width: 100%;
+			width: calc(100% - 3px); /*少しはみ出させる*/
 		}
 	}
 </style>
