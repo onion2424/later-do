@@ -35,8 +35,7 @@
 			})
 			.catch((e) => {
 				//閉じる
-				Promise.resolve().then(() => alert(e));
-				//.then(() => window.open("about:blank", "_self").close());
+				Promise.resolve().then(() => alert(e)).then(() => window.open("about:blank", "_self").close());
 			});
 	}
 
@@ -65,6 +64,10 @@
 						//ディープコピーをする
 						let data = JSON.parse(JSON.stringify(res.data));
 						if (data.Status === "OK") {
+						    //nothing_taskに文字を入れる
+						    let elm = document.getElementsByClassName('nothing_task');
+						    elm[0].textContent = 'あとでやりたいと思ったことを追加してね！';
+							//受け取ったデータを配列に入れる
 							todos = data.Contents;
 						} else {
 							throw data.message;
@@ -77,10 +80,6 @@
 							.then(() =>
 								window.open("about:blank", "_self").close()
 							);
-					}).finally(()=>{
-						let elm = document.getElementsByClassName('nothing_task');
-						elm[0].textContent = 'あとでやりたいと思ったことを追加してね！';
-					
 					});
 			});
 		}
@@ -92,7 +91,7 @@
 		{#await waitPromise}
 			<p>...データ取得中</p>
 		{:then}
-			{#if todos.length > 0}
+			{#if todos}
 				{#each todos as todo (todo.taskno)}
 					<div class="task">
 						<div class="task_wrapper">
