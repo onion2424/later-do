@@ -178,7 +178,7 @@
 	div.task {
 		height: calc(100% / 6);
 		width: 100%;
-		padding: 2% 0;
+		margin: 2vw 0;
 		box-sizing: border-box;
 		/* 表示部分	*/
 		div.task_wrapper {
