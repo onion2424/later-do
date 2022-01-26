@@ -11,6 +11,7 @@
 	let isInClient = false;
 	let idToken;
 	let waitPromise;
+	let isLoadEnd = false;
 	//--------------関数----------------------
 
 	//** タスク削除   */
@@ -29,6 +30,7 @@
 					//	消したやつ以外にする
 					//	複数端末での同時使用を想定していないのでデータを取り直すことはしない
 					todos = todos.filter((val) => !(val.taskno === taskNo));
+					isLoadEnd = true;
 				} else {
 					throw data.message;
 				}
@@ -64,9 +66,6 @@
 						//ディープコピーをする
 						let data = JSON.parse(JSON.stringify(res.data));
 						if (data.Status === "OK") {
-						    //nothing_taskに文字を入れる
-						    let elm = document.getElementsByClassName('nothing_task');
-						    elm[0].textContent = 'あとでやりたいと思ったことを追加してね！';
 							//受け取ったデータを配列に入れる
 							todos = data.Contents;
 						} else {
@@ -121,8 +120,8 @@
 						</div>
 					</div>
 				{/each}
-			{:else}
-				<p class="nothing_task"></p>
+			{:else if isLoadEnd}
+				<p>あとでやろうと思ったことを追加してね！</p>
 			{/if}
 		{/await}
 	{:else}
