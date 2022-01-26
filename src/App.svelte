@@ -176,7 +176,7 @@
 		}
 	}
 	div.task {
-		height: calc(100% / 6);
+		height: calc(100% / 5);
 		width: 100%;
 		padding: 2% 0;
 		box-sizing: border-box;
