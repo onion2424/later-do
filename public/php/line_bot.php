@@ -61,7 +61,7 @@ foreach ($events as $event) {
                 if ($stmt->execute()) {
                     error_log('ユーザ登録に失敗 : ' + $id);
                 } else {
-                    $message = 'お友達登録ありがとう!';
+                    $message = 'お友達登録ありがとう！使い方が分からなければ「ヘルプ」と送ってね！';
                 }
             } catch (\PDOException $e) {
                 error_log(\httpResponse::getPDOMessage($e));
@@ -124,7 +124,7 @@ foreach ($events as $event) {
                   
                   //SQL実行
                   if ($stmt->execute()) {
-                      $message = "登録完了!";
+                      $message = "登録完了！";
                   }
               } catch (\PDOException $e) {
                   error_log(\httpResponse::getPDOMessage($e));
