@@ -55,10 +55,12 @@ foreach ($events as $event) {
                 $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
                 $sql = 'CALL userDeposit(?)';
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(1, $id, PDO::PARAM_STR);
+                $cnt = 0;
+                $stmt->bindParam(1, $cnt, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 3);
+                $stmt->bindParam(2, $id, PDO::PARAM_STR);
                 $stmt->execute();
                 //失敗したらログを残す
-                if ($stmt->rowCount() != 1) {
+                if ($cnt != 1) {
                     error_log('ユーザ登録に失敗 : ' + $id);
                 } else {
                     $message = 'お友達登録ありがとう!';
@@ -80,10 +82,12 @@ foreach ($events as $event) {
                 $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
                 $sql = 'CALL userDelete(?)'; //userID
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(1, $id, PDO::PARAM_STR);
+                $cnt = 0;
+                $stmt->bindParam(1, $cnt, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 3);
+                $stmt->bindParam(2, $id, PDO::PARAM_STR);
                 $stmt->execute();
                 //失敗したらログを残す
-                if ($stmt->rowCount() != 1) {
+                if ($cnt != 1) {
                     error_log('ユーザ削除に失敗 : ' + $id);
                 }
             } catch (\PDOException $e) {
@@ -115,12 +119,15 @@ foreach ($events as $event) {
                   $sql = 'CALL setTask(?, ?)'; //userID, メッセージ内容
                   //  パラメータをセットする
                   //  =>変数を入れないといけない
+                  $cnt = 0;
                   $task = $event->getText();
                   $stmt = $conn->prepare($sql);
-                  $stmt->bindParam(1, $id, PDO::PARAM_STR);
-                  $stmt->bindParam(2, $task, PDO::PARAM_STR);
+                  $stmt->bindParam(1, $cnt, PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT, 3);
+                  $stmt->bindParam(2, $id, PDO::PARAM_STR);
+                  $stmt->bindParam(3, $task, PDO::PARAM_STR);
+                  
                   $stmt->execute();
-                  if ($stmt->rowCount() == 1) {
+                  if ($cnt == 1) {
                       $message = "登録完了!";
                   }
               } catch (\PDOException $e) {

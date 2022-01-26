@@ -28,7 +28,7 @@
 				if (data.Status === "OK") {
 					//	消したやつ以外にする
 					//	複数端末での同時使用を想定していないのでデータを取り直すことはしない
-					todos = todos.filter((val)=>!val.taskno == taskNo);
+					todos = todos.filter((val) => !val.taskno == taskNo);
 				} else {
 					throw data.message;
 				}
@@ -73,10 +73,11 @@
 					})
 					.catch((e) => {
 						//閉じる
-						Promise.resolve().then(() => alert(e))
-						.then(() =>
-							window.open("about:blank", "_self").close()
-						);
+						Promise.resolve()
+							.then(() => alert(e))
+							.then(() =>
+								window.open("about:blank", "_self").close()
+							);
 					});
 			});
 		}
@@ -85,68 +86,79 @@
 
 <main>
 	{#if isInClient}
-	{#await waitPromise}
-	<p>...タスク取得中</p>
-	{:then}
-		{#if todos}
-			{#each todos as todo (todo.taskno)}
-			<div class="task">
-				<div class="task_bottom">
-					<img src="./img/btn_check.png" alt="完了" />
-				</div>
-				<div class="task_top">
-					<Swiper on:progress={(e) => console.log(e.detail)}
-						on:slideChange={() => {deleteTodo(todo.taskno)}}
-						allowSlidePrev={false}
-						longSwipesRatio={0.25}
-						>
-						<SwiperSlide class="task_contents">
-							<span>{todo.time}</span> <!--今日か明日しかないはず(ストアドでねじ曲げる)-->
-							<span>{todo.task}</span>
-						</SwiperSlide>
-						<SwiperSlide class="task_delete"><span></span></SwiperSlide>
-					</Swiper>
-				</div>
-			</div>
+		{#await waitPromise}
+			<p>...タスク取得中</p>
+		{:then}
+			{#if todos}
+				{#each todos as todo (todo.taskno)}
+					<div class="task">
+						<div class="task_wrapper">
+						<div class="task_bottom">
+							<img src="./img/btn_check.png" alt="完了" />
+						</div>
+						<div class="task_top">
+							<Swiper
+								on:progress={(e) => console.log(e.detail)}
+								on:slideChange={() => {
+									deleteTodo(todo.taskno);
+								}}
+								allowSlidePrev={false}
+								longSwipesRatio={0.25}
+								shortSwipes={false}
+							>
+								<SwiperSlide class="task_contents">
+									<span>{todo.time}</span>
+									<!--今日か明日しかないはず(ストアドでねじ曲げる)-->
+									<span>{todo.task}</span>
+								</SwiperSlide>
+								<SwiperSlide class="task_delete"
+									><span /></SwiperSlide
+								>
+							</Swiper>
+						</div>
+						</div>
+					</div>
 					<!-- <p>
 						{todo.task}
 					</p>
 					<button on:click={() => deleteTodo(todo.taskNo)} />-->
-			{/each}
-		{:else}
-			<p>タスクを追加してね</p>
-		{/if}
-	{/await}
+				{/each}
+			{:else}
+				<p>タスクを追加してね</p>
+			{/if}
+		{/await}
 	{:else}
-	
 		<p>
 			LINE外からのこのWEBページの利用はできません。
 			<br
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 		<div class="task">
-			<div class="task_bottom">
-				<img src="./img/btn_check.png" alt="完了" />
-			</div>
-			<div class="task_top">
-				<Swiper on:progress={(e) => console.log(e.detail)}
-					allowSlidePrev={false}
-					longSwipesRatio={0.2}
-					shortSwipes={false}
+			<div class="task_wrapper">
+				<div class="task_bottom">
+					<img src="./img/btn_check.png" alt="完了" />
+				</div>
+				<div class="task_top">
+					<Swiper
+						on:progress={(e) => console.log(e.detail)}
+						allowSlidePrev={false}
+						longSwipesRatio={0.2}
+						
 					>
-					<SwiperSlide class="task_contents">
-						<span class="time">今日 9:00</span>
-						<span>タスク</span>
-					</SwiperSlide>
-					<SwiperSlide class="task_delete"><span></span></SwiperSlide>
-				</Swiper>
+						<SwiperSlide class="task_contents">
+							<span class="time">今日 9:00</span>
+							<span>タスク</span>
+						</SwiperSlide>
+						<SwiperSlide class="task_delete"><span /></SwiperSlide>
+					</Swiper>
+				</div>
 			</div>
 		</div>
 	{/if}
 </main>
 
 <style lang="scss">
-	$line_color:#06c755;
+	$line_color: #06c755;
 	main {
 		margin: 0 auto;
 		height: 100%;
@@ -165,24 +177,33 @@
 		}
 	}
 	div.task {
-		position:relative;
-		height:calc(100% / 6);
+		height: calc(100% / 6);
 		width: 100%;
+		padding: 2% 2%; 
+		box-sizing: border-box;
+		/* 表示部分	*/
+		div.task_wrapper{
+			position: relative;
+			height:100%;
+			width:100%;
+		}
+
 		div.task_bottom {
-			z-index:-1;
-			position:absolute;
-			background-color: $line_color;
+			z-index: -1;
+			position: absolute;
+			background-color: #BBFF99;
 			height: 100%;
-			width: 100%;
-			img{
-				position:absolute;
-				height:15%;
-				right:5%;
-				top:calc((100% - 15%) / 2);
+			width: calc(100% + 3px); /*少しはみ出させる*/
+			img {
+				position: absolute;
+				height: 15%;
+				right: 5%;
+				top: calc((100% - 15%) / 2);
 			}
 		}
-		div.task_top{
-			height:100%;
+		div.task_top {
+			height: 100%;
+			width: 100%;
 		}
 	}
 </style>

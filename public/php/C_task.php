@@ -99,12 +99,14 @@ class C_task
                 $sql = 'CALL DELETETASK(?, ?)'; //userID, TaskNo
                 $stmt = $conn->prepare($sql);
 
-                $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
-                $stmt->bindParam(2, $contents['taskNo'], \PDO::PARAM_INT);
+                $cnt = 0;;
+                $stmt->bindParam(1, $cnt, \PDO::PARAM_INT|\PDO::PARAM_INPUT_OUTPUT, 3);
+                $stmt->bindParam(2, $userData['sub'], \PDO::PARAM_STR);
+                $stmt->bindParam(3, $contents['taskNo'], \PDO::PARAM_INT);
                 $stmt->execute();
 
-                //戻り値設定
-                if($stmt -> rowCount() == 1){
+                //戻り値設定(消えてるのに失敗になる)
+                if($cnt == 1){
                     $ret->Status = \httpResponse::STATUS_OK;
                 }else{
                     $ret->message = "削除に失敗しました。";

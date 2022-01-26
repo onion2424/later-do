@@ -9,18 +9,30 @@
     opacity: 0;
 }
 .swiper-slide.task_contents{
-    background-color: aqua;
+    background-color: white;
+    /*角丸*/
+    border-radius: 5px;
 }
 
 /*スライドの中身(span)*/
-.swiper-slide.task_contents span{
+.swiper-slide.task_contents span:not(.time){
     display: inline-block;
-    height:50%;
+    box-sizing: border-box;
+    height:70%;
+    padding-left: 1vw;
+    padding-bottom: 0.5vw;
     width: 100%;
 }
-
 .swiper-slide.task_contents span.time{
+    display: inline-block;
+    box-sizing: border-box;
+    padding-left: 1vw;
+    padding-top: 0.5vw;
+    height:30%;
+    width: 100%;
     color:#06c755;
+    font-size: 14px;
+    
 }
 
 .swiper-slide.task_delete span{
