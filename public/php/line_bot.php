@@ -64,7 +64,7 @@ foreach ($events as $event) {
                     $message = 'お友達登録ありがとう!';
                 }
             } catch (\PDOException $e) {
-                error_log(httpResponse::getPDOMessage($e));
+                error_log(\httpResponse::getPDOMessage($e));
             }
             //メッセージを送る
             $response = $bot->replyText($reply_token, $message);
@@ -87,7 +87,7 @@ foreach ($events as $event) {
                     error_log('ユーザ削除に失敗 : ' + $id);
                 }
             } catch (\PDOException $e) {
-                error_log(httpResponse::getPDOMessage($e));
+                error_log(\httpResponse::getPDOMessage($e));
             }
             break;
 
@@ -127,7 +127,7 @@ foreach ($events as $event) {
                       $message = "登録完了!";
                   }
               } catch (\PDOException $e) {
-                  error_log(httpResponse::getPDOMessage($e));
+                  error_log(\httpResponse::getPDOMessage($e));
                 }
               //メッセージを送る
               $response = $bot->replyText($reply_token, $message);

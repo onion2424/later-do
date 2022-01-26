@@ -56,7 +56,7 @@ class C_task
                     $ret->Status = \httpResponse::STATUS_OK;
                 }
             } catch (\PDOException $e) {
-                error_log($ret->getPDOMessage($e));
+                error_log(\HttpResponse::getPDOMessage($e));
                 $ret->message = "サーバーとの接続に失敗しました。";
             }
         }
@@ -112,7 +112,7 @@ class C_task
                 }
                 
             } catch (\PDOException $e) {
-                error_log($ret->getPDOMessage($e));
+                error_log(\HttpResponse::getPDOMessage($e));
                 $ret->message = "サーバーとの接続に失敗しました。";
             }
         }
