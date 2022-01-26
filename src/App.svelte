@@ -63,7 +63,6 @@
 					.post("/get-tasks", JSON.stringify({ id_token: idToken }))
 					.then((res) => {
 						//ディープコピーをする
-						console.log(res.data);
 						let data = JSON.parse(JSON.stringify(res.data));
 						if (data.Status === "OK") {
 							todos = data.Contents;
@@ -78,6 +77,10 @@
 							.then(() =>
 								window.open("about:blank", "_self").close()
 							);
+					}).finally(()=>{
+						let elm = document.getElementsByClassName('nothing_task');
+						elm[0].textContent = 'あとでやりたいと思ったことを追加してね！';
+					
 					});
 			});
 		}
@@ -118,13 +121,9 @@
 							</div>
 						</div>
 					</div>
-					<!-- <p>
-						{todo.task}
-					</p>
-					<button on:click={() => deleteTodo(todo.taskNo)} />-->
 				{/each}
 			{:else}
-				<p>タスクが1件も登録されていません。メッセージを送信してあとでやろうと思ったことを追加してね！</p>
+				<p class="nothing_task"></p>
 			{/if}
 		{/await}
 	{:else}

@@ -2,8 +2,8 @@ body{
     padding:0;
     background-color: rgba(233, 255, 222, 0.3);
     height: 100%;
-    /*marginに大きさが影響されないように*/
-    display: flex;
+    /*marginに大きさが影響されないようにしたい*/
+    display: flow-root;
     /*横にしたときの文字拡大を防ぐ*/
     -webkit-text-size-adjust: 100%;
 }
