@@ -87,7 +87,7 @@
 <main>
 	{#if isInClient}
 		{#await waitPromise}
-			<p>...タスク取得中</p>
+			<p>...データ取得中</p>
 		{:then}
 			{#if todos.length > 0}
 				{#each todos as todo (todo.taskno)}
@@ -124,7 +124,7 @@
 					<button on:click={() => deleteTodo(todo.taskNo)} />-->
 				{/each}
 			{:else}
-				<p>タスクを追加してね</p>
+				<p>タスクが1件も登録されていません。メッセージを送信してあとでやろうと思ったことを追加してね！</p>
 			{/if}
 		{/await}
 	{:else}
