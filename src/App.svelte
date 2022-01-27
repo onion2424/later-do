@@ -148,12 +148,18 @@
 			right: 0;
 			bottom:0;
 			background-repeat: no-repeat;
+			margin: auto;
 			div{
 				position:relative;
+				height: 100%;
+				width: 100%;
 			}
 			p{
 				position :absolute;
+				left:50%;
 				bottom:0;
+				width:100%;
+				transform: translate(-50%, 0);
 			}
 		}
 	}
