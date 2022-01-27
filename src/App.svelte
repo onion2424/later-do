@@ -97,18 +97,23 @@
 					<div>
 					  <div class="background"></div>
 					</div>
-					<p>あとでやることがはありません。</p>
-					<p>LINEではなしかけてとうろくしてね！</p>
+					<p>あとでやることはありません。<br/>LINEではなしかけてとうろくしてね！</p>
 				</div>
 			{/if}
 		{/await}
 	{:else}
-		<p>
+	<div class="nothing_task">
+		<div>
+		  <div class="background"></div>
+		</div>
+		<p>あとでやることはありません。<br/>LINEではなしかけてとうろくしてね！</p>
+	</div>	
+		<!-- <p>
 			LINE外からのこのWEBページの利用はできません。
 			<br
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
-		<Tasks todos={todos} />
+		<Tasks todos={todos} /> -->
 	{/if}
 </main>
 
@@ -134,11 +139,6 @@
    			height:calc(100% / 2);
 			//width: 100%;
 			aspect-ratio: 1 / 1;
-			position:absolute;
-			top:0;
-			left:0;
-			right:0;
-			bottom:0;
 			margin:auto;
 			background-repeat: no-repeat;
 
