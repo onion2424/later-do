@@ -84,18 +84,15 @@
 				//jsonでPOSTを送ってbodyにとりにいく
 				waitPromise = axios
 					.post("/get-tasks", JSON.stringify({ id_token: idToken }))
-					.then((res) => {
+					.then(async (res) => {
 						//ディープコピーをする
 						let data = JSON.parse(JSON.stringify(res.data));
 						if (data.Status === "OK") {
 							//受け取ったデータを配列に入れる
 							todos = data.Contents;
 							//画像のサイズをセットする関数をsetImageSizeにセット
-							(async () => {
-								await tick();
-								setImageSize = setImageSize_enclosure();
-								return;
-							})();
+							await tick();
+							setImageSize = setImageSize_enclosure();
 						} else {
 							throw data.message;
 						}
