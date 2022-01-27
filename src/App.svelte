@@ -103,9 +103,7 @@
 		{/await}
 	{:else}
 	<div class="nothing_task">
-		<div>
-		  <div class="background"></div>
-		</div>
+		<div class="background"></div>
 		<p>あとでやることはありません。<br/>LINEではなしかけてとうろくしてね！</p>
 	</div>	
 		<!-- <p>
@@ -137,9 +135,8 @@
 			background:url('../img/back_img.png');
    			background-size:contain;
    			height:calc(100% / 2);
-			//width: 100%;
 			aspect-ratio: 1 / 1;
-			margin:auto;
+			margin:20% auto 0 auto;
 			background-repeat: no-repeat;
 
 		}
