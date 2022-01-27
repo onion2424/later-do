@@ -81,11 +81,6 @@
 							);
 					});
 			});
-		}else{
-			todos =[
-				{taskno : 1, task: 'あいうえお', time:'今日 09:00'},
-				{taskno : 2, task: 'かきくけこ', time:'今日 10:00'}
-			];
 		}
 	});
 </script>
@@ -95,11 +90,11 @@
 		{#await waitPromise}
 			<p>...データ取得中</p>
 		{:then}
-			{#if todos}
+			{#if todos.length > 0}
 			  <Tasks todos={todos} on:delete={deleteTodo}/>
 			{:else if isLoadEnd}
 				<div class="nothing_task">
-					<p>あとでやろうと思ったことを追加してね！</p>
+					<p>あとでやろうと思ったことをトークで送信してね！</p>
 				</div>
 			{/if}
 		{/await}

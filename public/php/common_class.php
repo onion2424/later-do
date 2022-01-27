@@ -1,5 +1,5 @@
 <?php
-
+  //共通クラス
   class httpResponse {
     const STATUS_OK = "OK";
     const STATUS_NG = "NG";

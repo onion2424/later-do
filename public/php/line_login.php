@@ -1,4 +1,4 @@
-<?php
+<?php //未使用
 define("LINE_CLIENT_ID", )
 session_start();
   $code = $_GET['code'];
