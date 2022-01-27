@@ -94,7 +94,9 @@
 			  <Tasks todos={todos} on:delete={deleteTodo}/>
 			{:else if isLoadEnd}
 				<div class="nothing_task">
-					<p>あとでやろうと思ったことをトークで送信してね！</p>
+					<div class="background"></div>
+					<p>タスクがありません！</p>
+					<p>LINEではなしかけてとうろくしてね！</p>
 				</div>
 			{/if}
 		{/await}
@@ -117,6 +119,20 @@
 		display:flow-root;
 		p{
 			color: $line_color;
+			text-align:center;
 		}
 	}
+
+	div.nothing_task{
+		height:100%;
+		width:100%;
+		.background{
+			background:url('./img/back_img.png');
+   			background-size:contain;
+    		width:calc(100% / 3);
+   			height:calc(100% / 3);
+			margin:0 auto;
+		}
+	}
+
 </style>
