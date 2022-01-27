@@ -15,13 +15,12 @@
 	let idToken;
 	let waitPromise;
 	let isLoadEnd = false;
-	let setImageSize = ()=>{};
+	let setImageSize = (elm:HTMLImageElement, progress:number)=>{};
 
 	//--------------関数----------------------
 
 	//** 画像のサイズをクロージャで持たせておく*/
-	async function setImageSize_enclosure() {
-		await tick();
+	function setImageSize_enclosure() {
 		let elm = document.querySelector(
 			"div.task_bottom img"
 		) as HTMLImageElement;
@@ -30,7 +29,7 @@
 		return function (elm: HTMLImageElement, progress: number) {
 			if (progress > LONG_SWIPES_RATIO) {
 				elm.width = width * 1.5;
-				elm.height = width * 1.5;
+				elm.height = height * 1.5;
 			}
 		};
 	}
@@ -91,8 +90,12 @@
 						if (data.Status === "OK") {
 							//受け取ったデータを配列に入れる
 							todos = data.Contents;
-							//画像のサイズを取得
-							setImageSize = setImageSize_enclosure();
+							//画像のサイズをセットする関数をsetImageSizeにセット
+							(async () => {
+								await tick();
+								setImageSize = setImageSize_enclosure();
+								return;
+							})();
 						} else {
 							throw data.message;
 						}
@@ -129,7 +132,7 @@
 									}}
 									on:progress={(e) => {
 											let elm =e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild?.firstElementChild;
-											elm ? setImageSize(elm) : false;
+											elm ? setImageSize(elm, e.detail[0][1]) : false;
 									}}
 									allowSlidePrev={false}
 									longSwipesRatio={LONG_SWIPES_RATIO}
@@ -168,7 +171,7 @@
 							let elm =
 								e.detail[0][0].el?.closest(".task_wrapper")
 									?.firstElementChild?.firstElementChild;
-							elm ? setImageSize(elm) : false;
+							elm ? setImageSize(elm, e[0][1]) : false;
 						}}
 						allowSlidePrev={false}
 						longSwipesRatio={0.2}
