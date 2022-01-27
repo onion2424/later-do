@@ -118,5 +118,8 @@
 	main {
 		margin: 0 auto;
 		height: 100%;
+		p{
+			color: $line_color;
+		}
 	}
 </style>

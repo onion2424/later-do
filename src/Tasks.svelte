@@ -101,13 +101,13 @@
                 position: absolute;
                 right: 5%;
                 top: 50%;
-                transform: translate(-50%, 50%);
-                transition: 0.2s;
+                transform: translate(50%, -50%);
+                transition: 0.1s;
             }
         }
         div.task_top {
             height: 100%;
-            width: calc(100% - 5px); /*少しはみ出させる*/
+            width: calc(100% - 1em); /*少しはみ出させる*/
         }
     }
 </style>
