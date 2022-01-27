@@ -135,6 +135,8 @@
     		width:calc(100% / 3);
    			height:calc(100% / 3);
 			margin:0 auto;
+			background-repeat: no-repeat;
+			
 		}
 	}
 
