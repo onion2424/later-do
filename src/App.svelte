@@ -132,11 +132,12 @@
 	    div.background{
 			background:url('../img/back_img.png');
    			background-size:contain;
-    		width:calc(100% / 3);
-   			height:calc(100% / 3);
-			margin:0 auto;
+   			height:calc(100% / 2);
+			position:absolute;;
+			width: 100%;
+			margin:auto;
 			background-repeat: no-repeat;
-			
+
 		}
 	}
 
