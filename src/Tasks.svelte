@@ -99,11 +99,10 @@
             width: 100%;
             img {
                 position: absolute;
-                //height: 1em;
-                //width: 1em;
                 right: 5%;
                 top: 50%;
-                transform: translate(-50%, -50%);
+                transform: translate(-50%, 50%);
+                transition: 0.2s;
             }
         }
         div.task_top {
