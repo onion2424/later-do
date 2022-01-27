@@ -93,30 +93,21 @@
 			{#if todos.length > 0}
 			  <Tasks todos={todos} on:delete={deleteTodo}/>
 			{:else if isLoadEnd}
-				<div class="nothing_task">
+			<div class="nothing_task">
+				<div class="background">
 					<div>
-					  <div class="background"></div>
+						<p>あとでやることはありません。<br/>LINEではなしかけてとうろくしてね！</p>
 					</div>
-					<p>あとでやることはありません。<br/>LINEではなしかけてとうろくしてね！</p>
 				</div>
+			</div>	
 			{/if}
 		{/await}
 	{:else}
-	<div class="nothing_task">
-		<div class="background">
-			<div>
-				<p>あとでやることはありません。<br/>LINEではなしかけてとうろくしてね！</p>
-			</div>
-
-		</div>
-		
-	</div>	
-		<!-- <p>
+		<p>
 			LINE外からのこのWEBページの利用はできません。
 			<br
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
-		<Tasks todos={todos} /> -->
 	{/if}
 </main>
 
