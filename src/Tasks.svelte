@@ -99,15 +99,15 @@
             width: 100%;
             img {
                 position: absolute;
-                right: 5%;
+                left: calc(100% - 30px);
                 top: 50%;
-                transform: translate(50%, -50%);
+                transform: translate(-50%, -50%);
                 transition: 0.1s;
             }
         }
         div.task_top {
             height: 100%;
-            width: calc(95% + 1em); /*少しはみ出させる*/
+            width: calc(100% - 10px); /*少しはみ出させる*/
         }
     }
 </style>
