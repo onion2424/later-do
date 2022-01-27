@@ -118,6 +118,8 @@
 	main {
 		margin: 0 auto;
 		height: 100%;
+		//marginをはみださせない
+		display:flow-root;
 		p{
 			color: $line_color;
 		}
