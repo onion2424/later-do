@@ -101,6 +101,9 @@
 			{/if}
 		{/await}
 	{:else}
+		<div class="nothing_task">
+			<div class="background"></div>
+		</div>
 		<p>
 			LINE外からのこのWEBページの利用はできません。
 			<br
@@ -126,7 +129,7 @@
 	div.nothing_task{
 		height:100%;
 		width:100%;
-		.background{
+	    div.background{
 			background:url('./img/back_img.png');
    			background-size:contain;
     		width:calc(100% / 3);
