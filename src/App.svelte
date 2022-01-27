@@ -1,18 +1,38 @@
 <script lang="ts">
 	import axios from "axios";
+	import { tick } from 'svelte';
 	import { dataset_dev } from "svelte/internal";
 	// Import Swiper Svelte components
 	import { Swiper, SwiperSlide } from "swiper/svelte";
-
 	// Import Swiper styles
 	import "swiper/css";
+	//定数
+	const LONG_SWIPES_RATIO = 0.25;
+
+
 	//------------プロパティ-------------------
 	let todos = [];
 	let isInClient = false;
 	let idToken;
 	let waitPromise;
 	let isLoadEnd = false;
+	let setImageSize;
+
 	//--------------関数----------------------
+
+	//** 画像のサイズをクロージャで持たせておく*/
+	async function setImageSize_enclosure(){
+		await tick();
+		let elm = document.querySelector('div.task_bottom img') as HTMLImageElement;
+	   const width =  elm.width;
+	   const height = elm.height;
+	   return function(elm:HTMLImageElement, progress:number){
+		   if(progress > LONG_SWIPES_RATIO){
+		   	elm.width = width * 1.5;
+			elm.height = width * 1.5;
+		   }
+	   }
+	};
 
 	//** タスク削除   */
 	function deleteTodo(taskNo:number) {
@@ -68,6 +88,8 @@
 						if (data.Status === "OK") {
 							//受け取ったデータを配列に入れる
 							todos = data.Contents;
+							//画像のサイズを取得
+							setImageSize = setImageSize_enclosure();
 						} else {
 							throw data.message;
 						}
@@ -103,7 +125,7 @@
 										deleteTodo(todo.taskno);
 									}}
 									allowSlidePrev={false}
-									longSwipesRatio={0.25}
+									longSwipesRatio={LONG_SWIPES_RATIO}
 									shortSwipes={false}
 								>
 									<SwiperSlide class="task_contents">
@@ -136,7 +158,7 @@
 					<Swiper
 						on:progress={(e) => {
 							let elm = e.detail[0][0].el?.closest('.task_wrapper')?.firstElementChild;
-							console.log(elm?.firstElementChild.innerHTML);
+							elm? setImageSize(elm.firstElementChild) : false;
 							}}
 						allowSlidePrev={false}
 						longSwipesRatio={0.2}
