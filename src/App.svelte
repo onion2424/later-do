@@ -28,7 +28,6 @@
 					//	消したやつ以外にする
 					//	複数端末での同時使用を想定していないのでデータを取り直すことはしない
 					todos = todos.filter((val) => !(val.taskno === taskNo));
-					isLoadEnd = true;
 				} else {
 					throw data.message;
 				}
@@ -68,6 +67,7 @@
 						if (data.Status === "OK") {
 							//受け取ったデータを配列に入れる
 							todos = data.Contents;
+							isLoadEnd = true;
 						} else {
 							throw data.message;
 						}
