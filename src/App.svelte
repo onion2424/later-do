@@ -130,7 +130,7 @@
 		height:100%;
 		width:100%;
 	    div.background{
-			background:url('./img/back_img.png');
+			background:url('/img/back_img.png');
    			background-size:contain;
     		width:calc(100% / 3);
    			height:calc(100% / 3);
