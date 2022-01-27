@@ -135,8 +135,8 @@
 				<div class="task_top">
 					<Swiper
 						on:progress={(e) => {
-							let elm = e[0].el.closest('task_wrapper').firstChild;
-							console.log(elm.firstChild.innerHTML);
+							let elm = e[0]?.el.closest('task_wrapper').firstChild;
+							console.log(elm?.firstChild.innerHTML);
 							}}
 						allowSlidePrev={false}
 						longSwipesRatio={0.2}
