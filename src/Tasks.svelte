@@ -9,7 +9,7 @@
     // Import Swiper styles
     import "swiper/css";
     //定数
-    const LONG_SWIPES_RATIO = 0.25;
+    const LONG_SWIPES_RATIO = 0.15;
 
     //------------プロパティ-------------------
     export let todos = [];

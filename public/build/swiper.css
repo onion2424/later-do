@@ -20,7 +20,7 @@
     box-sizing: border-box;
     height:70%;
     padding-left: 1vw;
-    padding-bottom: 0.5vw;
+    padding-bottom: 1vw;
     width: 100%;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -29,11 +29,11 @@
     display: inline-block;
     box-sizing: border-box;
     padding-left: 1vw;
-    padding-top: 0.5vw;
+    padding-top: 1vw;
     height:30%;
     width: 100%;
     color:#06c755;
-    font-size: 14px;
+    font-size: 12px;
     
 }
 
