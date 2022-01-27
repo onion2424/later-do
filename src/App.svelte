@@ -97,7 +97,7 @@
 					<div>
 					  <div class="background"></div>
 					</div>
-					<p>タスクがありません！</p>
+					<p>あとでやることがはありません。</p>
 					<p>LINEではなしかけてとうろくしてね！</p>
 				</div>
 			{/if}
