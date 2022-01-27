@@ -1,6 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
-	import { tick } from 'svelte';
+	import { tick } from "svelte";
 	import { dataset_dev } from "svelte/internal";
 	// Import Swiper Svelte components
 	import { Swiper, SwiperSlide } from "swiper/svelte";
@@ -9,33 +9,34 @@
 	//定数
 	const LONG_SWIPES_RATIO = 0.25;
 
-
 	//------------プロパティ-------------------
 	let todos = [];
 	let isInClient = false;
 	let idToken;
 	let waitPromise;
 	let isLoadEnd = false;
-	let setImageSize = () => {};
+	let setImageSize;
 
 	//--------------関数----------------------
 
 	//** 画像のサイズをクロージャで持たせておく*/
-	async function setImageSize_enclosure(){
+	async function setImageSize_enclosure() {
 		await tick();
-		let elm = document.querySelector('div.task_bottom img') as HTMLImageElement;
-	   const width =  elm.width;
-	   const height = elm.height;
-	   return function(elm:HTMLImageElement, progress:number){
-		   if(progress > LONG_SWIPES_RATIO){
-		   	elm.width = width * 1.5;
-			elm.height = width * 1.5;
-		   }
-	   }
-	};
+		let elm = document.querySelector(
+			"div.task_bottom img"
+		) as HTMLImageElement;
+		const width = elm.width;
+		const height = elm.height;
+		return function (elm: HTMLImageElement, progress: number) {
+			if (progress > LONG_SWIPES_RATIO) {
+				elm.width = width * 1.5;
+				elm.height = width * 1.5;
+			}
+		};
+	}
 
 	//** タスク削除   */
-	function deleteTodo(taskNo:number) {
+	function deleteTodo(taskNo: number) {
 		//jsonでPOSTを送ってbodyにとりにいく
 		axios
 			.post(
@@ -57,7 +58,9 @@
 			})
 			.catch((e) => {
 				//閉じる
-				Promise.resolve().then(() => alert(e)).then(() => window.open("about:blank", "_self").close());
+				Promise.resolve()
+					.then(() => alert(e))
+					.then(() => window.open("about:blank", "_self").close());
 			});
 	}
 
@@ -124,12 +127,16 @@
 									on:slideChange={() => {
 										deleteTodo(todo.taskno);
 									}}
+									on:progress={(e) => {
+										let elm =e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild?.firstElementChild;
+										elm ? setImageSize(elm) : false;
+									}}
 									allowSlidePrev={false}
 									longSwipesRatio={LONG_SWIPES_RATIO}
 									shortSwipes={false}
 								>
 									<SwiperSlide class="task_contents">
-										<span class='time'>{todo.time}</span>
+										<span class="time">{todo.time}</span>
 										<span>{todo.task}</span>
 									</SwiperSlide>
 									<SwiperSlide class="task_delete"
@@ -147,7 +154,8 @@
 	{:else}
 		<p>
 			LINE外からのこのWEBページの利用はできません。
-			<br/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
+			<br
+			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 		<div class="task">
 			<div class="task_wrapper">
@@ -157,9 +165,9 @@
 				<div class="task_top">
 					<Swiper
 						on:progress={(e) => {
-							let elm = e.detail[0][0].el?.closest('.task_wrapper')?.firstElementChild;
-							elm? setImageSize(elm.firstElementChild) : false;
-							}}
+							let elm =e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild?.firstElementChild;
+							elm ? setImageSize(elm) : false;
+						}}
 						allowSlidePrev={false}
 						longSwipesRatio={0.2}
 					>
@@ -170,7 +178,6 @@
 						<SwiperSlide class="task_delete"><span /></SwiperSlide>
 					</Swiper>
 				</div>
-				
 			</div>
 		</div>
 		<div class="task">
@@ -191,7 +198,6 @@
 						<SwiperSlide class="task_delete"><span /></SwiperSlide>
 					</Swiper>
 				</div>
-				
 			</div>
 		</div>
 	{/if}
@@ -233,7 +239,7 @@
 			position: absolute;
 			background-color: #bbff99;
 			height: 100%;
-			width: 100%; 
+			width: 100%;
 			img {
 				position: absolute;
 				height: 15%;
