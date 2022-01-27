@@ -29,23 +29,23 @@
    <script>
       //DEBUG用のvsConsole
       // VConsole will be exported to `window.VConsole` by default.
-      //var vConsole = new window.VConsole();
-      // window.addEventListener('load', function () {
-      //    initVConsole();
-      // });
-      // // Initialize vConsole
-      // function initVConsole() {
-      //    window.vConsole = new window.VConsole({
-      //       defaultPlugins: ['system', 'network', 'element', 'storage'],
-      //       maxLogNumber: 1000,
-      //       onReady: function () {
-      //          console.log('vConsole is ready.');
-      //       },
-      //       onClearLog: function () {
-      //          console.log('on clearLog');
-      //       }
-      //    });
-      // }
+      var vConsole = new window.VConsole();
+      window.addEventListener('load', function () {
+         initVConsole();
+      });
+      // Initialize vConsole
+      function initVConsole() {
+         window.vConsole = new window.VConsole({
+            defaultPlugins: ['system', 'network', 'element', 'storage'],
+            maxLogNumber: 1000,
+            onReady: function () {
+               console.log('vConsole is ready.');
+            },
+            onClearLog: function () {
+               console.log('on clearLog');
+            }
+         });
+      }
 
    </script>
 </body>
