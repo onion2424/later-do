@@ -49,7 +49,7 @@
             <div class="task">
                 <div class="task_wrapper">
                     <div class="task_bottom">
-                        <img src="./img/btn_check.png" alt="完了" />
+                        <img src="./img/btn_check.png" alt="完了" width="1px" height="1px"/>
                     </div>
                     <div class="task_top">
                         <Swiper
@@ -102,10 +102,11 @@
             width: 100%;
             img {
                 position: absolute;
-                height: 1em;
-                width: 1em;
+                //height: 1em;
+                //width: 1em;
                 right: 5%;
-                top: calc((100% - 15%) / 2);
+                //top: calc((100% - 15%) / 2);
+                transform: translate(-50%, 0);
             }
         }
         div.task_top {
