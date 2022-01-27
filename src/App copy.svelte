@@ -1,10 +1,9 @@
 <script lang="ts">
 	import axios from "axios";
-	import Tasks from "./Tasks.svelte";
 	import { tick } from "svelte";
 	import { dataset_dev } from "svelte/internal";
 	import { onMount } from 'svelte';
-
+	
 	// Import Swiper Svelte components
 	import { Swiper, SwiperSlide } from "swiper/svelte";
 	// Import Swiper styles
@@ -18,12 +17,24 @@
 	let idToken;
 	let waitPromise;
 	let isLoadEnd = false;
+	let setImageSize = (elm: HTMLImageElement, progress: number) => {};
+
 	//--------------関数----------------------
 
+	//** 画像のサイズをクロージャで持たせておく*/
+	function setImageSize_enclosure() {
+		let elm = document.querySelector("img") as HTMLImageElement;
+		const width = elm.width;
+		const height = elm.height;
+		return function (elm: HTMLImageElement, progress: number) {
+			let n = progress > LONG_SWIPES_RATIO ? 2 : 1;
+			elm.style.width = n + "em";
+			elm.style.height = n + "em";
+		};
+	}
 
 	//** タスク削除   */
-	function deleteTodo(e) {
-		let taskNo = e.detail.taskNo;
+	function deleteTodo(taskNo: number) {
 		//jsonでPOSTを送ってbodyにとりにいく
 		axios
 			.post(
@@ -101,7 +112,49 @@
 			<p>...データ取得中</p>
 		{:then}
 			{#if todos}
-			  <Tasks todos={todos} on:delete={deleteTodo}/>
+				<div class="exist_task">
+					{#each todos as todo (todo.taskno)}
+						<div class="task">
+							<div class="task_wrapper">
+								<div class="task_bottom">
+									<img src="./img/btn_check.png" alt="完了" />
+								</div>
+								<div class="task_top">
+									<Swiper
+										on:slideChange={() => {
+											deleteTodo(todo.taskno);
+										}}
+										on:progress={(e) => {
+											let elm =
+												e.detail[0][0].el?.closest(
+													".task_wrapper"
+												)?.firstElementChild
+													?.firstElementChild;
+											elm
+												? setImageSize(
+														elm,
+														e.detail[0][1]
+												  )
+												: false;
+										}}
+										allowSlidePrev={false}
+										longSwipesRatio={LONG_SWIPES_RATIO}
+										shortSwipes={false}
+									>
+										<SwiperSlide class="task_contents">
+											<span class="time">{todo.time}</span
+											>
+											<span>{todo.task}</span>
+										</SwiperSlide>
+										<SwiperSlide class="task_delete"
+											><span /></SwiperSlide
+										>
+									</Swiper>
+								</div>
+							</div>
+						</div>
+					{/each}
+				</div>
 			{:else if isLoadEnd}
 				<div class="nothing_task">
 					<p>あとでやろうと思ったことを追加してね！</p>
@@ -121,6 +174,12 @@
 				</div>
 				<div class="task_top">
 					<Swiper
+						on:progress={(e) => {
+							let elm =
+								e.detail[0][0].el?.closest(".task_wrapper")
+									?.firstElementChild?.firstElementChild;
+							elm ? setImageSize(elm, e[0][1]) : false;
+						}}
 						allowSlidePrev={false}
 						longSwipesRatio={0.2}
 					>
