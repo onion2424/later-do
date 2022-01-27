@@ -94,16 +94,15 @@
 			  <Tasks todos={todos} on:delete={deleteTodo}/>
 			{:else if isLoadEnd}
 				<div class="nothing_task">
-					<div class="background"></div>
+					<div>
+					  <div class="background"></div>
+					</div>
 					<p>タスクがありません！</p>
 					<p>LINEではなしかけてとうろくしてね！</p>
 				</div>
 			{/if}
 		{/await}
 	{:else}
-		<div class="nothing_task">
-			<div class="background"></div>
-		</div>
 		<p>
 			LINE外からのこのWEBページの利用はできません。
 			<br
