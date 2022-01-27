@@ -19,7 +19,8 @@
     //--------------関数----------------------
 
     //**マウント時*/
-    onMount(()=>{
+    onMount(async ()=>{
+        await tick();
         setImageSize = setImageSize_enclosure();
     });
     //** 画像のサイズをクロージャで持たせておく*/

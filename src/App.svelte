@@ -142,35 +142,4 @@
 			max-width: none;
 		}
 	}
-	div.task {
-		height: auto;
-		width: 100%;
-		margin: 2vw 0;
-		box-sizing: border-box;
-		/* 表示部分	*/
-		div.task_wrapper {
-			position: relative;
-			height: 100%;
-			width: 100%;
-		}
-
-		div.task_bottom {
-			z-index: -1;
-			position: absolute;
-			background-color: #bbff99;
-			height: 100%;
-			width: 100%;
-			img {
-				position: absolute;
-				height: 1em;
-				width: 1em;
-				right: 5%;
-				top: calc((100% - 15%) / 2);
-			}
-		}
-		div.task_top {
-			height: 100%;
-			width: calc(100% - 5px); /*少しはみ出させる*/
-		}
-	}
 </style>
