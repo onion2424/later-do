@@ -24,9 +24,11 @@
     });
     //** 画像のサイズをクロージャで持たせておく*/
     function setImageSize_enclosure() {
-        let elm = document.querySelector("img") as HTMLImageElement;
-        const width = elm.width;
-        const height = elm.height;
+        //let elm = document.querySelector("img") as HTMLImageElement;
+        //const width = elm.width;
+        //const height = elm.height;
+        let width = 8;
+        let height = 8;
         return function (elm: HTMLImageElement, progress: number) {
             let n = progress > LONG_SWIPES_RATIO ? 2 : 1;
             elm.width = n * width;
