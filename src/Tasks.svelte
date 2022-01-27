@@ -107,7 +107,7 @@
         }
         div.task_top {
             height: 100%;
-            width: calc(100% - 1em); /*少しはみ出させる*/
+            width: calc(95% + 1em); /*少しはみ出させる*/
         }
     }
 </style>
