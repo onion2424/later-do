@@ -25,15 +25,12 @@
     });
     //** 画像のサイズをクロージャで持たせておく*/
     function setImageSize_enclosure() {
-        //let elm = document.querySelector("img") as HTMLImageElement;
-        //const width = elm.width;
-        //const height = elm.height;
-        let width = 8;
-        let height = 8;
+        //基準のフォントサイズを取得
+        const size = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue('font-size')) || 16;
         return function (elm: HTMLImageElement, progress: number) {
-            let n = progress > LONG_SWIPES_RATIO ? 2 : 1;
-            elm.width = n * width;
-            elm.height = n * height;
+            let n = progress > LONG_SWIPES_RATIO ? 1.5 : 0.8;
+            elm.width = n * size;
+            elm.height = n * size;
         };
     }
 
@@ -105,8 +102,8 @@
                 //height: 1em;
                 //width: 1em;
                 right: 5%;
-                //top: calc((100% - 15%) / 2);
-                transform: translate(-50%, 0);
+                top: 50%;
+                transform: translate(-50%, -50%);
             }
         }
         div.task_top {

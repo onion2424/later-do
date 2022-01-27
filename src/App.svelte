@@ -1,16 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
 	import Tasks from "./Tasks.svelte";
-	import { tick } from "svelte";
-	import { dataset_dev } from "svelte/internal";
-	import { onMount } from 'svelte';
-
-	// Import Swiper Svelte components
-	import { Swiper, SwiperSlide } from "swiper/svelte";
-	// Import Swiper styles
-	import "swiper/css";
-	//定数
-	const LONG_SWIPES_RATIO = 0.25;
 
 	//------------プロパティ-------------------
 	let todos = [];
@@ -18,8 +8,8 @@
 	let idToken;
 	let waitPromise;
 	let isLoadEnd = false;
-	//--------------関数----------------------
 
+	//--------------関数----------------------
 
 	//** タスク削除   */
 	function deleteTodo(e) {
@@ -53,7 +43,7 @@
 
 	//-----------起動時実行-----------------------
 
-	//ロード時にユーザ情報をサーバに送る
+	//ロード時にユーザ情報を取得
 	window.addEventListener("load", () => {
 		const myLiffId = "1656807318-km8WVpYe";
 		const liff = (window as any).liff;
@@ -128,18 +118,5 @@
 	main {
 		margin: 0 auto;
 		height: 100%;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
 	}
 </style>
