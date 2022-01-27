@@ -21,9 +21,7 @@
 
 	//** 画像のサイズをクロージャで持たせておく*/
 	function setImageSize_enclosure() {
-		let elm = document.querySelector(
-			"div.task_bottom img"
-		) as HTMLImageElement;
+		let elm = document.querySelector("img") as HTMLImageElement;
 		const width = elm.width;
 		const height = elm.height;
 		return function (elm: HTMLImageElement, progress: number) {
