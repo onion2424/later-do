@@ -103,8 +103,13 @@
 		{/await}
 	{:else}
 	<div class="nothing_task">
-		<div class="background"></div>
-		<p>あとでやることはありません。<br/>LINEではなしかけてとうろくしてね！</p>
+		<div class="background">
+			<div>
+				<p>あとでやることはありません。<br/>LINEではなしかけてとうろくしてね！</p>
+			</div>
+
+		</div>
+		
 	</div>	
 		<!-- <p>
 			LINE外からのこのWEBページの利用はできません。
@@ -136,9 +141,20 @@
    			background-size:contain;
    			height:calc(100% / 2);
 			aspect-ratio: 1 / 1;
-			margin:20% auto 0 auto;
+			//中央に配置
+			position:absolute;
+			top:0;
+			left:0;
+			right: 0;
+			bottom:0;
 			background-repeat: no-repeat;
-
+			div{
+				position:relative;
+			}
+			p{
+				position :absolute;
+				bottom:0;
+			}
 		}
 	}
 
