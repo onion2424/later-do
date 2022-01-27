@@ -15,7 +15,7 @@
 	let idToken;
 	let waitPromise;
 	let isLoadEnd = false;
-	let setImageSize;
+	let setImageSize = ()=>{};
 
 	//--------------関数----------------------
 
@@ -128,8 +128,8 @@
 										deleteTodo(todo.taskno);
 									}}
 									on:progress={(e) => {
-										let elm =e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild?.firstElementChild;
-										elm ? setImageSize(elm) : false;
+											let elm =e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild?.firstElementChild;
+											elm ? setImageSize(elm) : false;
 									}}
 									allowSlidePrev={false}
 									longSwipesRatio={LONG_SWIPES_RATIO}
@@ -165,7 +165,9 @@
 				<div class="task_top">
 					<Swiper
 						on:progress={(e) => {
-							let elm =e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild?.firstElementChild;
+							let elm =
+								e.detail[0][0].el?.closest(".task_wrapper")
+									?.firstElementChild?.firstElementChild;
 							elm ? setImageSize(elm) : false;
 						}}
 						allowSlidePrev={false}
