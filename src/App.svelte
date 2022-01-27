@@ -91,6 +91,11 @@
 							);
 					});
 			});
+		}else{
+			todos =[
+				{taskno : 1, task: 'あいうえお', time:'今日 09:00'},
+				{taskno : 2, task: 'かきくけこ', time:'今日 10:00'}
+			];
 		}
 	});
 </script>
@@ -114,45 +119,6 @@
 			<br
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
-		<div class="task">
-			<div class="task_wrapper">
-				<div class="task_bottom">
-					<img src="./img/btn_check.png" alt="完了" />
-				</div>
-				<div class="task_top">
-					<Swiper
-						allowSlidePrev={false}
-						longSwipesRatio={0.2}
-					>
-						<SwiperSlide class="task_contents">
-							<span class="time">今日 9:00</span>
-							<span>タスク1</span>
-						</SwiperSlide>
-						<SwiperSlide class="task_delete"><span /></SwiperSlide>
-					</Swiper>
-				</div>
-			</div>
-		</div>
-		<div class="task">
-			<div class="task_wrapper">
-				<div class="task_bottom">
-					<img src="./img/btn_check.png" alt="完了" />
-				</div>
-				<div class="task_top">
-					<Swiper
-						on:progress={(e) => console.log(e.detail)}
-						allowSlidePrev={false}
-						longSwipesRatio={0.2}
-					>
-						<SwiperSlide class="task_contents">
-							<span class="time">今日 9:00</span>
-							<span>タスク2</span>
-						</SwiperSlide>
-						<SwiperSlide class="task_delete"><span /></SwiperSlide>
-					</Swiper>
-				</div>
-			</div>
-		</div>
 	{/if}
 </main>
 
