@@ -16,7 +16,7 @@
 	let idToken;
 	let waitPromise;
 	let isLoadEnd = false;
-	let setImageSize;
+	let setImageSize = () => {};
 
 	//--------------関数----------------------
 
