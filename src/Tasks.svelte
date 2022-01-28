@@ -13,6 +13,7 @@
 
     //------------プロパティ-------------------
     export let todos = [];
+    let shows;
 
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
     const dispatch = createEventDispatcher();
@@ -34,6 +35,15 @@
         };
     }
 
+    function onSlideChange(idx:number, taskNo:number){
+        if(idx == 0){
+            //
+        }else if(idx == 2){
+            //タスク削除
+            deleteTodo(taskNo);
+        }
+        return;
+    }
     //** タスク削除   */
     function deleteTodo(taskNo: number) {
         //親にイベントを渡す
@@ -52,8 +62,7 @@
                     <div class="task_top">
                         <Swiper
                             on:slideChange={(e) => {
-                                console.log(e.detail);
-                                //deleteTodo(todo.taskno);
+                                onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
                             }}
                             on:progress={(e) => {
                                 let elm;
@@ -78,10 +87,13 @@
                             <SwiperSlide class="task_delete"
                             ><span /></SwiperSlide
                             >
+
                             <SwiperSlide class="task_contents">
                                 <span class="time">{todo.time}</span>
                                 <span>{todo.task}</span>
                             </SwiperSlide>
+
+                            
                             <SwiperSlide class="task_delete"
                                 ><span /></SwiperSlide
                             >

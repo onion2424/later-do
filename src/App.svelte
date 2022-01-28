@@ -115,7 +115,7 @@
 	    {/if}
 	{/if}
 </main>
-
+あいうえお
 <style lang="scss">
 	$line_color: #06c755;
 	main {
