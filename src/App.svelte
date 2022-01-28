@@ -36,18 +36,18 @@
 			)
 			.then((res) => {
 				//ディープコピーをする
-				console.log(res.data);
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					//何もしない
+					//リアクティブ用
+					todos = todos;
 				} else {
 					throw data.message;
 				}
 			})
 			.catch((e) => {
 				//閉じる
-				Promise.resolve().then(() => alert(e));
-				//	.then(() => window.open("about:blank", "_self").close());
+				Promise.resolve().then(() => alert(e))
+					.then(() => window.open("about:blank", "_self").close());
 			});
 	}
 
@@ -84,7 +84,6 @@
 							":" +
 							("0" + setTime.getMinutes()).slice(1, 2) +
 							"0";
-						console.log(task.time);
 					}
 					//todosを入れ替えて再描画させる
 					todos = temp;
@@ -94,8 +93,8 @@
 			})
 			.catch((e) => {
 				//閉じる
-				Promise.resolve().then(() => alert(e));
-				//	.then(() => window.open("about:blank", "_self").close());
+				Promise.resolve().then(() => alert(e)).
+				then(() => window.open("about:blank", "_self").close());
 			});
 	}
 
@@ -110,7 +109,6 @@
 			)
 			.then((res) => {
 				//ディープコピーをする
-				console.log(res.data);
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
 					//	消したやつ以外にする
@@ -122,8 +120,8 @@
 			})
 			.catch((e) => {
 				//閉じる
-				Promise.resolve().then(() => alert(e));
-				//	.then(() => window.open("about:blank", "_self").close());
+				Promise.resolve().then(() => alert(e))
+					.then(() => window.open("about:blank", "_self").close());
 			});
 	}
 
@@ -174,10 +172,10 @@
 					})
 					.catch((e) => {
 						//閉じる
-						Promise.resolve().then(() => alert(e));
-						//.then(() =>
-						//	window.open("about:blank", "_self").close()
-						//);
+						Promise.resolve().then(() => alert(e))
+						.then(() =>
+							window.open("about:blank", "_self").close()
+						);
 					});
 			});
 		} else {

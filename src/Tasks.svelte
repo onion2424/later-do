@@ -21,7 +21,7 @@
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
     const dispatch = createEventDispatcher();
     //時間が変更されたかをチェックする
-    let task_cp;
+    let task_cp:string;
 
     //--------------関数----------------------
 
@@ -95,7 +95,7 @@
     function onChange(todo){
         if(todo.time){
             todo.time = todo.time.slice(0, -1) + '0';
-            todos = todos;
+            todos = todos; //リアクティブにするため
         }
         
         return;
@@ -258,19 +258,9 @@
              background-color: rgba(255, 255, 255, 0);
              padding: 0;
              margin:0;
-             //border:none;
+             border:none;
         }
     }
-
-// ::-webkit-datetime-edit {
-//     display: none;
-// }
-
-// ::-webkit-calendar-picker-indicator {
-//     cursor: pointer;
-//     margin:0;
-//     padding: 0;
-// }
 
 .clearText {
 	text-indent:150%;
