@@ -115,9 +115,12 @@
     function onBlur(todo){
         todo.time = todo.time ? todo.time : "";
         //値が変更されていたらDB更新する
+        console.log('onblur');
         if(todo_cp !== JSON.stringify(todo)){
+            console.log('onblur2');
             onTimeUpdate(todo);
         }
+        
         todo_cp = null;
         return;
     }
