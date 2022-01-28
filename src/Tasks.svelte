@@ -15,7 +15,7 @@
     //------------プロパティ-------------------
     export let todos = [];
     export let mode;
-    $: shows = mode == MODE_LATER ? todos.filter((val) => val.isLater) : todos.filter((val) => !val.isLater);
+    $: shows = mode == MODE_LATER ? todos.filter((val) => val.isnexttime) : todos.filter((val) => !val.isnexttime);
     //let shows;
 
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
