@@ -40,17 +40,18 @@
             elm.height = n * size;
         };
     }
-
+    //**時間が変更されていれば*/
     function onTimeUpdate(todo){
         if(Number.isNaN(new Date(todo.time).getDate())){
 			//不正な時間なら時間をリセットしてリターン
 			todo.time = "";
 			return;
 		}
-        setdateTodo(todo.taskNo, todo.time);
+        setdateTodo(todo.taskno, todo.time);
         return;
     }
 
+    //**スライドが変更されたとき*/
     function onSlideChange(idx:number, taskNo:number){
         if(idx == 0){
             //タスクトグル
@@ -61,6 +62,7 @@
         }
         return;
     }
+
     //** 送信時間設定*/
     function setdateTodo(taskNo:Number, time:string){
         //親にイベントを渡す
