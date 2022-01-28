@@ -296,7 +296,7 @@
 						margin: auto;
 						span{
 							display: inline-block;
-							height:80%;
+							height:100%;
 							width: 100%;
 							&.nexttime{
 								background: url("../img/translate_nexttime.png");
