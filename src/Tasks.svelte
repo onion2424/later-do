@@ -51,7 +51,7 @@
                     </div>
                     <div class="task_top">
                         <Swiper
-                            on:slideChange={() => {
+                            on:activeIndexChange={() => {
                                 deleteTodo(todo.taskno);
                             }}
                             on:progress={(e) => {
