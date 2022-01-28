@@ -56,12 +56,12 @@
                             }}
                             on:progress={(e) => {
                                 let elm;
-                                let progress = e.detail[0][1];
-                                if(progress < 0.5){
+                                let progress = 0.5 - e.detail[0][1];
+                                if(progress < 0){
                                     elm =
                                     e.detail[0][0].el?.closest(".task_wrapper")
                                         ?.firstElementChild?.firstElementChild;
-                                    progress += 0.5;
+                                   progress *= -1; //正にする
                                 }else{
                                     elm =
                                     e.detail[0][0].el?.closest(".task_wrapper")
