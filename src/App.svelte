@@ -17,9 +17,9 @@
 	function setDateTodo(e) {
 		let taskNo = e.detail.taskNo;
 		let time = e.detail.time;
-
-		if (Number.isNaN(new Date(time).getDate())) {
-			//不正な時間なら時間をリセットしてリターン
+		//念のため2回見ておく（サーバチェックもある）
+		if (!time && Number.isNaN(new Date(time).getDate())) {
+			//(空白でなく)不正な時間なら時間をリセットしてリターン
 			let task = todos.find((val) => val.taskNo == taskNo);
 			task.time = "";
 			todos = JSON.parse(JSON.stringify(todos));
@@ -38,6 +38,7 @@
 				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
+					todos = JSON.parse(JSON.stringify(todos));
 				} else {
 					throw data.message;
 				}
