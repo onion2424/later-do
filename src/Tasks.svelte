@@ -161,7 +161,7 @@
         position:relative;
         width:auto;
         height:100%;
-        input[type="datatime-local"]{
+        input[type="datetime-local"]{
              width:100%;
              appearance: none;
              position: absolute;
@@ -170,15 +170,15 @@
         }
     }
 
-::-webkit-datetime-edit {
-    display: none;
-}
+// ::-webkit-datetime-edit {
+//     display: none;
+// }
 
-::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    margin:0;
-    padding: 0;
-}
+// ::-webkit-calendar-picker-indicator {
+//     cursor: pointer;
+//     margin:0;
+//     padding: 0;
+// }
 
 .clearText {
 	text-indent:150%;
