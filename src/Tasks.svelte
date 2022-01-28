@@ -153,7 +153,7 @@
     }
     
 .input[type="datatime-local"]{
-    width:auto;
+    width:3em;
     appearance: none;
 }
 ::-webkit-datetime-edit {
@@ -165,8 +165,9 @@
     margin:0;
     padding: 0;
 }
+
 .clearText {
-	text-indent:100%;
+	text-indent:150%;
 	white-space:nowrap;
 	overflow:hidden;
 }
