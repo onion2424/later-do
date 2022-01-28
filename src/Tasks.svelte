@@ -92,13 +92,10 @@
     }
 
     //　カレンダーで値変更時10分単位で切り捨てる
-    function onChange(e, todo){
+    function onChange(todo){
         if(todo.time){
             todo.time = todo.time.slice(0, -1) + '0';
-            console.log(todo.time);
-            //  イベントを起こす
-            let ev = new Event('change');
-            e.target.dispatchEvent(ev);
+            todo.time = todo.time;
         }
         
         return;
@@ -188,7 +185,7 @@
                                   <span class="time">
                                       <span class="edit_time" >
                                           {showTime(todo.time)}
-                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:input={(e)=> onChange(e, todo)} on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
+                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:change={()=> onChange(todo)} on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
                                       </span>
                                   </span>
                                 {/if}
