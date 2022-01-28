@@ -219,14 +219,14 @@
 			<button
 				on:click={() => {
 					mode = MODE_LATER;
-				}}><div class="later"><span>あとで</span></div></button
+				}}><div class="img_wrapper"><div class="later"></div></div><span>あとで</span></button
 			>
 		</li>
 		<li>
 			<button
 				on:click={() => {
 					mode = MODE_NEXT;
-				}}><div class="nexttime"><span>こんど</span></div></button
+				}}><div class="img_wrapper"><div class="nexttime"></div></div><span>こんど</span></button
 			>
 		</li>
 	</ul>
@@ -263,6 +263,7 @@
 				list-style: none;
 				width: calc(100% / 2);
 				button {
+					position:relative;
 					height: 100%;
 					width: 100%;
 					display: inline-block;
@@ -271,6 +272,16 @@
 					background-color: rgba(255, 255, 255, 0);
 					margin: 0;
 					padding: 0;
+					span{
+						display: inline-block;
+						height:50%;
+						width:100%;
+						text-align: center;
+					}
+					div.img_wrapper{
+						height:50%;
+						width:100%;
+					}
 					div.later {
 						height: 100%;
 						aspect-ratio: 1 / 1;
