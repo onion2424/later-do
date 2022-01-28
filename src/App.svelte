@@ -13,6 +13,41 @@
 	let mode = MODE_LATER;
 
 	//--------------関数----------------------
+	//** 送信日付設定*/
+	function setDateTodo(e){
+		let taskNo = e.detail.taskNo;
+		let time = e.detail.time;
+
+		if(Number.isNaN(new Date(time).getDate())){
+			//不正な時間なら時間をリセットしてリターン
+			let task = todos.find((val) => val.taskNo == taskNo);
+			task.time = "";
+			todos = JSON.parse(JSON.stringify(todos));
+			return;
+		}
+		axios
+			.post(
+				"/setDate-task",
+				JSON.stringify({ id_token: idToken, taskNo: taskNo, time: time})
+			)
+			.then((res) => {
+				//ディープコピーをする
+				console.log(res.data);
+				let data = JSON.parse(JSON.stringify(res.data));
+				if (data.Status === "OK") {
+					//何もしない
+				} else {
+					throw data.message;
+				}
+			})
+			.catch((e) => {
+				//閉じる
+				Promise.resolve()
+					.then(() => alert(e));
+				//	.then(() => window.open("about:blank", "_self").close());
+			});
+	} 
+
 	//** タスクトグル*/
 	function toggleTodo(e){
 		let taskNo = e.detail.taskNo;
@@ -135,7 +170,7 @@
 			<p>...データ取得中</p>
 		{:then}
 			{#if todos.length > 0}
-			  <Tasks todos={todos} bind:mode={mode} on:delete={deleteTodo} on:toggle={toggleTodo}/>
+			  <Tasks todos={todos} bind:mode={mode} on:delete={deleteTodo} on:toggle={toggleTodo} on:setdate={setDateTodo}/>
 			{:else if isLoadEnd}
 			<div class="nothing_task">
 				<div class="background">

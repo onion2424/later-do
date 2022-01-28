@@ -38,6 +38,16 @@
         };
     }
 
+    function onTimeUpdate(todo){
+        if(Number.isNaN(new Date(todo.time).getDate())){
+			//不正な時間なら時間をリセットしてリターン
+			todo.time = "";
+			return;
+		}
+        setdateTodo(todo.taskNo, todo.time);
+        return;
+    }
+
     function onSlideChange(idx:number, taskNo:number){
         if(idx == 0){
             //タスクトグル
@@ -48,18 +58,32 @@
         }
         return;
     }
+    //** 送信時間設定*/
+    function setdateTodo(taskNo:Number, time:string){
+        //親にイベントを渡す
+        dispatch('setdate',{
+            taskNo: taskNo,
+            time: time
+        });
+        return;
+    }
+
     //** タスク削除   */
     function deleteTodo(taskNo: number) {
         //親にイベントを渡す
         dispatch('delete', {
             taskNo: taskNo
         });
+        return;
     }
+
     //** タスクトグル*/
     function toggleTodo(taskNo: number){
+        //親にイベントを渡す
         dispatch('toggle', {
             taskNo: taskNo,
         });
+        return;
     }
 
     //** 時間を捻じ曲げて表示*/
@@ -127,7 +151,7 @@
                                   <span class="time">
                                       <span class="edit_time" >
                                           {showTime(todo.time)}
-                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:timeupdate={()=>console.log(todo.time)}>
+                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:timeupdate={()=>onTimeUpdate(todo)}>
                                       </span>
                                   </span>
                                 {/if}
