@@ -63,7 +63,7 @@
 				if (data.Status === "OK") {
 					//	トグルさせる
 					let temp = JSON.parse(JSON.stringify(todos));
-					let task = temp.find((val) => val.taskNo == taskNo);
+					let task = temp.find((val) => val.taskno == taskNo);
 					task.isnexttime = !task.isnexttime; //フラグを反転
 					//時間をセット
 					if(mode === MODE_LATER){
