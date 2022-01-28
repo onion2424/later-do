@@ -13,6 +13,39 @@
 	let mode = MODE_LATER;
 
 	//--------------関数----------------------
+	//** タスクトグル*/
+	function toggleTodo(e){
+		let taskNo = e.detail.taskNo;
+		let time = e.detail.time || null;
+		axios
+			.post(
+				"/toggle-task",
+				JSON.stringify({ id_token: idToken, taskNo: taskNo, time: time})
+			)
+			.then((res) => {
+				//ディープコピーをする
+				console.log(res.data);
+				let data = JSON.parse(JSON.stringify(res.data));
+				if (data.Status === "OK") {
+					//	トグルさせる
+					let temp = JSON.parse(JSON.stringify(todos));
+					let task = temp.find((val) => val.taskNo == taskNo);
+					task.isNextTime = !task.isNextTime; //フラグを反転
+					task.time = time; //時間をセット 
+					//todosを入れ替えて再描画させる
+					todos = temp;
+				} else {
+					throw data.message;
+				}
+			})
+			.catch((e) => {
+				//閉じる
+				Promise.resolve()
+					.then(() => alert(e));
+				//	.then(() => window.open("about:blank", "_self").close());
+			});
+	} 
+
 	//** タスク削除   */
 	function deleteTodo(e) {
 		let taskNo = e.detail.taskNo;
@@ -95,7 +128,7 @@
 			<p>...データ取得中</p>
 		{:then}
 			{#if todos.length > 0}
-			  <Tasks todos={todos} bind:mode={mode} on:delete={deleteTodo}/>
+			  <Tasks todos={todos} bind:mode={mode} on:delete={deleteTodo} on:toggle={toggleTodo}/>
 			{:else if isLoadEnd}
 			<div class="nothing_task">
 				<div class="background">

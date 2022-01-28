@@ -38,10 +38,10 @@
         };
     }
 
-    function onSlideChange(idx:number, taskNo:number){
+    function onSlideChange(idx:number, taskNo:number, time:string){
         if(idx == 0){
-            //試し
-          (document.querySelector('input[type="datetime-local"]')as HTMLInputElement).click();
+            //タスクトグル
+            toggleTodo(taskNo, time);
         }else if(idx == 2){
             //タスク削除
             deleteTodo(taskNo);
@@ -55,11 +55,34 @@
             taskNo: taskNo
         });
     }
+    //** タスクトグル*/
+    function toggleTodo(taskNo: number, time: string){
+        dispatch('toggle', {
+            taskNo: taskNo,
+            time:time
+        });
+    }
 
     //** 時間を捻じ曲げて表示*/
     function showTime(str:string){
         const today = new Date();
-        return str + str;
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        let date = new Date(str);
+        let ret = "今度";
+        if(Number.isNaN(date.getDate())){
+            if(date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear())
+            {
+                ret = "今日";
+            }else if(date.getDate() == tomorrow.getDate() && date.getMonth() == tomorrow.getMonth() && date.getFullYear() == tomorrow.getFullYear()){
+                ret = "明日";
+            }else{
+                ret = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+            }
+            ret += " " + date.getHours + ":" + date.getMinutes();
+        }
+        
+        return ret;
     }
 
 </script>
@@ -73,8 +96,7 @@
                     <div class="task_top">
                         <Swiper
                             on:slideChange={(e) => {
-                                todo.time = 'a';
-                                onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
+                                onSlideChange(e.detail[0][0].activeIndex, todo.taskno, todo.time);
                             }}
                             on:progress={(e) => {
                                 let elm;
@@ -89,7 +111,6 @@
                                     e.detail[0][0].el?.closest(".task_wrapper")
                                         ?.firstElementChild?.firstElementChild;
                                 }
-                                console.log(progress);
                                 elm ? setImageSize(elm, progress) : false;
                             }}
                             initialSlide= {1}
