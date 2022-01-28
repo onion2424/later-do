@@ -103,7 +103,7 @@
                                       </span>
                                   </span>
                                 {/if}
-                                <span>{todo.task}</span>
+                                <span class="text">{todo.task}</span>
 
                             </SwiperSlide>
 
@@ -161,13 +161,14 @@
         position:relative;
         width:auto;
         height:100%;
-        //display:inline;
+        display:inline-block;
         input[type="datetime-local"]{
              width:100%;
              appearance: none;
              position: absolute;
              top: 0;
              left: 0;
+             background-color: rgba(255, 255, 255, 0);
         }
     }
 

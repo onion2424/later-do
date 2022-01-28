@@ -18,7 +18,7 @@
 }
 
 /*スライドの中身(span)*/
-.swiper-slide.task_contents span:not(.time){
+.swiper-slide.task_contents span.text{
     display: inline-block;
     box-sizing: border-box;
     height:70%;
