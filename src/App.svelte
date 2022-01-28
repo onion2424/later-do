@@ -38,7 +38,7 @@
 				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					todos = JSON.parse(JSON.stringify(todos));
+					//何もしない
 				} else {
 					throw data.message;
 				}

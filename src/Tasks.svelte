@@ -94,11 +94,8 @@
 
     //　カレンダーで値変更時10分単位で切り捨てる
     function onChange(todo){
-        if(todo.time){
-            todo.time = todo.time.slice(0, -1) + '0';
-            todos = todos; //リアクティブにするため
-        }
-        
+        todo.time = todo.time ? todo.time.slice(0, -1) + '0' : "";
+        todos = todos; //リアクティブにするため
         return;
     }
 
@@ -110,10 +107,12 @@
     }
 
     //カレンダーフォーカスはずれ時
-    function onBlur(todo){
-        todo.time = todo.time ? todo.time : "";
-        //値が変更されていたらDB更新する
+    async function onBlur(todo){
+        //整形する
+        onChange(todo);
+        //値が変更されていたらDBを更新する
         if(todo_cp !== JSON.stringify(todo)){
+            await tick();
             onTimeUpdate(todo);
         }
 
