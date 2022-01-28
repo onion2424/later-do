@@ -1,7 +1,7 @@
 <script lang="ts">
     import axios from "axios";
     import { tick } from "svelte";
-    import { createEventDispatcher, dataset_dev, loop_guard } from "svelte/internal";
+    import { compute_slots, createEventDispatcher, dataset_dev, loop_guard } from "svelte/internal";
     import { onMount } from "svelte";
 
     // Import Swiper Svelte components
@@ -94,6 +94,7 @@
     //　カレンダーで値変更時10分単位で切り捨てる
     function onChange(todo){
         todo.time = todo.time ? todo.time.slice(0, -1) + '0' : "";
+        console.log(todo.time);
         return;
     }
 
