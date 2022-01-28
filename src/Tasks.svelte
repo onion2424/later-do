@@ -151,4 +151,13 @@
             width: 100%; /*少しはみ出させる*/
         }
     }
+::-webkit-datetime-edit {
+    display: none;
+}
+
+::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    margin:0;
+    padding: 0;
+}
 </style>
