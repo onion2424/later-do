@@ -96,7 +96,7 @@
                                 {#if mode === MODE_LATER}
                                   <span class="time">{todo.time}</span>
                                 {:else}
-                                  <span><input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:timeupdate={()=>console.log(todo.time)}></span>
+                                  <span><input type="datetime-local" step="600" bind:value={todo.time} class="clearText" style="width:3em;" on:timeupdate={()=>console.log(todo.time)}></span>
                                 {/if}
                                 <span>{todo.task}</span>
 
