@@ -58,7 +58,6 @@
 			)
 			.then((res) => {
 				//ディープコピーをする
-				console.log(res.data);
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
 					//	トグルさせる
