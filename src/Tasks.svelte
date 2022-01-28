@@ -64,7 +64,6 @@
                                 elm ? setImageSize(elm, e.detail[0][1]) : false;
                             }}
                             initialSlide= {1}
-                            allowSlidePrev={false}
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={false}
                         >

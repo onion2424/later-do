@@ -3,7 +3,7 @@
 	import Tasks from "./Tasks.svelte";
 
 	//------------プロパティ-------------------
-	let todos = [];
+	let todos = [{time: "今日", task: 'あいうえお'}, {time: "明日", task: 'かきくけこ'}];
 	let isInClient = false;
 	let idToken;
 	let waitPromise;
@@ -108,6 +108,9 @@
 			<br
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
+		{#if todos.length > 0}
+		  <Tasks todos={todos} on:delete={deleteTodo}/>
+	    {/if}
 	{/if}
 </main>
 
