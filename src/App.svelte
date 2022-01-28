@@ -127,6 +127,17 @@
 			});
 	}
 
+	//メニューがクリックされたとき
+	function onClickMenu(elm:HTMLInputElement){
+		if(mode==MODE_LATER){
+			(elm.parentElement.querySelector('.later')as HTMLElement).style.backgroundColor="#06c755";
+			(elm.parentElement.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#f0f0f0";
+		}else{
+			(elm.parentElement.querySelector('.later')as HTMLElement).style.backgroundColor="#f0f0f0";
+			(elm.parentElement.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#06c755";
+		}
+	}
+
 	//-----------起動時実行-----------------------
 
 	//ロード時にユーザ情報を取得
@@ -217,16 +228,18 @@
 	<ul>
 		<li>
 			<button
-				on:click={() => {
+				on:click={(e) => {
 					mode = MODE_LATER;
+					onClickMenu(e);
 				}}><div class="img_wrapper"><div style="background-color:#06c755;"><span class="later"></span></div></div><span>あとで</span></button
 			>
 		</li>
 		<li>
 			<button
-				on:click={() => {
+				on:click={(e) => {
 					mode = MODE_NEXT;
-				}}><div class="img_wrapper"><div style="background-color:#f2f2f2;"><span class="nexttime"></span></div></div><span>こんど</span></button
+					onClickMenu(e);
+				}}><div class="img_wrapper"><div style="background-color:#f0f0f0;"><span class="nexttime"></span></div></div><span>こんど</span></button
 			>
 		</li>
 	</ul>
@@ -295,7 +308,7 @@
 						bottom: 0;
 						margin: auto;
 						span{
-							display: inline-block;
+							display: block;
 							height:100%;
 							width: 100%;
 							&.nexttime{
