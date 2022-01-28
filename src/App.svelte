@@ -149,6 +149,10 @@
 				button{
 					width:50%;
 					height:100%;
+					display: inline-block;
+					border:none;
+					cursor: pointer;
+					background-color: rgba(255, 255, 255, 0);
 				}
 			}
 		}
