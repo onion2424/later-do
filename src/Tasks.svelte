@@ -95,7 +95,7 @@
     function onChange(todo){
         if(todo.time){
             todo.time = todo.time.slice(0, -1) + '0';
-            todo.time = todo.time;
+            todos = todos;
         }
         
         return;
