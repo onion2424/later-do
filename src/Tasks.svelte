@@ -15,8 +15,8 @@
     //------------プロパティ-------------------
     export let todos = [];
     export let mode;
+    //あとで　と　今度　でタスクを切り替える
     $: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
-    //let shows;
 
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
     const dispatch = createEventDispatcher();
@@ -55,6 +55,13 @@
             taskNo: taskNo
         });
     }
+
+    //** 時間を捻じ曲げて表示*/
+    function showTime(str:string){
+        const today = new Date();
+        return str + str;
+    }
+
 </script>
         {#each shows as todo (todo.taskno)}
             <div class="task">
@@ -66,6 +73,7 @@
                     <div class="task_top">
                         <Swiper
                             on:slideChange={(e) => {
+                                todo.time = 'a';
                                 onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
                             }}
                             on:progress={(e) => {
@@ -98,7 +106,7 @@
                                 {:else}
                                   <span class="time">
                                       <span class="edit_time" >
-                                          {"今度"}
+                                          {showTime(todo.time)}
                                           <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:timeupdate={()=>console.log(todo.time)}>
                                       </span>
                                   </span>
@@ -171,7 +179,7 @@
              background-color: rgba(255, 255, 255, 0);
              padding: 0;
              margin:0;
-             
+             border:none;
         }
     }
 
