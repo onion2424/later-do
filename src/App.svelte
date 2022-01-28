@@ -146,9 +146,10 @@
 			display: flex;
 			li{
 				list-style: none;
+				width:calc(100% / 2);
 				button{
-					width:50%;
 					height:100%;
+					width:100%;
 					display: inline-block;
 					border:none;
 					cursor: pointer;
