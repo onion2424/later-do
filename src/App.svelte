@@ -117,8 +117,8 @@
 </main>
 <menu>
 	<ul>
-		<li><button>ボタン1</button>
-		<li><button>ボタン2</button>
+		<li><button><span>あとで</span></button>
+		<li><button><span>こんど</span></button>
 	</ul>
 </menu>
 <style lang="scss">
@@ -141,11 +141,13 @@
 		position:absolute;
 		bottom: 0;
 		width: 100%;
-		border-top: 1px black;
+		box-sizing: border-box;
 		ul{
 			display: flex;
 			margin: 0;
 			padding: 0;
+			height: 100%;
+			border-top: 1px solid #dbdbdb6e;
 			li{
 				list-style: none;
 				width:calc(100% / 2);
