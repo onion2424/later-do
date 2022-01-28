@@ -3,7 +3,7 @@
 	import Tasks from "./Tasks.svelte";
 
 	//------------プロパティ-------------------
-	let todos = [{time: "今日", task: 'あいうえお'}, {time: "明日", task: 'かきくけこ'}];
+	let todos = [];
 	let isInClient = false;
 	let idToken;
 	let waitPromise;
@@ -81,6 +81,8 @@
 							);
 					});
 			});
+		}else{
+			todos = [{time: "今日", task: 'あいうえお'}, {time: "明日", task: 'かきくけこ'}];
 		}
 	});
 </script>
