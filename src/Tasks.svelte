@@ -1,7 +1,7 @@
 <script lang="ts">
     import axios from "axios";
     import { tick } from "svelte";
-    import { createEventDispatcher, dataset_dev } from "svelte/internal";
+    import { createEventDispatcher, dataset_dev, loop_guard } from "svelte/internal";
     import { onMount } from "svelte";
 
     // Import Swiper Svelte components
@@ -46,8 +46,8 @@
             <div class="task">
                 <div class="task_wrapper">
                     <div class="task_bottom">
-                        <img src="./img/btn_check.png" alt="完了" class="left" width="1px" height="1px"/>
-                        <img src="./img/btn_next.png" alt="次" class="right" width="1px" height="1px"/>
+                        <img src="./img/btn_check.png" alt="完了" class="right" width="1px" height="1px"/>
+                        <img src="./img/btn_next.png" alt="次" class="left" width="1px" height="1px"/>
                     </div>
                     <div class="task_top">
                         <Swiper
@@ -55,6 +55,7 @@
                                 deleteTodo(todo.taskno);
                             }}
                             on:progress={(e) => {
+                                console.log(e.detail[0][1]);
                                 let elm =
                                     e.detail[0][0].el?.closest(".task_wrapper")
                                         ?.firstElementChild?.firstElementChild;
