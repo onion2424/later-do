@@ -194,8 +194,8 @@
 </main>
 <menu>
 	<ul>
-		<li><button on:click={()=>{mode = MODE_LATER}}><span>あとで</span></button>
-		<li><button on:click={() => {mode=MODE_NEXT}}><span>こんど</span></button>
+		<li><button on:click={()=>{mode = MODE_LATER}}><div class="later"><span>あとで</span></div></button>
+		<li><button on:click={() => {mode=MODE_NEXT}}><div class="nexttime"><span>こんど</span></div></button>
 	</ul>
 </menu>
 <style lang="scss">
@@ -237,6 +237,22 @@
 					background-color: rgba(255, 255, 255, 0);
 					margin: 0;
 					padding: 0;
+					div.later{
+						height:100%;
+						width:100%;
+						background:url('../img/translate_later.png');
+   						background-size:contain;
+			  			background-repeat: no-repeat;
+						background-color: red;
+					}
+					div.nexttime{
+						height:100%;
+						width:100%;
+						background:url('../img/translate_nexttime.png');
+   						background-size:contain;
+			 		    background-repeat: no-repeat;
+						background-color: blue;
+					}
 				}
 			}
 		}

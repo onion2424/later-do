@@ -137,7 +137,7 @@
             <div class="task">
                 <div class="task_wrapper">
                     <div class="task_bottom">
-                        <img src="./img/btn_next.png" alt="次" class="left" width="1px" height="1px"/>
+                        <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
                         <img src="./img/btn_check.png" alt="完了" class="right" width="1px" height="1px"/>
                     </div>
                     <div class="task_top">
