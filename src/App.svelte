@@ -282,10 +282,9 @@
 						height:50%;
 						width:100%;
 					}
-					div.later {
+					div.later div.nexttime{
 						height: 100%;
 						aspect-ratio: 1 / 1;
-						background: url("../img/translate_later.png");
 						background-size: contain;
 						//中央に配置
 						position: absolute;
@@ -298,19 +297,11 @@
 						background-color: red;
 					}
 					div.nexttime {
-						height: 100%;
-						aspect-ratio: 1 / 1;
+						
 						background: url("../img/translate_nexttime.png");
-						background-size: contain;
-						//中央に配置
-						position: absolute;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						background-repeat: no-repeat;
-						margin: auto;
-						background-color: blue;
+					}
+					div.later{
+						background: url("../img/translate_later.png");
 					}
 				}
 			}
