@@ -42,13 +42,12 @@
     }
     //**時間が変更されていれば*/
     function onTimeUpdate(todo){
-        if(!todo.time && Number.isNaN(new Date(todo.time).getDate())){
+        if(todo.time && Number.isNaN(new Date(todo.time).getDate())){
 			//(空白でない)不正な時間なら時間をリセットしてリターン
 			todo.time = "";
             todos = todos;
 			return;
 		}
-        console.log('ontime');
         setdateTodo(todo.taskno, todo.time);
         return;
     }
@@ -67,7 +66,6 @@
 
     //** 送信時間設定*/
     function setdateTodo(taskNo:Number, time:string){
-        console.log('setdate');
         //親にイベントを渡す
         dispatch('setdate',{
             taskNo: taskNo,
@@ -115,12 +113,10 @@
     function onBlur(todo){
         todo.time = todo.time ? todo.time : "";
         //値が変更されていたらDB更新する
-        console.log('onblur');
         if(todo_cp !== JSON.stringify(todo)){
-            console.log('onblur2');
             onTimeUpdate(todo);
         }
-        
+
         todo_cp = null;
         return;
     }
