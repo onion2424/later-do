@@ -70,7 +70,7 @@
         tomorrow.setDate(today.getDate() + 1);
         let date = new Date(str);
         let ret = "今度";
-        if(Number.isNaN(date.getDate())){
+        if(!Number.isNaN(date.getDate())){
             if(date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear())
             {
                 ret = "今日";
