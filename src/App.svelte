@@ -38,8 +38,6 @@
 				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					//リアクティブ用
-					todos = todos;
 				} else {
 					throw data.message;
 				}

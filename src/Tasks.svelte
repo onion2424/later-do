@@ -114,7 +114,11 @@
         //値が変更されていたらDB更新する
         if(todo_cp !== JSON.stringify(todo)){
             onTimeUpdate(todo);
+            //リアクティブ用
+			todos = todos;
         }
+        console.log('cp : ' + todo_cp);
+        console.log(JSON.stringify(todo));
         todo_cp = null;
         return;
     }
