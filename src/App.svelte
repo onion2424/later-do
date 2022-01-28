@@ -111,7 +111,7 @@
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 		{#if todos.length > 0}
-		  <Tasks todos={todos} on:delete={deleteTodo}/>
+		  <Tasks todos={todos}/>
 	    {/if}
 	{/if}
 </main>
