@@ -28,7 +28,7 @@
         //基準のフォントサイズを取得
         const size = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue('font-size')) || 16;
         return function (elm: HTMLImageElement, progress: number) {
-            let n = progress > LONG_SWIPES_RATIO ? 1.5 : 0.8;
+            let n = progress > LONG_SWIPES_RATIO / 2 ? 1.5 : 0.8;
             elm.width = n * size;
             elm.height = n * size;
         };
@@ -60,12 +60,12 @@
                                 if(progress < 0){
                                     elm =
                                     e.detail[0][0].el?.closest(".task_wrapper")
-                                        ?.firstElementChild?.firstElementChild;
+                                        ?.firstElementChild?.lastElementChild;
                                    progress *= -1; //正にする
                                 }else{
                                     elm =
                                     e.detail[0][0].el?.closest(".task_wrapper")
-                                        ?.firstElementChild?.lastElementChild;
+                                        ?.firstElementChild?.firstElementChild;
                                 }
                                 console.log(progress);
                                 elm ? setImageSize(elm, progress) : false;
