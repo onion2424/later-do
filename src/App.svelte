@@ -84,7 +84,7 @@
 					});
 			});
 		}else{
-			todos = [{time: "今日", task: 'あいうえお', isLater: false}, {time: "明日", task: 'かきくけこ', isLater: true}];
+			todos = [{time: "今日", task: 'あいうえお', isnexttime: false}, {time: "明日", task: 'かきくけこ', isnexttime: true}];
 		}
 	});
 </script>
