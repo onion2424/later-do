@@ -116,7 +116,10 @@
 	{/if}
 </main>
 <menu>
-	<p>メニューです</p>
+	<ul>
+		<li><button>ボタン1</button>
+		<li><button>ボタン2</button>
+	</ul>
 </menu>
 <style lang="scss">
 	$line_color: #06c755;
@@ -134,9 +137,21 @@
 		height: 50px;
 		background-color: white;
 		margin:0;
+		padding: 0;
 		position:absolute;
 		bottom: 0;
+		width: 100%;
 		border-top: 1px black;
+		ul{
+			display: flex;
+			li{
+				list-style: none;
+				button{
+					width:50%;
+					height:100%;
+				}
+			}
+		}
 	}
 
 	div.nothing_task{
