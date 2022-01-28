@@ -142,12 +142,12 @@
 		bottom: 0;
 		width: 100%;
 		box-sizing: border-box;
+		border-top: 1px solid #dbdbdb6e;
 		ul{
 			display: flex;
 			margin: 0;
 			padding: 0;
 			height: 100%;
-			border-top: 1px solid #dbdbdb6e;
 			li{
 				list-style: none;
 				width:calc(100% / 2);
