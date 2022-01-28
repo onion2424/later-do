@@ -20,6 +20,9 @@
 
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
     const dispatch = createEventDispatcher();
+    //時間が変更されたかをチェックする
+    let task_cp;
+
     //--------------関数----------------------
 
     //**マウント時*/
@@ -86,6 +89,25 @@
         return;
     }
 
+    //カレンダーフォーカス時
+    function onFocus(todo){
+        todo.time = todo.time ? todo.time : "";
+        todo = JSON.stringify(todo);
+        return;
+    }
+
+    //カレンダーフォーカスはずれ時
+    function onBlur(todo){
+        todo.time = todo.time ? todo.time : "";
+        //値が変更されていたらDB更新する
+        if(task_cp !== JSON.stringify(todo)){
+            onTimeUpdate(todo);
+        }
+        task_cp = null;
+        return;
+    }
+
+
     //** 時間を捻じ曲げて表示*/
     function showTime(str:string){
         const today = new Date();
@@ -151,7 +173,7 @@
                                   <span class="time">
                                       <span class="edit_time" >
                                           {showTime(todo.time)}
-                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:focus={()=>console.log('focus')} on:blur={()=>console.log('blur')}>
+                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
                                       </span>
                                   </span>
                                 {/if}
