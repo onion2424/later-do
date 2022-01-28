@@ -273,23 +273,23 @@
 					padding: 0;
 					span{
 						display: inline-block;
-						height:40%;
+						height:30%;
 						width:100%;
 						text-align: center;
 						font-size: 10px;
 					}
 					div.img_wrapper{
 						position:relative;
-						height:60%;
+						height:70%;
 						width:100%;
 
 						div{
-						height: 100%;
+						height: 80%;
 						aspect-ratio: 1 / 1;
 						
 						//中央に配置
 						position: absolute;
-						top: 0;
+						//top: 0;
 						left: 0;
 						right: 0;
 						bottom: 0;
