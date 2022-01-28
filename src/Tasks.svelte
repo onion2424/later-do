@@ -151,7 +151,7 @@
                                   <span class="time">
                                       <span class="edit_time" >
                                           {showTime(todo.time)}
-                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:timeupdate={()=>{console.log(todo.time),onTimeUpdate(todo)}}>
+                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:change={()=>{console.log(todo.time),onTimeUpdate(todo)}}>
                                       </span>
                                   </span>
                                 {/if}
