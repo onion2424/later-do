@@ -93,7 +93,7 @@
                                 <span>{todo.task}</span>
                             </SwiperSlide>
 
-                            
+
                             <SwiperSlide class="task_delete"
                                 ><span /></SwiperSlide
                             >
@@ -139,7 +139,7 @@
         }
         div.task_top {
             height: 100%;
-            width: calc(100% - 10px); /*少しはみ出させる*/
+            width: 100%; /*少しはみ出させる*/
         }
     }
 </style>

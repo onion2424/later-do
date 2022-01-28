@@ -10,8 +10,11 @@
 }
 .swiper-slide.task_contents{
     background-color: white;
+    
+}
+.swiper-slide.task_contents.move{
     /*角丸*/
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px 5px 5px 5px;
 }
 
 /*スライドの中身(span)*/
