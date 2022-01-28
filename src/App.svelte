@@ -263,7 +263,6 @@
 				list-style: none;
 				width: calc(100% / 2);
 				button {
-					position:relative;
 					height: 100%;
 					width: 100%;
 					display: inline-block;
@@ -279,34 +278,33 @@
 						text-align: center;
 					}
 					div.img_wrapper{
+						position:relative;
 						height:50%;
 						width:100%;
 					}
 					div.later, div.nexttime{
 						height: 100%;
 						aspect-ratio: 1 / 1;
-						background-size: contain;
+						
 						//中央に配置
 						position: absolute;
 						top: 0;
 						left: 0;
 						right: 0;
 						bottom: 0;
-						background-repeat: no-repeat;
 						margin: auto;
-						div{
-							background-color: red;
-						}
 						span{
 							display: inline-block;
 							height:100%;
 							width: 100%;
+							background-size: contain;
+							background-repeat: no-repeat;
 						}
 					}
 					div.nexttime span{
 						background: url("../img/translate_nexttime.png");
 					}
-					div.later span{
+					div.later{
 						background: url("../img/translate_later.png");
 					}
 				}
