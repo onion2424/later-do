@@ -1,16 +1,18 @@
 <script lang="ts">
 	import axios from "axios";
 	import Tasks from "./Tasks.svelte";
-
+    //--------------定数-------------
+	const MODE_LATER = 1;
+    const MODE_NEXT = 2;
 	//------------プロパティ-------------------
 	let todos = [];
 	let isInClient = false;
 	let idToken;
 	let waitPromise;
 	let isLoadEnd = false;
+	let mode = MODE_LATER;
 
 	//--------------関数----------------------
-
 	//** タスク削除   */
 	function deleteTodo(e) {
 		let taskNo = e.detail.taskNo;
@@ -82,7 +84,7 @@
 					});
 			});
 		}else{
-			todos = [{time: "今日", task: 'あいうえお'}, {time: "明日", task: 'かきくけこ'}];
+			todos = [{time: "今日", task: 'あいうえお', isLater: false}, {time: "明日", task: 'かきくけこ', isLater: true}];
 		}
 	});
 </script>
@@ -93,7 +95,7 @@
 			<p>...データ取得中</p>
 		{:then}
 			{#if todos.length > 0}
-			  <Tasks todos={todos} on:delete={deleteTodo}/>
+			  <Tasks todos={todos} bind:mode={mode} on:delete={deleteTodo}/>
 			{:else if isLoadEnd}
 			<div class="nothing_task">
 				<div class="background">
@@ -111,14 +113,14 @@
 			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 		{#if todos.length > 0}
-		  <Tasks todos={todos}/>
+		  <Tasks todos={todos} bind:mode={mode}/>
 	    {/if}
 	{/if}
 </main>
 <menu>
 	<ul>
-		<li><button><span>あとで</span></button>
-		<li><button><span>こんど</span></button>
+		<li><button on:click={()=>{mode = MODE_LATER}}><span>あとで</span></button>
+		<li><button on:click={() => {mode=MODE_NEXT}}><span>こんど</span></button>
 	</ul>
 </menu>
 <style lang="scss">

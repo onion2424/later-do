@@ -10,10 +10,13 @@
     import "swiper/css";
     //定数
     const LONG_SWIPES_RATIO = 0.15;
-
+    const MODE_LATER = 1;
+    const MODE_NEXT = 2;
     //------------プロパティ-------------------
     export let todos = [];
-    let shows;
+    export let mode;
+    $: shows = mode == MODE_LATER ? todos.filter((val) => val.isLater) : todos.filter((val) => !val.isLater);
+    //let shows;
 
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
     const dispatch = createEventDispatcher();
@@ -52,7 +55,7 @@
         });
     }
 </script>
-        {#each todos as todo (todo.taskno)}
+        {#each shows as todo (todo.taskno)}
             <div class="task">
                 <div class="task_wrapper">
                     <div class="task_bottom">
