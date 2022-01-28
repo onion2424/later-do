@@ -146,7 +146,7 @@
 
                             <SwiperSlide class="task_contents">
                                 {#if mode === MODE_LATER}
-                                  <span class="time">{todo.time}</span>
+                                  <span class="time">{showTime(todo.time)}</span>
                                 {:else}
                                   <span class="time">
                                       <span class="edit_time" >
