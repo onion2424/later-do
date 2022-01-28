@@ -99,10 +99,10 @@
                 ret = "今日";
             }else if(date.getDate() == tomorrow.getDate() && date.getMonth() == tomorrow.getMonth() && date.getFullYear() == tomorrow.getFullYear()){
                 ret = "明日";
-            }else{
-                ret = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
+            }else{ // 0埋めする
+                ret = date.getFullYear() + "/" + ('0' + date.getMonth()).slice(-2) + "/" + ('0' + date.getDate()).slice(-2);
             }
-            ret += " " + date.getHours() + ":" + date.getMinutes();
+            ret += " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
         }
         
         return ret;
