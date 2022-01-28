@@ -157,10 +157,11 @@
         }
     }
     
-    .edit_time{
+    span.edit_time{
         position:relative;
         width:auto;
         height:100%;
+        //display:inline;
         input[type="datetime-local"]{
              width:100%;
              appearance: none;
