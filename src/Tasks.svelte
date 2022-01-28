@@ -50,9 +50,6 @@
                         <img src="./img/btn_next.png" alt="次" class="right" width="1px" height="1px"/>
                     </div>
                     <div class="task_top">
-                        <SwiperSlide class="task_delete"
-                                ><span /></SwiperSlide
-                            >
                         <Swiper
                             on:slideChange={() => {
                                 deleteTodo(todo.taskno);
@@ -67,6 +64,9 @@
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={false}
                         >
+                            <SwiperSlide class="task_delete"
+                            ><span /></SwiperSlide
+                            >
                             <SwiperSlide class="task_contents">
                                 <span class="time">{todo.time}</span>
                                 <span>{todo.task}</span>
@@ -106,10 +106,10 @@
                 top: 50%;
                 transform: translate(-50%, -50%);
                 transition: 0.1s;
-                .right{
+                &.right{
                     left: calc(100% - 30px);
                 }
-                .left{
+                &.left{
                     left: 30px;
                 }
             }
