@@ -67,12 +67,13 @@
 					task.isnexttime = !task.isnexttime; //フラグを反転
 					//時間をセット
 					if(mode === MODE_LATER){
-						task.time = null;
+						task.time = "";
 					}else{
 						// 2022-01-01T12:00 のような形(16文字)に整形する
 						let setTime = new Date();
-						task.time = setTime.getFullYear() + "-" + setTime.getMonth() + " -" + setTime.getDate() + "T" + setTime.getMinutes();
+						task.time = setTime.getFullYear() + "-" + setTime.getMonth() + " -" + setTime.getDate() + "T" + setTime.getHours + ":" + setTime.getMinutes();
 						task.time = task.time.slice(0, -1) + "0"; //10分区切りにする
+						console.log(task.time);
 					}
 					//todosを入れ替えて再描画させる
 					todos = temp;
