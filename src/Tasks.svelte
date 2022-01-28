@@ -40,7 +40,8 @@
 
     function onSlideChange(idx:number, taskNo:number){
         if(idx == 0){
-            //
+            //試し
+          document.querySelector('input[type="datetime-local"]')[0].click();
         }else if(idx == 2){
             //タスク削除
             deleteTodo(taskNo);
@@ -95,7 +96,7 @@
                                 {#if mode === MODE_LATER}
                                   <span class="time">{todo.time}</span>
                                 {:else}
-                                  <span><input type="datetime-local" bind:value={todo.time} on:timeupdate={()=>console.log(todo.time)}></span>
+                                  <span><input type="datetime-local" step="600" bind:value={todo.time} on:timeupdate={()=>console.log(todo.time)}></span>
                                 {/if}
                                 <span>{todo.task}</span>
 
