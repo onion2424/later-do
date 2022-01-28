@@ -95,7 +95,7 @@
                                 {#if mode === MODE_LATER}
                                   <span class="time">{todo.time}</span>
                                 {:else}
-                                  <span><input type="datetime-local" bind:value={todo.time}></span>
+                                  <span><input type="datetime-local" bind:value={todo.time} on:timeupdate={()=>console.log(todo.time)}></span>
                                 {/if}
                                 <span>{todo.task}</span>
 
