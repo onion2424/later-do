@@ -144,6 +144,8 @@
 		border-top: 1px black;
 		ul{
 			display: flex;
+			margin: 0;
+			padding: 0;
 			li{
 				list-style: none;
 				width:calc(100% / 2);
@@ -154,6 +156,8 @@
 					border:none;
 					cursor: pointer;
 					background-color: rgba(255, 255, 255, 0);
+					margin: 0;
+					padding: 0;
 				}
 			}
 		}
