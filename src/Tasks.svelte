@@ -48,6 +48,7 @@
             todos = todos;
 			return;
 		}
+        console.log('ontime');
         setdateTodo(todo.taskno, todo.time);
         return;
     }
@@ -66,6 +67,7 @@
 
     //** 送信時間設定*/
     function setdateTodo(taskNo:Number, time:string){
+        console.log('setdate');
         //親にイベントを渡す
         dispatch('setdate',{
             taskNo: taskNo,

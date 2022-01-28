@@ -17,6 +17,7 @@
 	function setDateTodo(e) {
 		let taskNo = e.detail.taskNo;
 		let time = e.detail.time;
+		console.log('last');
 		//念のため2回見ておく（サーバチェックもある）
 		if (!time && Number.isNaN(new Date(time).getDate())) {
 			//(空白でなく)不正な時間なら時間をリセットしてリターン
@@ -25,13 +26,14 @@
 			todos = JSON.parse(JSON.stringify(todos));
 			return;
 		}
+		console.log('perfect');
 		axios
 			.post(
 				"/setdate-task",
 				JSON.stringify({
 					id_token: idToken,
 					taskNo: taskNo,
-					time: time,
+					time: time || "",
 				})
 			)
 			.then((res) => {
