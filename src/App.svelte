@@ -27,7 +27,7 @@
 		}
 		axios
 			.post(
-				"/setDate-task",
+				"/setdate-task",
 				JSON.stringify({ id_token: idToken, taskNo: taskNo, time: time})
 			)
 			.then((res) => {

@@ -16,6 +16,7 @@ $router->map('GET|POST', '/', function () {
 $router->map('POST', '/get-tasks', 'app\public\php\C_task::getTasks', 'get-tasks');
 $router->map('POST', '/delete-task', 'app\public\php\C_task::deleteTask', 'delete-tasks');
 $router->map('POST', '/toggle-task', 'app\public\php\C_task::toggleTask', 'toggle-tasks');
+$router->map('POST', '/setdate-task', 'app\public\php\C_task::setDateTask', 'setdate-task');
 
 //  Line_bot
 $router->map('POST', '/line-bot', function(){
