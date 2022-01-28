@@ -39,7 +39,7 @@ try {
             $response = $bot->pushMessage($to, $builder);
         }
         //  送れたかどうかに関わらず更新
-        $sql = 'CALL SetNextTime()';
+        $sql = 'CALL SetSendTime()';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
     }
