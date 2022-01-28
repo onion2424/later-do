@@ -223,7 +223,7 @@
              background-color: rgba(255, 255, 255, 0);
              padding: 0;
              margin:0;
-             border:none;
+             //border:none;
         }
     }
 
