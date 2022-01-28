@@ -115,18 +115,25 @@
 	    {/if}
 	{/if}
 </main>
+<menu>
+	メニューです
+</menu>
 あいうえお
 <style lang="scss">
 	$line_color: #06c755;
 	main {
 		margin: 0 auto;
-		height: 100%;
+		height: calc(100% - 50px);
 		//marginをはみださせない
 		display:flow-root;
 		p{
 			color: $line_color;
 			text-align:center;
 		}
+	}
+	menu{
+		height: 50px;
+		background-color: blue;
 	}
 
 	div.nothing_task{
