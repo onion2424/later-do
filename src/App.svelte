@@ -132,7 +132,11 @@
 	}
 	menu{
 		height: 50px;
-		background-color: blue;
+		background-color: white;
+		margin:0;
+		position:absolute;
+		bottom: 0;
+		border-top: 1px black;
 	}
 
 	div.nothing_task{
