@@ -41,7 +41,7 @@
     function onSlideChange(idx:number, taskNo:number){
         if(idx == 0){
             //試し
-          document.querySelector('input[type="datetime-local"]')[0].click();
+          (document.querySelector('input[type="datetime-local"]')as HTMLInputElement).click();
         }else if(idx == 2){
             //タスク削除
             deleteTodo(taskNo);
