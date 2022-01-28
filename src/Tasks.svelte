@@ -51,8 +51,9 @@
                     </div>
                     <div class="task_top">
                         <Swiper
-                            on:activeIndexChange={() => {
-                                deleteTodo(todo.taskno);
+                            on:slideChange={(e) => {
+                                console.log(e.detail);
+                                //deleteTodo(todo.taskno);
                             }}
                             on:progress={(e) => {
                                 let elm;
