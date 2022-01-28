@@ -151,6 +151,10 @@
             width: 100%; /*少しはみ出させる*/
         }
     }
+    
+input[type="datatime-local"]{
+    width:auto;
+}
 ::-webkit-datetime-edit {
     display: none;
 }
