@@ -116,9 +116,8 @@
 	{/if}
 </main>
 <menu>
-	メニューです
+	<p>メニューです</p>
 </menu>
-あいうえお
 <style lang="scss">
 	$line_color: #06c755;
 	main {
