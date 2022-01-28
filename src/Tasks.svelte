@@ -97,10 +97,10 @@
                                   <span class="time">{todo.time}</span>
                                 {:else}
                                   <span>
-                                      <div class="edit_time" >
+                                      <span class="edit_time" >
                                           {"今度"}
                                           <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:timeupdate={()=>console.log(todo.time)}>
-                                      </div>
+                                      </span>
                                   </span>
                                 {/if}
                                 <span>{todo.task}</span>
@@ -157,7 +157,7 @@
         }
     }
     
-    div.edit_time{
+    .edit_time{
         position:relative;
         width:auto;
         height:100%;
