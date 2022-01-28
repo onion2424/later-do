@@ -282,7 +282,7 @@
 						height:50%;
 						width:100%;
 					}
-					div.later div.nexttime{
+					div.later, div.nexttime{
 						height: 100%;
 						aspect-ratio: 1 / 1;
 						background-size: contain;
