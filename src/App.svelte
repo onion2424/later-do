@@ -71,8 +71,8 @@
 					}else{
 						// 2022-01-01T12:00 のような形(16文字)に整形する
 						let setTime = new Date();
-						task.time = setTime.getFullYear() + "-" + setTime.getMonth() + " -" + setTime.getDate() + "T" + setTime.getHours() + ":" + setTime.getMinutes();
-						task.time = task.time.slice(0, -1) + "0"; //10分区切りにする
+						task.time = setTime.getFullYear() + "-" + ( '0' + Number(setTime.getMonth() + 1)).slice(-2) + "-" + ('0' + setTime.getDate()).slice(-2) 
+						+ "T" + ('0' + setTime.getHours()).slice(-2) + ":" + ('0' + setTime.getMinutes()).slice(1, 2) + '0';
 						console.log(task.time);
 					}
 					//todosを入れ替えて再描画させる

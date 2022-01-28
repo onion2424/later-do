@@ -100,7 +100,7 @@
             }else if(date.getDate() == tomorrow.getDate() && date.getMonth() == tomorrow.getMonth() && date.getFullYear() == tomorrow.getFullYear()){
                 ret = "明日";
             }else{ // 0埋めする
-                ret = date.getFullYear() + "/" + ('0' + date.getMonth()).slice(-2) + "/" + ('0' + date.getDate()).slice(-2);
+                ret = date.getFullYear() + "/" + ('0' + Number(date.getMonth() + 1)).slice(-2) + "/" + ('0' + date.getDate()).slice(-2);
             }
             ret += " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
         }
