@@ -128,13 +128,13 @@
 	}
 
 	//メニューがクリックされたとき
-	function onClickMenu(elm:HTMLInputElement){
+	function onClickMenu(){
 		if(mode==MODE_LATER){
-			(elm.parentElement.querySelector('.later')as HTMLElement).style.backgroundColor="#06c755";
-			(elm.parentElement.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#f0f0f0";
+			(document.querySelector('.later')as HTMLElement).style.backgroundColor="#06c755";
+			(document.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#f0f0f0";
 		}else{
-			(elm.parentElement.querySelector('.later')as HTMLElement).style.backgroundColor="#f0f0f0";
-			(elm.parentElement.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#06c755";
+			(document.querySelector('.later')as HTMLElement).style.backgroundColor="#f0f0f0";
+			(document.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#06c755";
 		}
 	}
 
@@ -144,6 +144,8 @@
 	window.addEventListener("load", () => {
 		const myLiffId = "1656807318-km8WVpYe";
 		const liff = (window as any).liff;
+		//初期選択メニューに色を付ける
+		onClickMenu();
 
 		//LIFFで立ち上げているかどうかの判定
 		if ((isInClient = liff.isInClient())) {
@@ -230,16 +232,16 @@
 			<button
 				on:click={(e) => {
 					mode = MODE_LATER;
-					onClickMenu(e);
-				}}><div class="img_wrapper"><div style="background-color:#06c755;"><span class="later"></span></div></div><span>あとで</span></button
+					onClickMenu();
+				}}><div class="img_wrapper"><div><span class="later"></span></div></div><span>あとで</span></button
 			>
 		</li>
 		<li>
 			<button
 				on:click={(e) => {
 					mode = MODE_NEXT;
-					onClickMenu(e);
-				}}><div class="img_wrapper"><div style="background-color:#f0f0f0;"><span class="nexttime"></span></div></div><span>こんど</span></button
+					onClickMenu();
+				}}><div class="img_wrapper"><div><span class="nexttime"></span></div></div><span>こんど</span></button
 			>
 		</li>
 	</ul>
@@ -285,7 +287,7 @@
 					margin: 0;
 					padding: 0;
 					span{
-						display: inline-block;
+						display: block;
 						height:30%;
 						width:100%;
 						text-align: center;
