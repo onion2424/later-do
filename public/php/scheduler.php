@@ -38,8 +38,8 @@ try {
             $builder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($rec["tasks"]);
             $response = $bot->pushMessage($to, $builder);
         }
-        //  送れたかどうかに関わらず更新
-        $sql = 'CALL SetSendTime()';
+        //  送れたかどうかに関わらず後処理
+        $sql = 'CALL PostProcess()';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
     }

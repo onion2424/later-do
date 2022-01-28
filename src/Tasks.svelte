@@ -38,10 +38,10 @@
         };
     }
 
-    function onSlideChange(idx:number, taskNo:number, time:string){
+    function onSlideChange(idx:number, taskNo:number){
         if(idx == 0){
             //タスクトグル
-            toggleTodo(taskNo, time);
+            toggleTodo(taskNo);
         }else if(idx == 2){
             //タスク削除
             deleteTodo(taskNo);
@@ -56,10 +56,9 @@
         });
     }
     //** タスクトグル*/
-    function toggleTodo(taskNo: number, time: string){
+    function toggleTodo(taskNo: number){
         dispatch('toggle', {
             taskNo: taskNo,
-            time:time
         });
     }
 
@@ -79,7 +78,7 @@
             }else{
                 ret = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate();
             }
-            ret += " " + date.getHours + ":" + date.getMinutes();
+            ret += " " + date.getHours() + ":" + date.getMinutes();
         }
         
         return ret;
@@ -96,7 +95,7 @@
                     <div class="task_top">
                         <Swiper
                             on:slideChange={(e) => {
-                                onSlideChange(e.detail[0][0].activeIndex, todo.taskno, todo.time);
+                                onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
                             }}
                             on:progress={(e) => {
                                 let elm;

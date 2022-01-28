@@ -16,11 +16,10 @@
 	//** タスクトグル*/
 	function toggleTodo(e){
 		let taskNo = e.detail.taskNo;
-		let time = e.detail.time || null;
 		axios
 			.post(
 				"/toggle-task",
-				JSON.stringify({ id_token: idToken, taskNo: taskNo, time: time})
+				JSON.stringify({ id_token: idToken, taskNo: taskNo})
 			)
 			.then((res) => {
 				//ディープコピーをする
@@ -31,7 +30,15 @@
 					let temp = JSON.parse(JSON.stringify(todos));
 					let task = temp.find((val) => val.taskNo == taskNo);
 					task.isNextTime = !task.isNextTime; //フラグを反転
-					task.time = time; //時間をセット 
+					//時間をセット
+					if(mode === MODE_LATER){
+						task.time = null;
+					}else{
+						// 2022-01-01T12:00 のような形(16文字)に整形する
+						let setTime = new Date();
+						task.time = setTime.getFullYear() + "-" + setTime.getMonth() + " -" + setTime.getDate() + "T" + setTime.getMinutes();
+						task.time = task.time.slice(0, -1) + "0"; //10分区切りにする
+					}
 					//todosを入れ替えて再描画させる
 					todos = temp;
 				} else {

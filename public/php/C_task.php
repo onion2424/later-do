@@ -100,7 +100,6 @@ class C_task
                 $sql = 'CALL DELETETASK(?, ?)'; //userID, TaskNo
                 $stmt = $conn->prepare($sql);
 
-                $cnt = 0;
                 $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
                 $stmt->bindParam(2, $contents['taskNo'], \PDO::PARAM_INT);
                 
@@ -109,6 +108,61 @@ class C_task
                     $ret->Status = \httpResponse::STATUS_OK;
                 }else{
                     $ret->message = "削除に失敗しました。";
+                }
+                
+            } catch (\PDOException $e) {
+                error_log(\HttpResponse::getPDOMessage($e));
+                $ret->message = "サーバーとの接続に失敗しました。";
+            }
+        }
+
+        //戻り値設定
+        header("content-type:application/json");
+        echo json_encode($ret, JSON_UNESCAPED_UNICODE);
+        exit();
+    }
+
+    public function toggleTask(){
+        /************POSTされたデータを取得***********/
+        //  POSTされたJSON文字列を取り出す
+        $json = file_get_contents("php://input");
+
+
+        //  JSON文字列をobjectに変換
+        //      =>trueにしないといけない
+        $contents = json_decode($json, true);
+        //ユーザーデータ取得
+        $userData = self::getUserData($contents['id_token']);
+
+        /*******:***************返答処理***********************/
+        //  userIDが存在するかを確認
+        //      =>subにセットされている
+
+        $ret = new \httpResponse();
+
+        if (!isset($userData['sub']) || $userData['sub'] == "") {
+
+            $ret->message = "ユーザー認証に失敗しました。";
+        } else { //--------------------データベース接続してデータを取る---------------
+            try {
+                $url = parse_url(getenv('DATABASE_URL'));
+                $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+                $conn = new \PDO($dsn, $url['user'], $url['pass']);
+                //PDOのエラー時に例外(PDOException)が発生するように設定
+                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+                //SQL実行
+                $sql = 'CALL TOGGLETASK(?, ?)'; //userID, TaskNo
+                $stmt = $conn->prepare($sql);
+
+                $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
+                $stmt->bindParam(2, $contents['taskNo'], \PDO::PARAM_INT);
+                
+                //SQL実行
+                if($stmt->execute()){
+                    $ret->Status = \httpResponse::STATUS_OK;
+                }else{
+                    $ret->message = "更新に失敗しました。";
                 }
                 
             } catch (\PDOException $e) {

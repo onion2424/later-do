@@ -1,4 +1,5 @@
 <?php
+//ルーター設定をする
 
 declare(strict_types=1);
 
@@ -11,9 +12,10 @@ $router->map('GET|POST', '/', function () {
     require_once __DIR__ . '/../../public/index.html';
 });
 
-// '/task'はtask関連
+// '/XXX-task'はデータベースT_todo関連
 $router->map('POST', '/get-tasks', 'app\public\php\C_task::getTasks', 'get-tasks');
 $router->map('POST', '/delete-task', 'app\public\php\C_task::deleteTask', 'delete-tasks');
+$router->map('POST', '/toggle-task', 'app\public\php\C_task::toggleTask', 'toggle-tasks');
 
 //  Line_bot
 $router->map('POST', '/line-bot', function(){
