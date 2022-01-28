@@ -42,9 +42,10 @@
     }
     //**時間が変更されていれば*/
     function onTimeUpdate(todo){
-        if(Number.isNaN(new Date(todo.time).getDate())){
-			//不正な時間なら時間をリセットしてリターン
+        if(!todo.time && Number.isNaN(new Date(todo.time).getDate())){
+			//(空白でない)不正な時間なら時間をリセットしてリターン
 			todo.time = "";
+            todos = todos;
 			return;
 		}
         setdateTodo(todo.taskno, todo.time);
