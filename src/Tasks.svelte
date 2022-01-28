@@ -96,7 +96,7 @@
                                 {#if mode === MODE_LATER}
                                   <span class="time">{todo.time}</span>
                                 {:else}
-                                  <span>
+                                  <span class="time">
                                       <span class="edit_time" >
                                           {"今度"}
                                           <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:timeupdate={()=>console.log(todo.time)}>
@@ -169,6 +169,9 @@
              top: 0;
              left: 0;
              background-color: rgba(255, 255, 255, 0);
+             padding: 0;
+             margin:0;
+             
         }
     }
 
