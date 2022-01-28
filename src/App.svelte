@@ -219,14 +219,14 @@
 			<button
 				on:click={() => {
 					mode = MODE_LATER;
-				}}><div class="img_wrapper"><div class="later"><span></span></div></div><span>あとで</span></button
+				}}><div class="img_wrapper"><div style="background-clor:#06c755;"><span class="later"></span></div></div><span>あとで</span></button
 			>
 		</li>
 		<li>
 			<button
 				on:click={() => {
 					mode = MODE_NEXT;
-				}}><div class="img_wrapper"><div class="nexttime"><span></span></div></div><span>こんど</span></button
+				}}><div class="img_wrapper"><div><span class="nexttime"></span></div></div><span>こんど</span></button
 			>
 		</li>
 	</ul>
@@ -281,8 +281,8 @@
 						position:relative;
 						height:50%;
 						width:100%;
-					}
-					div.later, div.nexttime{
+
+						div{
 						height: 100%;
 						aspect-ratio: 1 / 1;
 						
@@ -297,16 +297,20 @@
 							display: inline-block;
 							height:100%;
 							width: 100%;
-							background-size: contain;
-							background-repeat: no-repeat;
+							&.nexttime{
+								background: url("../img/translate_nexttime.png");
+								background-size: contain;
+								background-repeat: no-repeat;
+							}
+							&.later{
+								background: url("../img/translate_later.png");
+								background-size: contain;
+								background-repeat: no-repeat;
+							}
 						}
 					}
-					div.nexttime span{
-						background: url("../img/translate_nexttime.png");
 					}
-					div.later{
-						background: url("../img/translate_later.png");
-					}
+
 				}
 			}
 		}
