@@ -96,7 +96,7 @@
                                 {#if mode === MODE_LATER}
                                   <span class="time">{todo.time}</span>
                                 {:else}
-                                  <span><input type="datetime-local" step="600" style="width:auto;" bind:value={todo.time} on:timeupdate={()=>console.log(todo.time)}></span>
+                                  <span><input type="datetime-local" step="600" bind:value={todo.time} on:timeupdate={()=>console.log(todo.time)}></span>
                                 {/if}
                                 <span>{todo.task}</span>
 
@@ -152,8 +152,9 @@
         }
     }
     
-input[type="datatime-local"]{
+.input[type="datatime-local"]{
     width:auto;
+    appearance: none;
 }
 ::-webkit-datetime-edit {
     display: none;
