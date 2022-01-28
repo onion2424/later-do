@@ -46,9 +46,13 @@
             <div class="task">
                 <div class="task_wrapper">
                     <div class="task_bottom">
-                        <img src="./img/btn_check.png" alt="完了" width="1px" height="1px"/>
+                        <img src="./img/btn_check.png" alt="完了" class="left" width="1px" height="1px"/>
+                        <img src="./img/btn_next.png" alt="次" class="right" width="1px" height="1px"/>
                     </div>
                     <div class="task_top">
+                        <SwiperSlide class="task_delete"
+                                ><span /></SwiperSlide
+                            >
                         <Swiper
                             on:slideChange={() => {
                                 deleteTodo(todo.taskno);
@@ -59,6 +63,7 @@
                                         ?.firstElementChild?.firstElementChild;
                                 elm ? setImageSize(elm, e.detail[0][1]) : false;
                             }}
+                            initialSlide= {1}
                             allowSlidePrev={false}
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={false}
@@ -99,10 +104,15 @@
             width: 100%;
             img {
                 position: absolute;
-                left: calc(100% - 30px);
                 top: 50%;
                 transform: translate(-50%, -50%);
                 transition: 0.1s;
+                .right{
+                    left: calc(100% - 30px);
+                }
+                .left{
+                    left: 30px;
+                }
             }
         }
         div.task_top {
