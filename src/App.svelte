@@ -35,8 +35,8 @@
 			.catch((e) => {
 				//閉じる
 				Promise.resolve()
-					.then(() => alert(e))
-					.then(() => window.open("about:blank", "_self").close());
+					.then(() => alert(e));
+				//	.then(() => window.open("about:blank", "_self").close());
 			});
 	}
 
