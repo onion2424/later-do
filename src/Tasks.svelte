@@ -21,7 +21,7 @@
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
     const dispatch = createEventDispatcher();
     //時間が変更されたかをチェックする
-    let task_cp:string;
+    let todo_cp:string;
 
     //--------------関数----------------------
 
@@ -104,7 +104,7 @@
     //カレンダーフォーカス時
     function onFocus(todo){
         todo.time = todo.time ? todo.time : "";
-        todo = JSON.stringify(todo);
+        todo_cp = JSON.stringify(todo);
         return;
     }
 
@@ -112,10 +112,10 @@
     function onBlur(todo){
         todo.time = todo.time ? todo.time : "";
         //値が変更されていたらDB更新する
-        if(task_cp !== JSON.stringify(todo)){
+        if(todo_cp !== JSON.stringify(todo)){
             onTimeUpdate(todo);
         }
-        task_cp = null;
+        todo_cp = null;
         return;
     }
 
