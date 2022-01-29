@@ -1,3 +1,8 @@
+.swiper.move{
+    /*角丸*/
+    border-radius: 5px 5px 5px 5px;
+    outline: solid 1px #f0f0f0f0;
+}
 .swiper {
     height:100%;
 }
@@ -13,8 +18,7 @@
     
 }
 .swiper-slide.task_contents.move{
-    /*角丸*/
-    border-radius: 5px 5px 5px 5px;
+    
 }
 
 /*スライドの中身(span)*/

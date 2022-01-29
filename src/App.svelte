@@ -243,16 +243,16 @@
 				on:click={(e) => {
 					mode = MODE_LATER;
 					onClickMenu();
-				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span></button
-			>
+				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span>
+			</button>
 		</li>
 		<li>
 			<button
 				on:click={(e) => {
 					mode = MODE_NEXT;
 					onClickMenu();
-				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span></button
-			>
+				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span>
+			</button>
 		</li>
 	</ul>
 </menu>

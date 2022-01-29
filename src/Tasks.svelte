@@ -169,8 +169,8 @@
                                 }
                                 elm ? setImageSize(elm, progress) : false;
                             }}
-                            on:touchMove={(swiper) => console.log(swiper)}
-                            on:touchEnd={(swiper) => console.log(swiper)}
+                            on:touchStart={(e) => e.detail[0][0].el.classList.add('move')}
+                            on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={false}
