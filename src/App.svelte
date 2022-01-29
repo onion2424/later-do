@@ -38,7 +38,7 @@
 				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					//何もしない
+					todos = JSON.parse(JSON.stringify(todos));
 				} else {
 					throw data.message;
 				}
@@ -73,16 +73,8 @@
 						// 2022-01-01T12:00 のような形(16文字)に整形する
 						let setTime = new Date();
 						task.time =
-							setTime.getFullYear() +
-							"-" +
-							("0" + Number(setTime.getMonth() + 1)).slice(-2) +
-							"-" +
-							("0" + setTime.getDate()).slice(-2) +
-							"T" +
-							("0" + setTime.getHours()).slice(-2) +
-							":" +
-							("0" + setTime.getMinutes()).slice(1, 2) +
-							"0";
+							setTime.getFullYear() +"-" +("0" + Number(setTime.getMonth() + 1)).slice(-2) +"-" +("0" + setTime.getDate()).slice(-2) +
+							"T" +("0" + setTime.getHours()).slice(-2) +":" +("0" + setTime.getMinutes()).slice(1, 2) +"0";
 					}
 					//todosを入れ替えて再描画させる
 					todos = temp;

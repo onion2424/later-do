@@ -135,7 +135,7 @@
             }else{ // 0埋めする
                 ret = date.getFullYear() + "/" + ('0' + Number(date.getMonth() + 1)).slice(-2) + "/" + ('0' + date.getDate()).slice(-2);
             }
-            ret += " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
+            ret += " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(1, 2) + '0';
         }
         
         return ret;
@@ -184,7 +184,7 @@
                                   <span class="time">
                                       <span class="edit_time" >
                                           {showTime(todo.time)}
-                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:input={()=> onChange(todo)} on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
+                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:change={()=> onChange(todo)} on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
                                       </span>
                                   </span>
                                 {/if}
