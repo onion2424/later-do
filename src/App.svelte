@@ -274,7 +274,7 @@
 		background-color: white;
 		margin: 0;
 		padding: 0;
-		position: absolute;
+		position: fixed;
 		bottom: 0;
 		width: 100%;
 		box-sizing: border-box;
@@ -323,6 +323,7 @@
 							display: block;
 							height:100%;
 							width: 100%;
+							
 							&#nexttimeIcon{
 								background: url("../img/translate_nexttime.png");
 								background-size: contain;
@@ -333,7 +334,7 @@
 								background-size: contain;
 								background-repeat: no-repeat;
 							}
-							/*件数をつける*/
+							/*件数をつける 通知アイコン参考 https://qiita.com/sumtrue/items/03601443f20dee4075f0 */
 							&#nexttimeIcon::before, &#laterIcon::before{
 								display: flex;
     							justify-content: center;
@@ -346,7 +347,8 @@
     							padding: 4px;
     							font-size: 10px;
     							font-weight: bold;
-    							background-color: #ef5350;
+    							background-color: #ef5350da;
+								color: white;
     							border: 1px solid #fff;
     							border-radius: 10px;
     							top: 0;
