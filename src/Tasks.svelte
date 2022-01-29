@@ -132,9 +132,16 @@
                 ret = "今日";
             }else if(date.getDate() == tomorrow.getDate() && date.getMonth() == tomorrow.getMonth() && date.getFullYear() == tomorrow.getFullYear()){
                 ret = "明日";
-            }else{ // 0埋めする
-                ret = date.getFullYear() + "/" + ('0' + Number(date.getMonth() + 1)).slice(-2) + "/" + ('0' + date.getDate()).slice(-2);
+            }else{ 
+                //年をまたぐかどうか
+                if(date.getFullYear() !== today.getFullYear()){
+                    //またぐなら yyyy年m月d日
+                    ret = date.getFullYear() + "年";
+                }
+                //またがないなら m月d日
+                ret += Number(date.getMonth() + 1) + "月" + date.getDate() + "日";
             }
+            //時間を足す
             ret += " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(1, 2) + '0';
         }
         
@@ -161,7 +168,6 @@
                                     elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
                                     if(elm){
                                         elm.firstElementChild.height = 0;//逆側をなくす
-                                        console.log(elm.firstElementChild.height);
                                         elm = elm.lastElementChild;
                                     }
                                     progress *= -1; //正にする
@@ -169,7 +175,6 @@
                                     elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
                                     if(elm){
                                         elm.lastElementChild.height = 0;//逆側をなくす
-                                        console.log(elm?.firstElementChild.height);
                                         elm = elm.firstElementChild;
                                     }
                                 }
