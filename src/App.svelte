@@ -123,11 +123,11 @@
 	//メニューがクリックされたとき
 	function onClickMenu(){
 		if(mode==MODE_LATER){
-			(document.querySelector('.later')as HTMLElement).style.backgroundColor="#06c755";
-			(document.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#f0f0f0";
+			(document.getElementById('laterIcon')as HTMLElement).style.backgroundColor="#06c755";
+			(document.getElementById('nexttimeIcon')as HTMLElement).style.backgroundColor="#f0f0f0";
 		}else{
-			(document.querySelector('.later')as HTMLElement).style.backgroundColor="#f0f0f0";
-			(document.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#06c755";
+			(document.getElementById('laterIcon')as HTMLElement).style.backgroundColor="#f0f0f0";
+			(document.getElementById('nexttimeIcon')as HTMLElement).style.backgroundColor="#06c755";
 		}
 	}
 
@@ -138,8 +138,8 @@
 
 		//件数をセットする関数を返す
 		return function(){
-			//laterIcon.dataset.num = todos.filter((val) => !val.isnexttime)?.length + '';
-			//nexttimeIcon.dataset.num = todos.filter((val) => val.isnexttime)?.length + '';
+			laterIcon.dataset.num = todos.filter((val) => !val.isnexttime)?.length + '';
+			nexttimeIcon.dataset.num = todos.filter((val) => val.isnexttime)?.length + '';
 			true;
 		}
 
@@ -243,7 +243,7 @@
 				on:click={(e) => {
 					mode = MODE_LATER;
 					onClickMenu();
-				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="2"></span></div></div><span>あとで</span></button
+				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span></button
 			>
 		</li>
 		<li>
@@ -251,7 +251,7 @@
 				on:click={(e) => {
 					mode = MODE_NEXT;
 					onClickMenu();
-				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="2"></span></div></div><span>こんど</span></button
+				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span></button
 			>
 		</li>
 	</ul>
