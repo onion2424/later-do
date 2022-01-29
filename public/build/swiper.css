@@ -15,12 +15,14 @@
     opacity: 0;
 }
 .swiper-slide.task_contents{
-    background-color: white;
+    
     
 }
 div.slide_wrapper{
     height:100%;
     padding-bottom: 10px;
+    background-color: white;
+    background-clip: content-box;
 }
 
 /*スライドの中身(span)*/
