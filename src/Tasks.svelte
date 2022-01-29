@@ -160,14 +160,17 @@
                                 if(progress < 0){
                                     elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
                                     elm.firstElementChild.height = 0;//逆側をなくす
+                                    console.log(elm.firstElmentChild.height);
                                     elm = elm.lastElementChild;
 
                                     progress *= -1; //正にする
                                 }else{
                                     elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
                                     elm.lastElementChild.height = 0;//逆側をなくす
+                                    console.log(elm.firstElmentChild.height);
                                     elm = elm.firstElementChild;
                                 }
+                                
                                 elm && setImageSize(elm, progress);
                             }}
                             on:touchStart={(e) => e.detail[0][0].el.classList.add('move')}
