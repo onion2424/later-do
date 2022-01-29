@@ -119,7 +119,7 @@
 					.then(() => window.open("about:blank", "_self").close());
 			});
 	}
-
+	let ctlMenuIcon;
 	//メニューがクリックされたとき
 	function onClickMenu(){
 		if(mode==MODE_LATER){

@@ -158,16 +158,17 @@
                                 let elm;
                                 let progress = 0.5 - e.detail[0][1];
                                 if(progress < 0){
-                                    elm =
-                                    e.detail[0][0].el?.closest(".task_wrapper")
-                                        ?.firstElementChild?.lastElementChild;
-                                   progress *= -1; //正にする
+                                    elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
+                                    elm.firstElementChild.height = 0;//逆側をなくす
+                                    elm = elm.lastElementChild;
+
+                                    progress *= -1; //正にする
                                 }else{
-                                    elm =
-                                    e.detail[0][0].el?.closest(".task_wrapper")
-                                        ?.firstElementChild?.firstElementChild;
+                                    elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
+                                    elm.lastElementChild.height = 0;//逆側をなくす
+                                    elm = elm.firstElementChild;
                                 }
-                                elm ? setImageSize(elm, progress) : false;
+                                elm && setImageSize(elm, progress);
                             }}
                             on:touchStart={(e) => e.detail[0][0].el.classList.add('move')}
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
