@@ -275,6 +275,7 @@
 		margin: 0;
 		padding: 0;
 		position: fixed;
+		z-index:100;
 		bottom: 0;
 		width: 100%;
 		box-sizing: border-box;
