@@ -101,9 +101,8 @@
 
     //カレンダーフォーカス時
     function onFocus(todo){
-        todo.time = todo.time ? todo.time.slice(0, -1) + '0' : "";
+        todo.time = todo.time ? todo.time : "";
         todo_cp = JSON.stringify(todo);
-        todos = todos;
         return;
     }
 
@@ -185,7 +184,7 @@
                                   <span class="time">
                                       <span class="edit_time" >
                                           {showTime(todo.time)}
-                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:change={()=> onChange(todo)} on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
+                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:input={()=> onChange(todo)} on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
                                       </span>
                                   </span>
                                 {/if}
