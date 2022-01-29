@@ -173,12 +173,13 @@
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
-                            shortSwipes={false}
-                        >
+                            shortSwipes={false}>
+
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
 
+                            <div class="slide_wrapper">
                             <SwiperSlide class="task_contents">
-                                <div class="slide_wrapper">
+                                
                                 {#if mode === MODE_LATER}
                                   <span class="time">{showTime(todo.time)}</span>
                                 {:else}
@@ -191,9 +192,9 @@
                                   </span>
                                 {/if}
                                 <span class="text">{todo.task}</span>
-                                </div>
                             </SwiperSlide>
-
+                            </div>
+                            
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
                         </Swiper>
                     </div>
