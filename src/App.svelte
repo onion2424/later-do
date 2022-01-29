@@ -204,7 +204,7 @@
 		{#await waitPromise}
 			<p>...データ取得中</p>
 		{:then}
-			{#if todos.length > 0}
+			{#if todos.length > 0 && !!todos.find((val)=> val.isnexttime === (mode === MODE_NEXT))}
 				<Tasks
 					{todos}
 					bind:mode
@@ -217,8 +217,13 @@
 					<div class="background">
 						<div>
 							<p>
-								あとでやることはありません。<br
-								/>LINEではなしかけてとうろくしてね！
+								{#if mode === MODE_LATER}
+								あとでやることはありません。<br/>
+								LINEではなしかけてとうろくしてね！
+								{:else}
+								こんどやることはありません。<br/>
+								あとでで→スワイプしてとうろくしてね！
+								{/if}
 							</p>
 						</div>
 					</div>
@@ -227,9 +232,8 @@
 		{/await}
 	{:else}
 		<p>
-			LINE外からのこのWEBページの利用はできません。
-			<br
-			/>LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
+			LINE外からのこのWEBページの利用はできません。<br/>
+			LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
 		{#if todos.length > 0}
 			<Tasks {todos} bind:mode />
