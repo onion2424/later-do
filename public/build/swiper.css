@@ -1,8 +1,8 @@
 .swiper.move div.task_contents{
     /*角丸*/
     border-radius: 0.5em;
-    border: 1px solid #f0f0f0f0;
-    box-shadow: 0px 10px 10px 0px rgb(235, 235, 235);
+    border: 1px solid #f0f0f0;
+    //box-shadow: 0px 10px 10px 0px rgb(235, 235, 235);
 }
 .swiper {
     height:100%;
