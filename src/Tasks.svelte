@@ -178,6 +178,7 @@
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
 
                             <SwiperSlide class="task_contents">
+                                <div class="slide_wrapper">
                                 {#if mode === MODE_LATER}
                                   <span class="time">{showTime(todo.time)}</span>
                                 {:else}
@@ -190,7 +191,7 @@
                                   </span>
                                 {/if}
                                 <span class="text">{todo.task}</span>
-
+                                </div>
                             </SwiperSlide>
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>

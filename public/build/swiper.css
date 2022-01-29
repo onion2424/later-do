@@ -18,6 +18,10 @@
     background-color: white;
     
 }
+.swiper-slide div.slide_wrapper{
+    height:100%;
+    padding-bottom: 10px;
+}
 
 /*スライドの中身(span)*/
 .swiper-slide.task_contents span.text{
