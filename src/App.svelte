@@ -11,7 +11,7 @@
 	let waitPromise; //タスク取得中かどうかを判断するPromise
 	let isLoadEnd = false;
 	let mode = MODE_LATER;
-	let setTaskAmount;  //件数を表示するためのクロージャ
+	let ctlIcon; //アイコンを操作するためのクロージャ
 
 	//--------------関数----------------------
 	//** 送信日付設定*/
@@ -80,7 +80,7 @@
 					}
 					//todosを入れ替えて再描画させる
 					todos = temp;
-					setTaskAmount();//件数をセットし直す
+					ctlIcon.setTaskAmount();//件数をセットし直す
 				} else {
 					throw data.message;
 				}
@@ -108,7 +108,7 @@
 					//	消したやつ以外にする
 					//	複数端末での同時使用を想定していないのでデータを取り直すことはしない
 					todos = todos.filter((val) => !(val.taskno === taskNo));
-					setTaskAmount();//件数をセットし直す
+					ctlIcon.setTaskAmount();//件数をセットし直す
 				} else {
 					throw data.message;
 				}
@@ -119,28 +119,41 @@
 					.then(() => window.open("about:blank", "_self").close());
 			});
 	}
-	let ctlMenuIcon;
-	//メニューがクリックされたとき
-	function onClickMenu(){
-		if(mode==MODE_LATER){
-			(document.getElementById('laterIcon')as HTMLElement).style.backgroundColor="#06c755";
-			(document.getElementById('nexttimeIcon')as HTMLElement).style.backgroundColor="#f0f0f0";
-		}else{
-			(document.getElementById('laterIcon')as HTMLElement).style.backgroundColor="#f0f0f0";
-			(document.getElementById('nexttimeIcon')as HTMLElement).style.backgroundColor="#06c755";
-		}
-	}
+	
+	// //メニューがクリックされたとき
+	// function onClickMenu(){
+	// 	if(mode==MODE_LATER){
+	// 		(document.getElementById('laterIcon')as HTMLElement).style.backgroundColor="#06c755";
+	// 		(document.getElementById('nexttimeIcon')as HTMLElement).style.backgroundColor="#f0f0f0";
+	// 	}else{
+	// 		(document.getElementById('laterIcon')as HTMLElement).style.backgroundColor="#f0f0f0";
+	// 		(document.getElementById('nexttimeIcon')as HTMLElement).style.backgroundColor="#06c755";
+	// 	}
+	// }
 
 	//件数セット用のクロージャ
 	function setTaskAmount_enclosure(){
 		const laterIcon = document.getElementById('laterIcon') as HTMLElement;
 		const nexttimeIcon = document.getElementById('nexttimeIcon') as HTMLElement;
-
+		if(!laterIcon || !nexttimeIcon) throw 'アイコンが見つかりません。';
 		//件数をセットする関数を返す
-		return function(){
+		return {
+			setTaskAmount : function (){
 			laterIcon.dataset.num = todos.filter((val) => !val.isnexttime)?.length + '';
 			nexttimeIcon.dataset.num = todos.filter((val) => val.isnexttime)?.length + '';
 			true;
+			},
+
+			setIconColer : function (){
+				if(mode==MODE_LATER){
+					laterIcon.style.backgroundColor="#06c755";
+					nexttimeIcon.style.backgroundColor="#f0f0f0";
+				}else{
+					laterIcon.style.backgroundColor="#f0f0f0";
+					nexttimeIcon.style.backgroundColor="#06c755";
+				}
+			}
+
 		}
 
 	}
@@ -151,8 +164,10 @@
 	window.addEventListener("load", () => {
 		const myLiffId = "1656807318-km8WVpYe";
 		const liff = (window as any).liff;
-		//初期選択メニューに色を付ける
-		onClickMenu();
+		
+		//クロージャを持たせる
+		ctlIcon = setTaskAmount_enclosure();
+		ctlIcon.setIconColer(); //初期選択メニューに色を付ける
 
 		//LIFFで立ち上げているかどうかの判定
 		if ((isInClient = liff.isInClient())) {
@@ -175,9 +190,8 @@
 							//受け取ったデータを配列に入れる
 							todos = data.Contents;
 							isLoadEnd = true;
-							//クロージャを持たせる
-							setTaskAmount = setTaskAmount_enclosure();
-							setTaskAmount();
+							//タスクの件数を表示
+							ctlIcon.setTaskAmount();
 						} else {
 							throw data.message;
 						}
@@ -222,7 +236,7 @@
 								LINEではなしかけてとうろくしてね！
 								{:else}
 								こんどやることはありません。<br/>
-								あとでで→スワイプしてとうろくしてね！
+								→にスワイプしてとうろくしてね！
 								{/if}
 							</p>
 						</div>
@@ -246,7 +260,7 @@
 			<button
 				on:click={(e) => {
 					mode = MODE_LATER;
-					onClickMenu();
+					ctlIcon.setIconColer();
 				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span>
 			</button>
 		</li>
@@ -254,7 +268,7 @@
 			<button
 				on:click={(e) => {
 					mode = MODE_NEXT;
-					onClickMenu();
+					ctlIcon.setIconColer();
 				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span>
 			</button>
 		</li>
