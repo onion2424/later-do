@@ -261,7 +261,7 @@
 	$line_color: #06c755;
 	main {
 		margin: 0 auto;
-		height: calc(100% - 50px);
+		height: 100%;
 		//marginをはみださせない
 		display: flow-root;
 		p {

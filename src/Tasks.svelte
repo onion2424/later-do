@@ -169,13 +169,13 @@
                                 }
                                 elm ? setImageSize(elm, progress) : false;
                             }}
+                            on:touchMove={(swiper) => console.log(swiper)}
+                            on:touchEnd={(swiper) => console.log(swiper)}
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={false}
                         >
-                            <SwiperSlide class="task_delete"
-                            ><span /></SwiperSlide
-                            >
+                            <SwiperSlide class="task_delete"><span /></SwiperSlide>
 
                             <SwiperSlide class="task_contents">
                                 {#if mode === MODE_LATER}
@@ -184,7 +184,8 @@
                                   <span class="time">
                                       <span class="edit_time" >
                                           {showTime(todo.time)}
-                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" on:change={()=> onChange(todo)} on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
+                                          <input type="datetime-local" step="600" bind:value={todo.time} class="clearText" 
+                                          on:change={()=> onChange(todo)} on:focus={()=>onFocus(todo)} on:blur={()=>onBlur(todo)}>
                                       </span>
                                   </span>
                                 {/if}
@@ -192,10 +193,7 @@
 
                             </SwiperSlide>
 
-
-                            <SwiperSlide class="task_delete"
-                                ><span /></SwiperSlide
-                            >
+                            <SwiperSlide class="task_delete"><span /></SwiperSlide>
                         </Swiper>
                     </div>
                 </div>
