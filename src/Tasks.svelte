@@ -125,7 +125,7 @@
         const tomorrow = new Date();
         tomorrow.setDate(today.getDate() + 1);
         let date = new Date(str);
-        let ret = "今度";
+        let ret = "";
         if(!Number.isNaN(date.getDate())){
             if(date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear())
             {
@@ -143,6 +143,8 @@
             }
             //時間を足す
             ret += " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(1, 2) + '0';
+        }else{
+            ret = "今度";
         }
         
         return ret;
