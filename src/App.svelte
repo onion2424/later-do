@@ -8,9 +8,10 @@
 	let todos = [];
 	let isInClient = false;
 	let idToken;
-	let waitPromise;
+	let waitPromise; //タスク取得中かどうかを判断するPromise
 	let isLoadEnd = false;
 	let mode = MODE_LATER;
+	let setTaskAmount;  //件数を表示するためのクロージャ
 
 	//--------------関数----------------------
 	//** 送信日付設定*/
@@ -79,6 +80,7 @@
 					}
 					//todosを入れ替えて再描画させる
 					todos = temp;
+					setTaskAmount();//件数をセットし直す
 				} else {
 					throw data.message;
 				}
@@ -106,6 +108,7 @@
 					//	消したやつ以外にする
 					//	複数端末での同時使用を想定していないのでデータを取り直すことはしない
 					todos = todos.filter((val) => !(val.taskno === taskNo));
+					setTaskAmount();//件数をセットし直す
 				} else {
 					throw data.message;
 				}
@@ -126,6 +129,19 @@
 			(document.querySelector('.later')as HTMLElement).style.backgroundColor="#f0f0f0";
 			(document.querySelector('.nexttime')as HTMLElement).style.backgroundColor="#06c755";
 		}
+	}
+
+	//件数セット用のクロージャ
+	function setTaskAmount_enclosure(){
+		const laterIcon = document.getElementById('laterIcon') as HTMLElement;
+		const nexttimeIcon = document.getElementById('nexttimeIcon') as HTMLElement;
+
+		//件数をセットする関数を返す
+		return function(){
+			laterIcon.dataset.num = todos.filter((val) => !val.isnexttime)?.length + '';
+			nexttimeIcon.dataset.num = todos.filter((val) => val.isnexttime)?.length + '';
+		}
+
 	}
 
 	//-----------起動時実行-----------------------
@@ -158,6 +174,9 @@
 							//受け取ったデータを配列に入れる
 							todos = data.Contents;
 							isLoadEnd = true;
+							//クロージャを持たせる
+							setTaskAmount = setTaskAmount_enclosure();
+							setTaskAmount();
 						} else {
 							throw data.message;
 						}
@@ -223,7 +242,7 @@
 				on:click={(e) => {
 					mode = MODE_LATER;
 					onClickMenu();
-				}}><div class="img_wrapper"><div><span class="later"></span></div></div><span>あとで</span></button
+				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span></button
 			>
 		</li>
 		<li>
@@ -231,7 +250,7 @@
 				on:click={(e) => {
 					mode = MODE_NEXT;
 					onClickMenu();
-				}}><div class="img_wrapper"><div><span class="nexttime"></span></div></div><span>こんど</span></button
+				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span></button
 			>
 		</li>
 	</ul>
@@ -264,34 +283,34 @@
 			margin: 0;
 			padding: 0;
 			height: 100%;
-			li {
-				list-style: none;
-				width: calc(100% / 2);
-				button {
-					height: 100%;
-					width: 100%;
-					display: inline-block;
-					border: none;
-					cursor: pointer;
-					background-color: rgba(255, 255, 255, 0);
-					margin: 0;
-					padding: 0;
-					span{
-						display: block;
-						height:30%;
-						width:100%;
-						text-align: center;
-						font-size: 10px;
-					}
-					div.img_wrapper{
-						position:relative;
-						height:70%;
-						width:100%;
-
-						div{
+		}
+		li {
+			list-style: none;
+			width: calc(100% / 2);
+			button {
+				height: 100%;
+				width: 100%;
+				display: inline-block;
+				border: none;
+				cursor: pointer;
+				background-color: rgba(255, 255, 255, 0);
+				margin: 0;
+				padding: 0;
+				span{
+					display: block;
+					height:30%;
+					width:100%;
+					text-align: center;
+					font-size: 10px;
+				}
+				div.img_wrapper{
+					position:relative;
+					height:70%;
+					width:100%;
+					div{
 						height: 80%;
 						aspect-ratio: 1 / 1;
-						
+					
 						//中央に配置
 						position: absolute;
 						//top: 0;
@@ -303,20 +322,43 @@
 							display: block;
 							height:100%;
 							width: 100%;
-							&.nexttime{
+							&#nexttimeIcon{
 								background: url("../img/translate_nexttime.png");
 								background-size: contain;
 								background-repeat: no-repeat;
 							}
-							&.later{
+							&#laterIcon{
 								background: url("../img/translate_later.png");
 								background-size: contain;
 								background-repeat: no-repeat;
 							}
+							/*件数をつける*/
+							&#nexttimeIcon::before, &#laterIcon::before{
+								display: flex;
+    							justify-content: center;
+    							align-items: center;
+    							position: absolute;
+    							content: attr(data-num);
+    							min-width: 20px;
+   								height: 20px;
+    							box-sizing: border-box;
+    							padding: 4px;
+    							font-size: 10px;
+    							font-weight: bold;
+    							background-color: #ef5350;
+    							border: 1px solid #fff;
+    							border-radius: 10px;
+    							top: 0;
+    							right: 0;
+    							transform: translate(40%, -40%);
+    							z-index: 1;
+							}
+							&#nexttimeIcon[data-num="0"]::before, &#laterIcon[data-num="0"]::before{
+									display: none;
+							}
 						}
-					}
-					}
 
+					}
 				}
 			}
 		}
