@@ -101,18 +101,17 @@
 
     //カレンダーフォーカス時
     function onFocus(todo){
-        todo.time = todo.time ? todo.time : "";
+        todo.time = todo.time ? todo.time.slice(0, -1) + '0' : "";
         todo_cp = JSON.stringify(todo);
+        todos = todos;
         return;
     }
 
     //カレンダーフォーカスはずれ時
-    async function onBlur(todo){
-        //整形する
-        onChange(todo);
+    function onBlur(todo){
+        todo.time = todo.time ? todo.time : "";
         //値が変更されていたらDBを更新する
         if(todo_cp !== JSON.stringify(todo)){
-            await tick();
             onTimeUpdate(todo);
         }
 
