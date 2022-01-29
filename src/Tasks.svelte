@@ -159,16 +159,19 @@
                                 let progress = 0.5 - e.detail[0][1];
                                 if(progress < 0){
                                     elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
-                                    elm.firstElementChild.height = 0;//逆側をなくす
-                                    console.log(elm.firstElmentChild.height);
-                                    elm = elm.lastElementChild;
-
+                                    if(elm){
+                                        elm.firstElementChild.height = 0;//逆側をなくす
+                                        console.log(elm.firstElementChild.height);
+                                        elm = elm.lastElementChild;
+                                    }
                                     progress *= -1; //正にする
                                 }else{
                                     elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
-                                    elm.lastElementChild.height = 0;//逆側をなくす
-                                    console.log(elm.firstElmentChild.height);
-                                    elm = elm.firstElementChild;
+                                    if(elm){
+                                        elm.lastElementChild.height = 0;//逆側をなくす
+                                        console.log(elm?.firstElementChild.height);
+                                        elm = elm.firstElementChild;
+                                    }
                                 }
                                 
                                 elm && setImageSize(elm, progress);
