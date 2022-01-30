@@ -136,8 +136,8 @@
     //スライド時
     function onProgress(e){
         let elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
-        let progress = Math.abs(0.5 - e.detail[0][1]);
-        let isBig = progress > (LONG_SWIPES_RATIO / 2);
+        let progress = 0.5 - e.detail[0][1];
+        let isBig = Math.abs(progress) > (LONG_SWIPES_RATIO / 2);
         if(progress < 0){
             elm && setImageSize(elm.lastElementChild, elm.firstElementChild, isBig);
         }else{

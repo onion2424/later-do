@@ -1,5 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
+import { tick } from "svelte";
 	import Tasks from "./Tasks.svelte";
 	//--------------定数-------------
 	const MODE_LATER = 1;
@@ -251,7 +252,8 @@
 	<ul>
 		<li>
 			<button
-				on:click={(e) => {
+				on:click={async (e) => {
+					await tick();
 					mode = MODE_LATER;
 					ctlIcon.setIconColer();
 				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span>
@@ -259,7 +261,8 @@
 		</li>
 		<li>
 			<button
-				on:click={(e) => {
+				on:click={async (e) => {
+					await tick();
 					mode = MODE_NEXT;
 					ctlIcon.setIconColer();
 				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span>
