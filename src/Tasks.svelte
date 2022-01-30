@@ -58,14 +58,19 @@
 
     //**スライドが変更されたとき*/
     async function onSlideChange(idx:number, taskNo:number){
-        duration = 200;
-        if(idx == 0){
-            //タスクトグル
-            toggleTodo(taskNo);
-        }else if(idx == 2){
-            //タスク削除
-            deleteTodo(taskNo);
+        if(idx !== 1){ //初期化時に 0 -> 1
+            duration = 200;
+            if(idx == 0){
+                //タスクトグル
+                toggleTodo(taskNo);
+            }else if(idx == 2){
+                //タスク削除
+                deleteTodo(taskNo);
+            }
+        }else{
+            alert('お');
         }
+ 
         return;
     }
 
@@ -191,7 +196,7 @@
                             }}
                             on:touchStart={(e) => e.detail[0][0].el.classList.add('move')}
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
-                            initialSlide= {1}
+                            centeredSlides={true}                         
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             >
 
