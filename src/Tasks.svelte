@@ -3,6 +3,8 @@
     import { compute_slots, createEventDispatcher, dataset_dev, loop_guard } from "svelte/internal";
     import { onMount } from "svelte";
     import { flip } from "svelte/animate"
+    import { slide } from "svelte/transition"
+
     // Import Swiper Svelte components
     import { Swiper, SwiperSlide } from "swiper/svelte";
     // Import Swiper styles
@@ -153,7 +155,7 @@
 
 </script>
         {#each shows as todo (todo.taskno)}
-            <div class="task" animate:flip="{{duration: 200}}">
+            <div class="task" animate:flip="{{duration: 200}}" out:slide="{{duration: 200}}">
                 <div class="task_wrapper">
                     <div class="task_bottom">
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
