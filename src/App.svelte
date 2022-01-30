@@ -18,8 +18,8 @@
 	let isLoadEnd = false; //初期ロードが終わっているか
 	let waitPromise; //タスク取得中かどうかを判断するPromise
 	let todos = []; //表示するタスク
-	$: later = todos.filter((val) => !val.isnexttime); 
-	$: nexttime = todos.filter((val) => val.isnexttime);
+	$: later = (todos || []).filter((val) => !val.isnexttime); 
+	$: nexttime = (todos || []).filter((val) => val.isnexttime);
 	let ctlIcon; //アイコンを操作するためのクロージャ
 
 	//--------------関数----------------------
@@ -32,7 +32,7 @@
 			//(空白でなく)不正な時間なら時間をリセットしてリターン
 			let task = todos.find((val) => val.taskNo == taskNo);
 			task.time = "";
-			todos = JSON.parse(JSON.stringify(todos));
+			todos = todos; //リアクティブ用
 			return;
 		}
 		//通信部分
@@ -139,8 +139,8 @@
 		//件数をセットする関数とアイコンの色を変える関数を返す
 		return {
 			setTaskAmount : function (){
-			laterIcon.dataset.num = todos.filter((val) => !val.isnexttime)?.length + '';
-			nexttimeIcon.dataset.num = todos.filter((val) => val.isnexttime)?.length + '';
+			laterIcon.dataset.num = later.length + '';
+			nexttimeIcon.dataset.num = nexttime.length + '';
 			true;
 			},
 
