@@ -143,11 +143,6 @@
         }else{
             elm && setImageSize(elm.firstElementChild, elm.lastElementChild, isBig);
         }
-        if(isBig){
-            !e.detail[0][0].shortSwipes || (e.detail[0][0].shortSwipes = true);
-        }else{
-            e.detail[0][0].shortSwipes || (e.detail[0][0].shortSwipes = false);
-        }
     }
 
     //** 時間を捻じ曲げて表示*/
@@ -193,7 +188,7 @@
                         <Swiper
                             on:slideChange={(e) => {
                                 onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
-                                e.detail[0][0].init();
+                                e.detail[0][0].init(e.detail[0][0].el);
                             }}
                             on:progress={onProgress}
                             on:touchStart={(e) => e.detail[0][0].el.classList.add('move')}
