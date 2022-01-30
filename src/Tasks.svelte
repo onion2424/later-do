@@ -21,7 +21,6 @@
 
     //あとで　と　今度　でタスクを切り替える
     $: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
-    $: isConnecting = isConnecting;
 
     let setImageSize = (set: HTMLImageElement, vanish: HTMLImageElement, isBig: boolean) => {};
     const dispatch = createEventDispatcher();

@@ -224,6 +224,7 @@ import { tick } from "svelte";
 				<Tasks
 					{todos}
 					bind:mode
+					bind:isConnecting
 					on:delete={deleteTodo}
 					on:toggle={toggleTodo}
 					on:setdate={setDateTodo}
