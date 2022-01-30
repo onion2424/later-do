@@ -36,11 +36,9 @@
 				})
 			)
 			.then((res) => {
-				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					//todos = JSON.parse(JSON.stringify(todos));
-					todos = todos.sort((a, b) =>  Number((a.time || '3') > (b.time || '3')) * 2 - 1);
+					//サーバを意識させないため何もしない
 				} else {
 					throw data.message;
 				}
@@ -50,38 +48,24 @@
 				Promise.resolve().then(() => alert(e))
 					.then(() => window.open("about:blank", "_self").close());
 			});
+
+		//取り直しをせずに自前で更新する
+		todos = todos.sort((a, b) =>  Number((a.time || '3') > (b.time || '3')) * 2 - 1);
 	}
 
 	//** タスクトグル*/
 	function toggleTodo(e) {
 		let taskNo = e.detail.taskNo;
+		let mode = e.detail.mode;
 		axios
 			.post(
 				"/toggle-task",
 				JSON.stringify({ id_token: idToken, taskNo: taskNo })
 			)
 			.then((res) => {
-				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					//	トグルさせる
-					let temp = JSON.parse(JSON.stringify(todos));
-					let task = temp.find((val) => val.taskno == taskNo);
-					task.isnexttime = !task.isnexttime; //フラグを反転
-					//時間をセット
-					if (mode === MODE_LATER) {
-						task.time = "";
-					} else {
-						// 2022-01-01T12:00 のような形(16文字)に整形する
-						let setTime = new Date();
-						setTime.setMinutes(setTime.getMinutes() + 20);
-						task.time =
-							setTime.getFullYear() +"-" +("0" + Number(setTime.getMonth() + 1)).slice(-2) +"-" +("0" + setTime.getDate()).slice(-2) +
-							"T" +("0" + setTime.getHours()).slice(-2) +":" +("0" + setTime.getMinutes()).slice(1, 2) +"0";
-					}
-					//todosを入れ替えて再描画させる
-					todos = temp.sort((a, b) => Number((a.time || '3') > (b.time || '3')) * 2 - 1);
-					ctlIcon.setTaskAmount();//件数をセットし直す
+					//サーバを意識させないため何もしない
 				} else {
 					throw data.message;
 				}
@@ -91,6 +75,24 @@
 				Promise.resolve().then(() => alert(e)).
 				then(() => window.open("about:blank", "_self").close());
 			});
+
+		//	トグルさせる
+		let task = todos.find((val) => val.taskno == taskNo);
+		task.isnexttime = !task.isnexttime; //フラグを反転
+		//時間をセット
+		if (mode === MODE_LATER) {
+			task.time = "";
+		} else {
+			// 2022-01-01T12:00 のような形(16文字)に整形する
+			let setTime = new Date();
+			setTime.setMinutes(setTime.getMinutes() + 20);
+			task.time =
+				setTime.getFullYear() +"-" +("0" + Number(setTime.getMonth() + 1)).slice(-2) +"-" +("0" + setTime.getDate()).slice(-2) +
+				"T" +("0" + setTime.getHours()).slice(-2) +":" +("0" + setTime.getMinutes()).slice(1, 2) +"0";
+		}
+		//todosを入れ替えて再描画させる
+		todos = todos.sort((a, b) => Number((a.time || '3') > (b.time || '3')) * 2 - 1);
+		ctlIcon.setTaskAmount();//件数をセットし直す			
 	}
 
 	//** タスク削除   */
@@ -103,14 +105,9 @@
 				JSON.stringify({ id_token: idToken, taskNo: taskNo })
 			)
 			.then((res) => {
-				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					//	消したやつ以外にする
-					//	複数端末での同時使用を想定していないのでデータを取り直すことはしない
-					todos = todos.filter((val) => !(val.taskno === taskNo));
-					
-					ctlIcon.setTaskAmount();//件数をセットし直す
+				//サーバを意識させないため何もしない
 				} else {
 					throw data.message;
 				}
@@ -120,6 +117,10 @@
 				Promise.resolve().then(() => alert(e))
 					.then(() => window.open("about:blank", "_self").close());
 			});
+
+		//	消したやつ以外にする
+		todos = todos.filter((val) => !(val.taskno === taskNo));
+		ctlIcon.setTaskAmount();//件数をセットし直す
 	}
 
 	//アイコン操作用のクロージャ

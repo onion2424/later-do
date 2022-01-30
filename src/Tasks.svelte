@@ -88,6 +88,7 @@
         //親にイベントを渡す
         dispatch('toggle', {
             taskNo: taskNo,
+            mode: mode //押されたときのモードを送る
         });
         return;
     }
