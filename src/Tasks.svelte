@@ -21,6 +21,7 @@
 
     //あとで　と　今度　でタスクを切り替える
     $: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
+    $: isConnecting = isConnecting;
 
     let setImageSize = (set: HTMLImageElement, vanish: HTMLImageElement, isBig: boolean) => {};
     const dispatch = createEventDispatcher();
@@ -196,8 +197,9 @@
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
-                            shortSwipes={true}
-                            threshold={10}
+                            shortSwipes={false}
+                            enabled={!
+                            isConnecting}
                             >
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
