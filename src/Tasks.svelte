@@ -197,7 +197,7 @@
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={true}
-                            threshold={30}
+                            threshold={10}
                             >
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
