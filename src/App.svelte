@@ -40,7 +40,7 @@
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
 					//todos = JSON.parse(JSON.stringify(todos));
-					todos = todos.sort((a, b) =>  Number(a.time > b.time) * 2 - 1);
+					todos = todos.sort((a, b) =>  Number((a.time || '3') > (b.time || '3')) * 2 - 1);
 				} else {
 					throw data.message;
 				}
@@ -80,7 +80,7 @@
 							"T" +("0" + setTime.getHours()).slice(-2) +":" +("0" + setTime.getMinutes()).slice(1, 2) +"0";
 					}
 					//todosを入れ替えて再描画させる
-					todos = temp.sort((a, b) =>  Number(a.time > b.time) * 2 - 1).sort((a, b) =>  Number(a.time > b.time) * 2 - 1);
+					todos = temp.sort((a, b) => Number((a.time || '3') > (b.time || '3')) * 2 - 1);
 					ctlIcon.setTaskAmount();//件数をセットし直す
 				} else {
 					throw data.message;
