@@ -132,7 +132,7 @@
         todo_cp = null;
         return;
     }
-    let test = false;
+    let test;
     //スライド時
     function onProgress(e){
         let elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
@@ -144,7 +144,7 @@
             elm && setImageSize(elm.firstElementChild, elm.lastElementChild, isBig);
         }
         if(isBig){
-            e.detail[0][0].shortSwipes = true;
+            //e.detail[0][0].shortSwipes = true;
             test = true;
         }else{
             test = false;
