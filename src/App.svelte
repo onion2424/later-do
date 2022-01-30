@@ -8,6 +8,7 @@ import { tick } from "svelte";
 	//------------プロパティ-------------------
 	let mode = MODE_LATER; //あとで　か　こんど
 	let isConnecting = false; //サーバーと通信中かどうか
+	let isAnimating;
 
 	// LINE関連
 	let isInClient = false;
@@ -17,6 +18,8 @@ import { tick } from "svelte";
 	let isLoadEnd = false; //初期ロードが終わっているか
 	let waitPromise; //タスク取得中かどうかを判断するPromise
 	let todos = []; //表示するタスク
+	$: later = todos.filter((val) => !val.isnexttime); 
+	$: nexttime = todos.filter((val) => val.isnexttime);
 	let ctlIcon; //アイコンを操作するためのクロージャ
 
 	//--------------関数----------------------
@@ -220,15 +223,26 @@ import { tick } from "svelte";
 		{#await waitPromise}
 			<p>...データ取得中</p>
 		{:then}
-			{#if todos.length > 0 && !!todos.find((val)=> val.isnexttime === (mode === MODE_NEXT))}
+
+			{#if mode === MODE_LATER && later}
 				<Tasks
 					{todos}
-					bind:mode={mode}
+					mode={MODE_LATER}
 					bind:isConnecting={isConnecting}
 					on:delete={deleteTodo}
 					on:toggle={toggleTodo}
 					on:setdate={setDateTodo}
 				/>
+			{:else if mode === MODE_NEXT && nexttime}
+				<Tasks
+				{todos}
+				mode={MODE_NEXT}
+				bind:isConnecting={isConnecting}
+				on:delete={deleteTodo}
+				on:toggle={toggleTodo}
+				on:setdate={setDateTodo}
+				/>
+
 			{:else if isLoadEnd}
 				<div class="nothing_task">
 					<div class="background">
@@ -246,6 +260,7 @@ import { tick } from "svelte";
 					</div>
 				</div>
 			{/if}
+
 		{/await}
 	{:else}
 		<p>

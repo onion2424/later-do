@@ -20,7 +20,7 @@
     export let isConnecting:boolean;
 
     //あとで　と　今度　でタスクを切り替える
-    $: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
+    //$: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
 
     let setImageSize = (set: HTMLImageElement, vanish: HTMLImageElement, isBig: boolean) => {};
     const dispatch = createEventDispatcher();
@@ -179,8 +179,8 @@
     }
 
 </script>
-        {#each shows as todo (todo.taskno)}
-            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: duration}}" on:outroend="{() => duration = 0}">
+        {#each todos as todo (todo.taskno)}
+            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 200}}" on:outroend="{() => duration = 0}">
                 <div class="task_wrapper">
                     <div class="task_bottom">
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
