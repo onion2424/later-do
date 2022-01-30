@@ -1,0 +1,435 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.5 (Ubuntu 13.5-2.pgdg20.04+1)
+-- Dumped by pg_dump version 14.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: deletetask(character varying, integer); Type: PROCEDURE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE PROCEDURE public.deletetask(uid character varying, num integer)
+    LANGUAGE plpgsql
+    AS $$
+--変数宣言
+DECLARE
+setId int;
+
+BEGIN
+  --idを取得する
+  SELECT id INTO setId FROM M_user WHERE UserID = uid;
+
+  --DELETEする
+  DELETE FROM T_todo WHERE id = setId AND taskNo = num;
+  
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'タスクの削除に失敗しました。';
+  END IF;
+END;
+$$;
+
+
+ALTER PROCEDURE public.deletetask(uid character varying, num integer) OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: getsendmessage(); Type: FUNCTION; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE FUNCTION public.getsendmessage() RETURNS TABLE(userid character varying, tasks text)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+ now timestamp with time zone;
+BEGIN
+  now = now();
+  RETURN QUERY
+  SELECT
+    m.userid
+    ,'##あとでやること##' || chr(13) || chr(10) || t.tasks
+  FROM M_user m
+  INNER JOIN(
+    SELECT
+      id,
+      STRING_AGG("task", chr(13) || chr(10) || chr(13) || chr(10)) AS tasks --タスクごとに空白で区切る
+    FROM t_todo
+    Where sendtime <= now
+    GROUP BY id) t
+  on m.Master = true AND m.id = t.id;
+
+END;
+$$;
+
+
+ALTER FUNCTION public.getsendmessage() OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: gettasks(character varying); Type: FUNCTION; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE FUNCTION public.gettasks(uid character varying) RETURNS TABLE(taskno integer, task text, "time" text, isnexttime boolean)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+ now timestamp with time zone;
+BEGIN
+  now = now();
+  RETURN QUERY
+  SELECT 
+    t.TaskNo,
+    t.Task,
+    COALESCE(to_char(SendTime, 'YYYY-MM-DD"T"HH24:MI'), ''), --時間のフォーマットをhtmlに合わせる, nullだと都合が悪いので空白
+    t.isnexttime
+  FROM T_todo AS t
+  INNER JOIN(
+  SELECT
+    ID
+  FROM M_User
+  WHERE UserID = uid
+  ) AS m
+  ON t.id = m.id
+  ORDER BY SendTime ASC;
+END;
+$$;
+
+
+ALTER FUNCTION public.gettasks(uid character varying) OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: postprocess(); Type: PROCEDURE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE PROCEDURE public.postprocess()
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+ now timestamp with time zone;
+BEGIN
+  now = DATE_TRUNC('minute', now());
+  now = now -  CAST( (extract(minute from now)::integer % 10) || 'minute' as INTERVAL);
+  --UPDATEする
+  UPDATE T_todo 
+  SET
+  count = count + 1,
+  isNextTime = false,
+  sendtime =   --countに応じて次に送る時間を変更
+    CASE WHEN count = 0 THEN now + CAST('10 minutes' as INTERVAL)
+         WHEN count = 1 THEN now + CAST('30 minutes' as INTERVAL)
+         WHEN count = 2 THEN now + CAST('1 hour' as INTERVAL)
+         WHEN count = 3 THEN now + CAST('3 hours' as INTERVAL)
+         WHEN count = 4 THEN now + CAST('6 hours' as INTERVAL)
+         --次の日の朝６時
+         ELSE DATE_TRUNC('day', now + CAST('1 day' as INTERVAL)) + CAST('6 hours' as INTERVAL)
+    END
+  WHERE sendtime <= now;
+  
+END;
+$$;
+
+
+ALTER PROCEDURE public.postprocess() OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: rounduptime(); Type: FUNCTION; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE FUNCTION public.rounduptime() RETURNS timestamp with time zone
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  t timestamp with time zone;
+BEGIN
+  select DATE_TRUNC('minute', now()) into t;
+  --10分後にする
+  t = t + CAST('10 minutes' as INTERVAL);
+  --10分単位にするため,直後の10の倍数分にする(1のくらいを繰り上げるための最小値を足す)
+  t = t + CAST( (10 - extract(minute from t)::integer % 10) || 'minute' as INTERVAL);
+  RETURN t;
+END;
+$$;
+
+
+ALTER FUNCTION public.rounduptime() OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: setsendtime(character varying, integer, character varying); Type: PROCEDURE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE PROCEDURE public.setsendtime(uid character varying, num integer, str character varying)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+ settime timestamp with time zone;
+ setId int;
+BEGIN
+  IF str != '' OR str IS NULL THEN 
+    settime = CAST( str as timestamp with time zone);
+    IF settime IS NULL THEN
+      RAISE EXCEPTION '日付が不正です。';
+    END IF;
+    --10分で切る
+    settime = DATE_TRUNC('minute', settime);
+    settime = settime -  CAST( (extract(minute from settime)::integer % 10) || 'minute' as INTERVAL);
+  ELSE
+    --空白出来た場合はnullを入れたい
+    settime = CAST( null as timestamp with time zone); 
+  END IF;
+  --idを取得する
+  SELECT id INTO setId FROM M_user WHERE UserID = uid;
+  
+  --UPDATEする
+  UPDATE T_todo 
+  SET
+  --念のため
+  count = 0,
+  isNextTime = true,
+  --時間をセットする
+  sendtime = settime
+  WHERE id = setID AND taskno = num AND isNextTime = true;
+    
+  IF NOT FOUND THEN
+    RAISE EXCEPTION '日付の設定に失敗しました。';
+  END IF;
+  
+END;
+$$;
+
+
+ALTER PROCEDURE public.setsendtime(uid character varying, num integer, str character varying) OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: settask(character varying, text); Type: PROCEDURE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE PROCEDURE public.settask(uid character varying, task text)
+    LANGUAGE plpgsql
+    AS $$
+--変数定義
+DECLARE
+setTaskNo int;
+setTime timestamp with time zone;
+setId int;
+
+BEGIN
+  --idを取得する
+  SELECT id INTO setId FROM M_user WHERE UserID = uid;
+
+  --タスクNoを空き番号にする
+  SELECT COALESCE(MIN(taskNo + 1), 1) INTO setTaskNo FROM T_todo 
+  WHERE (
+  id = setId AND  --レコードのtaskNoの値全てに対して次の番号の存在確認をする
+  (taskNo + 1) NOT IN (SELECT taskNo FROM T_todo WHERE id = setId)
+  );
+  
+  --時間を10分後にして切り上げする
+  setTime = roundUpTime();
+  
+  --INSERTする
+  INSERT INTO T_todo VALUES (setId, setTaskNo, task, setTime, 1, false);
+  
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'タスク登録に失敗しました。';
+  END IF;
+END;
+$$;
+
+
+ALTER PROCEDURE public.settask(uid character varying, task text) OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: toggletask(character varying, integer); Type: PROCEDURE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE PROCEDURE public.toggletask(uid character varying, num integer)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+ settime timestamp with time zone;
+ setId int;
+ cnt int;
+BEGIN
+  --idを取得する
+  SELECT id INTO setId FROM M_user WHERE UserID = uid;
+  
+  --UPDATEする
+  UPDATE T_todo 
+  SET
+  count = CASE WHEN isNextTime THEN 1 ELSE 0 END,
+  sendtime = CASE WHEN isNextTime THEN rounduptime() ELSE CAST( null as timestamp with time zone) END,
+  isNextTime = NOT isNextTime
+  WHERE id = setID AND taskno = num;
+    
+  IF NOT FOUND THEN
+    RAISE EXCEPTION '更新に失敗しました。';
+  END IF;
+  
+END;
+$$;
+
+
+ALTER PROCEDURE public.toggletask(uid character varying, num integer) OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: userdelete(character varying); Type: PROCEDURE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE PROCEDURE public.userdelete(uid character varying)
+    LANGUAGE plpgsql
+    AS $$
+--変数宣言
+DECLARE
+setId int;
+
+BEGIN --BEGINがTRANSACTIONらしい
+  --タスク用のidを取得する
+  SELECT id INTO setId FROM M_user WHERE UserID = uid;
+
+  --そのユーザのT_todoレコードを全てDELETEする
+  DELETE FROM T_todo WHERE id = setId;
+  
+  --M_userからも削除する
+  DELETE FROM M_user WHERE userId = uid;
+  --削除を確認する
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'ユーザ情報が見つかりませんでした。';
+  END IF;
+   
+END;
+$$;
+
+
+ALTER PROCEDURE public.userdelete(uid character varying) OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: userdeposit(character varying); Type: PROCEDURE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE PROCEDURE public.userdeposit(uid character varying)
+    LANGUAGE plpgsql
+    AS $$
+
+BEGIN
+
+  --INSERTする
+  --INSERT INTO M_user (UserID, Master)  VALUES (uid, true);
+  INSERT INTO M_user (UserID, Master)  VALUES (uid, false); --デモ登録にする
+  
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'ユーザ情報の登録に失敗しました。';
+  END IF;
+END;
+$$;
+
+
+ALTER PROCEDURE public.userdeposit(uid character varying) OWNER TO cbkeehvirwxwst;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: m_user; Type: TABLE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE TABLE public.m_user (
+    id integer NOT NULL,
+    userid character varying(50) NOT NULL,
+    master boolean
+);
+
+
+ALTER TABLE public.m_user OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: m_user_id_seq; Type: SEQUENCE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE SEQUENCE public.m_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.m_user_id_seq OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: m_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cbkeehvirwxwst
+--
+
+ALTER SEQUENCE public.m_user_id_seq OWNED BY public.m_user.id;
+
+
+--
+-- Name: t_todo; Type: TABLE; Schema: public; Owner: cbkeehvirwxwst
+--
+
+CREATE TABLE public.t_todo (
+    id integer NOT NULL,
+    taskno integer NOT NULL,
+    task text,
+    sendtime timestamp with time zone,
+    count integer,
+    isnexttime boolean
+);
+
+
+ALTER TABLE public.t_todo OWNER TO cbkeehvirwxwst;
+
+--
+-- Name: m_user id; Type: DEFAULT; Schema: public; Owner: cbkeehvirwxwst
+--
+
+ALTER TABLE ONLY public.m_user ALTER COLUMN id SET DEFAULT nextval('public.m_user_id_seq'::regclass);
+
+
+--
+-- Name: m_user m_user_pkey; Type: CONSTRAINT; Schema: public; Owner: cbkeehvirwxwst
+--
+
+ALTER TABLE ONLY public.m_user
+    ADD CONSTRAINT m_user_pkey PRIMARY KEY (userid);
+
+
+--
+-- Name: t_todo t_todo_pkey; Type: CONSTRAINT; Schema: public; Owner: cbkeehvirwxwst
+--
+
+ALTER TABLE ONLY public.t_todo
+    ADD CONSTRAINT t_todo_pkey PRIMARY KEY (id, taskno);
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: cbkeehvirwxwst
+--
+
+REVOKE ALL ON SCHEMA public FROM postgres;
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO cbkeehvirwxwst;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- Name: LANGUAGE plpgsql; Type: ACL; Schema: -; Owner: postgres
+--
+
+GRANT ALL ON LANGUAGE plpgsql TO cbkeehvirwxwst;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
