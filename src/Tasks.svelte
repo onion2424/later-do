@@ -1,5 +1,4 @@
 <script lang="ts">
-    import axios from "axios";
     import { tick } from "svelte";
     import { compute_slots, createEventDispatcher, dataset_dev, loop_guard } from "svelte/internal";
     import { onMount } from "svelte";
@@ -8,6 +7,7 @@
     import { Swiper, SwiperSlide } from "swiper/svelte";
     // Import Swiper styles
     import "swiper/css";
+    
     //定数
     const LONG_SWIPES_RATIO = 0.15;
     const MODE_LATER = 1;
@@ -217,7 +217,7 @@
 
 <style lang="scss">
     $line_color: #06c755;
-
+    /*タスク*/
     div.task {
         height: auto;
         width: 100%;
@@ -229,7 +229,7 @@
             height: 100%;
             width: 100%;
         }
-
+        /*下の部分*/
         div.task_bottom {
             z-index: -1;
             position: absolute;
@@ -249,12 +249,14 @@
                 }
             }
         }
+        /*上の部分*/
         div.task_top {
             height: 100%;
-            width: 100%; /*少しはみ出させる*/
+            width: 100%;
         }
     }
     
+    /*編集可能の時間*/
     span.edit_time{
         position:relative;
         width:auto;
@@ -274,6 +276,7 @@
         }
     }
 
+/*文章をなくす共通クラス*/
 .clearText {
 	text-indent:150%;
 	white-space:nowrap;

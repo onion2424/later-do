@@ -119,24 +119,13 @@
 					.then(() => window.open("about:blank", "_self").close());
 			});
 	}
-	
-	// //メニューがクリックされたとき
-	// function onClickMenu(){
-	// 	if(mode==MODE_LATER){
-	// 		(document.getElementById('laterIcon')as HTMLElement).style.backgroundColor="#06c755";
-	// 		(document.getElementById('nexttimeIcon')as HTMLElement).style.backgroundColor="#f0f0f0";
-	// 	}else{
-	// 		(document.getElementById('laterIcon')as HTMLElement).style.backgroundColor="#f0f0f0";
-	// 		(document.getElementById('nexttimeIcon')as HTMLElement).style.backgroundColor="#06c755";
-	// 	}
-	// }
 
-	//件数セット用のクロージャ
+	//アイコン操作用のクロージャ
 	function setTaskAmount_enclosure(){
 		const laterIcon = document.getElementById('laterIcon') as HTMLElement;
 		const nexttimeIcon = document.getElementById('nexttimeIcon') as HTMLElement;
 		if(!laterIcon || !nexttimeIcon) throw 'アイコンが見つかりません。';
-		//件数をセットする関数を返す
+		//件数をセットする関数とアイコンの色を変える関数を返す
 		return {
 			setTaskAmount : function (){
 			laterIcon.dataset.num = todos.filter((val) => !val.isnexttime)?.length + '';
@@ -204,12 +193,13 @@
 						);
 					});
 			});
-		} else {
-			todos = [
-				{ time: "今日", task: "あいうえお", isnexttime: false },
-				{ time: "明日", task: "かきくけこ", isnexttime: true },
-			];
-		}
+		} 
+		// else {
+		// 	todos = [
+		// 		{ time: "今日", task: "あいうえお", isnexttime: false },
+		// 		{ time: "明日", task: "かきくけこ", isnexttime: true },
+		// 	];
+		// }
 	});
 </script>
 
@@ -249,9 +239,9 @@
 			LINE外からのこのWEBページの利用はできません。<br/>
 			LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
-		{#if todos.length > 0}
+		<!-- {#if todos.length > 0}
 			<Tasks {todos} bind:mode />
-		{/if}
+		{/if} -->
 	{/if}
 </main>
 <menu>
