@@ -20,11 +20,11 @@
     //あとで　と　今度　でタスクを切り替える
     $: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
 
-    let setImageSize = (elm: HTMLImageElement, progress: number) => {};
+    let setImageSize = (set: HTMLImageElement, vanish: HTMLImageElement, isBig: boolean) => {};
     const dispatch = createEventDispatcher();
     //時間が変更されたかをチェックする
     let todo_cp:string;
-
+    //操作によるアニメーションの時間を管理する 
     let duration = 0;
 
     //--------------関数----------------------
@@ -34,14 +34,20 @@
         await tick();
         setImageSize = setImageSize_enclosure();
     });
+
     //** 画像のサイズをクロージャで持たせておく*/
     function setImageSize_enclosure() {
         //基準のフォントサイズを取得
         const size = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue('font-size')) || 16;
-        return function (elm: HTMLImageElement, progress: number) {
-            let n = progress > LONG_SWIPES_RATIO / 2 ? 1.5 : 0.8;
-            elm.width = n * size;
-            elm.height = n * size;
+        
+        //スライド上のアイコンを操作する関数を返す
+        return function (set: HTMLImageElement, vanish: HTMLImageElement, isBig: boolean) {
+            let n = isBig ? 1.5 : 0.8;
+            //スライド位置によってサイズを変更
+            set.width = n * size;
+            set.height = n * size;
+            //逆側のアイコンをなくす
+            vanish.height = 0; 
         };
     }
     //**時間が変更されていれば*/
@@ -58,8 +64,8 @@
 
     //**スライドが変更されたとき*/
     async function onSlideChange(idx:number, taskNo:number){
-        if(idx !== 1){ //初期化時に 0 -> 1
-            duration = 200;
+        if(idx !== 1){ //初期化時に 0 -> 1 に移動する処理があるので無視する
+            duration = 200; //個別にアニメーションの時間を管理するため
             if(idx == 0){
                 //タスクトグル
                 toggleTodo(taskNo);
@@ -67,8 +73,6 @@
                 //タスク削除
                 deleteTodo(taskNo);
             }
-        }else{
-            alert('お');
         }
  
         return;
@@ -129,6 +133,17 @@
         return;
     }
 
+    //スライド時
+    function onProgress(e){
+        let elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
+        let progress = 0.5 - e.detail[0][1];
+        let isBig = progress > (LONG_SWIPES_RATIO / 2);
+        if(progress < 0){
+            elm && setImageSize(elm.lastElementChild, elm.firstElementChild, isBig);
+        }else{
+            elm && setImageSize(elm.firstElementChild, elm.lastElementChild, isBig);
+        }  
+    }
 
     //** 時間を捻じ曲げて表示*/
     function showTime(str:string){
@@ -174,29 +189,10 @@
                             on:slideChange={(e) => {
                                 onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
                             }}
-                            on:progress={(e) => {
-                                let elm;
-                                let progress = 0.5 - e.detail[0][1];
-                                if(progress < 0){
-                                    elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
-                                    if(elm){
-                                        elm.firstElementChild.height = 0;//逆側をなくす
-                                        elm = elm.lastElementChild;
-                                    }
-                                    progress *= -1; //正にする
-                                }else{
-                                    elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
-                                    if(elm){
-                                        elm.lastElementChild.height = 0;//逆側をなくす
-                                        elm = elm.firstElementChild;
-                                    }
-                                }
-                                
-                                elm && setImageSize(elm, progress);
-                            }}
+                            on:progress={onProgress}
                             on:touchStart={(e) => e.detail[0][0].el.classList.add('move')}
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
-                            centeredSlides={true}                         
+                            initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             >
 
