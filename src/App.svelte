@@ -48,10 +48,14 @@
 			)
 			.then((res) => {
 				isConnecting = false;
+				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
-				if (data.Status === "OK") {				
-					//取り直しをせずに自前で更新する
-					todos = todos.sort((a, b) =>  Number((a.time || '3') > (b.time || '3')) * 2 - 1);
+				if (data.Status === "OK") {
+					//受け取ったデータを配列に入れる
+					todos = data.Contents;
+					isLoadEnd = true;
+					//タスクの件数を再表示
+					ctlIcon.setTaskAmount();
 				} else {
 					throw data.message;
 				}
@@ -77,25 +81,14 @@
 			)
 			.then((res) => {
 				isConnecting = false;
+				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					//	トグルさせる
-					let task = todos.find((val) => val.taskno == taskNo);
-					task.isnexttime = !task.isnexttime; //フラグを反転
-					//時間をセット
-					if (mode === MODE_LATER) {
-						task.time = "";
-					} else {
-						// 2022-01-01T12:00 のような形(16文字)に整形する
-						let setTime = new Date();
-						setTime.setMinutes(setTime.getMinutes() + 20);
-						task.time =
-							setTime.getFullYear() +"-" +("0" + Number(setTime.getMonth() + 1)).slice(-2) +"-" +("0" + setTime.getDate()).slice(-2) +
-							"T" +("0" + setTime.getHours()).slice(-2) +":" +("0" + setTime.getMinutes()).slice(1, 2) +"0";
-					}
-					//todosを入れ替えて再描画させる
-					todos = todos.sort((a, b) => Number((a.time || '3') > (b.time || '3')) * 2 - 1);
-					ctlIcon.setTaskAmount();//件数をセットし直す
+					//受け取ったデータを配列に入れる
+					todos = data.Contents;
+					isLoadEnd = true;
+					//タスクの件数を再表示
+					ctlIcon.setTaskAmount();
 				} else {
 					throw data.message;
 				}
@@ -119,11 +112,14 @@
 			)
 			.then((res) => {
 				isConnecting = false;
+				//ディープコピーをする
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
-					//	消したやつ以外にする
-					todos = todos.filter((val) => !(val.taskno === taskNo));
-					ctlIcon.setTaskAmount();//件数をセットし直す
+					//受け取ったデータを配列に入れる
+					todos = data.Contents;
+					isLoadEnd = true;
+					//タスクの件数を再表示
+					ctlIcon.setTaskAmount();
 				} else {
 					throw data.message;
 				}
