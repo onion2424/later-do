@@ -6,12 +6,17 @@ import { tick } from "svelte";
 	const MODE_LATER = 1;
 	const MODE_NEXT = 2;
 	//------------プロパティ-------------------
-	let todos = [];
+	let mode = MODE_LATER; //あとで　か　こんど
+	let isConnecting = false; //サーバーと通信中かどうか
+
+	// LINE関連
 	let isInClient = false;
 	let idToken;
+
+	//描画関連
+	let isLoadEnd = false; //初期ロードが終わっているか
 	let waitPromise; //タスク取得中かどうかを判断するPromise
-	let isLoadEnd = false;
-	let mode = MODE_LATER;
+	let todos = []; //表示するタスク
 	let ctlIcon; //アイコンを操作するためのクロージャ
 
 	//--------------関数----------------------
@@ -27,6 +32,8 @@ import { tick } from "svelte";
 			todos = JSON.parse(JSON.stringify(todos));
 			return;
 		}
+		//通信部分
+		isConnecting = true;
 		axios
 			.post(
 				"/setdate-task",
@@ -37,6 +44,7 @@ import { tick } from "svelte";
 				})
 			)
 			.then((res) => {
+				isConnecting = false;
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {				
 					//取り直しをせずに自前で更新する
@@ -56,12 +64,16 @@ import { tick } from "svelte";
 	function toggleTodo(e) {
 		let taskNo = e.detail.taskNo;
 		let mode = e.detail.mode;
+
+		//通信部分
+		isConnecting = true;
 		axios
 			.post(
 				"/toggle-task",
 				JSON.stringify({ id_token: idToken, taskNo: taskNo })
 			)
 			.then((res) => {
+				isConnecting = false;
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
 					//	トグルさせる
@@ -95,13 +107,15 @@ import { tick } from "svelte";
 	//** タスク削除   */
 	function deleteTodo(e) {
 		let taskNo = e.detail.taskNo;
-		//jsonでPOSTを送ってbodyにとりにいく
+		//通信部分
+		isConnecting = true;
 		axios
 			.post(
 				"/delete-task",
 				JSON.stringify({ id_token: idToken, taskNo: taskNo })
 			)
 			.then((res) => {
+				isConnecting = false;
 				let data = JSON.parse(JSON.stringify(res.data));
 				if (data.Status === "OK") {
 					//	消したやつ以外にする
@@ -247,7 +261,7 @@ import { tick } from "svelte";
 		<li>
 			<button
 				on:click={async (e) => {
-					await tick();
+					if(isConnecting) return; //サーバ通信中は動かさない
 					mode = MODE_LATER;
 					ctlIcon.setIconColer();
 				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span>
@@ -256,7 +270,7 @@ import { tick } from "svelte";
 		<li>
 			<button
 				on:click={async (e) => {
-					await tick();
+					if(isConnecting) return; //サーバ通信中は動かさない
 					mode = MODE_NEXT;
 					ctlIcon.setIconColer();
 				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span>
