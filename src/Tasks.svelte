@@ -132,7 +132,7 @@
         todo_cp = null;
         return;
     }
-    
+
     //スライド時
     function onProgress(e){
         let elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
@@ -142,6 +142,11 @@
             elm && setImageSize(elm.lastElementChild, elm.firstElementChild, isBig);
         }else{
             elm && setImageSize(elm.firstElementChild, elm.lastElementChild, isBig);
+        }
+        if(isBig){
+            e.detail[0][0].shortSwipes = true;
+        }else{
+            e.detail[0][0].shortSwipes = false;
         }
     }
 
@@ -188,7 +193,7 @@
                         <Swiper
                             on:slideChange={(e) => {
                                 onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
-                                
+                                e.detail[0][0].init();
                             }}
                             on:progress={onProgress}
                             on:touchStart={(e) => e.detail[0][0].el.classList.add('move')}
