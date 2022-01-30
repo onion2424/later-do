@@ -223,8 +223,8 @@ import { tick } from "svelte";
 			{#if todos.length > 0 && !!todos.find((val)=> val.isnexttime === (mode === MODE_NEXT))}
 				<Tasks
 					{todos}
-					bind:mode
-					bind:isConnecting
+					bind:mode={mode}
+					bind:isConnecting={isConnecting}
 					on:delete={deleteTodo}
 					on:toggle={toggleTodo}
 					on:setdate={setDateTodo}

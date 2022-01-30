@@ -198,6 +198,7 @@
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={false}
                             noSwiping={!isConnecting}
+                            disabled={!isConnecting}
                             >
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
