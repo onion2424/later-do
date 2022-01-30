@@ -18,8 +18,8 @@
 	let isLoadEnd = false; //初期ロードが終わっているか
 	let waitPromise; //タスク取得中かどうかを判断するPromise
 	let todos = []; //表示するタスク
-	$: later = JSON.parse(JSON.stringify((todos || []).filter((val) => !val.isnexttime)));
-	$: nexttime = JSON.parse(JSON.stringify((todos || []).filter((val) => val.isnexttime)));
+	$: later = JSON.parse(JSON.stringify(todos?.filter((val) => !val.isnexttime)));
+	$: nexttime = JSON.parse(JSON.stringify(todos?.filter((val) => val.isnexttime)));
 	let ctlIcon; //アイコンを操作するためのクロージャ
 
 	//--------------関数----------------------
@@ -139,8 +139,8 @@
 		//件数をセットする関数とアイコンの色を変える関数を返す
 		return {
 			setTaskAmount : function (){
-			laterIcon.dataset.num = later.length + '';
-			nexttimeIcon.dataset.num = nexttime.length + '';
+			laterIcon.dataset.num = todos?.filter((val) => !val.isnexttime).length + '';
+			nexttimeIcon.dataset.num = todos?.filter((val) => val.isnexttime).length + '';
 			true;
 			},
 
