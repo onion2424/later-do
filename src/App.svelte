@@ -1,6 +1,6 @@
 <script lang="ts">
 	import axios from "axios";
-import { tick } from "svelte";
+	import { tick } from "svelte";
 	import Tasks from "./Tasks.svelte";
 	//--------------定数-------------
 	const MODE_LATER = 1;
