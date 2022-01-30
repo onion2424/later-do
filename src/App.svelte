@@ -53,7 +53,6 @@
 				if (data.Status === "OK") {
 					//受け取ったデータを配列に入れる
 					todos = data.Contents;
-					isLoadEnd = true;
 					//タスクの件数を再表示
 					ctlIcon.setTaskAmount();
 				} else {
@@ -86,7 +85,6 @@
 				if (data.Status === "OK") {
 					//受け取ったデータを配列に入れる
 					todos = data.Contents;
-					isLoadEnd = true;
 					//タスクの件数を再表示
 					ctlIcon.setTaskAmount();
 				} else {
@@ -117,7 +115,6 @@
 				if (data.Status === "OK") {
 					//受け取ったデータを配列に入れる
 					todos = data.Contents;
-					isLoadEnd = true;
 					//タスクの件数を再表示
 					ctlIcon.setTaskAmount();
 				} else {
@@ -141,7 +138,6 @@
 			setTaskAmount : function (){
 			laterIcon.dataset.num = todos?.filter((val) => !val.isnexttime).length + '';
 			nexttimeIcon.dataset.num = todos?.filter((val) => val.isnexttime).length + '';
-			true;
 			},
 
 			setIconColer : function (){

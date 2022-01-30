@@ -241,7 +241,21 @@ class C_task
 
                 //SQL実行
                 if($stmt->execute()){
-                    $ret->Status = \httpResponse::STATUS_OK;
+                    //データを取り直して返す
+                    $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
+                    $stmt = $conn->prepare($sql);
+
+                    $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
+                    //SQL実行
+                    if($stmt->execute()){
+                        $aryList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+                        //戻り値設定
+                        $ret->Contents = $aryList ? $aryList : array();
+                        $ret->Status = \httpResponse::STATUS_OK;
+                    }else{
+                        $ret->message = "データ取得に失敗しました。";
+                    }
                 }else{
                     $ret->message = "更新に失敗しました。";
                 }
