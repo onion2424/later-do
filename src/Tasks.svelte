@@ -132,17 +132,23 @@
         todo_cp = null;
         return;
     }
-
+    let test = false;
     //スライド時
     function onProgress(e){
         let elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
-        let progress = 0.5 - e.detail[0][1];
+        let progress = Math.abs(0.5 - e.detail[0][1]);
         let isBig = progress > (LONG_SWIPES_RATIO / 2);
         if(progress < 0){
             elm && setImageSize(elm.lastElementChild, elm.firstElementChild, isBig);
         }else{
             elm && setImageSize(elm.firstElementChild, elm.lastElementChild, isBig);
-        }  
+        }
+        if(isBig){
+            e.detail[0][0].shortSwipes = true;
+            test = true;
+        }else{
+            test = false;
+        }
     }
 
     //** 時間を捻じ曲げて表示*/
@@ -188,12 +194,14 @@
                         <Swiper
                             on:slideChange={(e) => {
                                 onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
+                                
                             }}
                             on:progress={onProgress}
                             on:touchStart={(e) => e.detail[0][0].el.classList.add('move')}
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
+                            shortSwipes={test}
                             >
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
