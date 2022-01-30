@@ -158,7 +158,7 @@
 
 </script>
         {#each shows as todo (todo.taskno)}
-            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 200}}" on:outroend="{() => duration = 0}">
+            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: duration}}" on:outroend="{() => duration = 0}">
                 <div class="task_wrapper">
                     <div class="task_bottom">
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
