@@ -186,7 +186,7 @@
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
                         <img src="./img/btn_check.png" alt="完了" class="right" width="1px" height="1px"/>
                     </div>
-                    <div class="task_top">
+                    <div class="task_top" class:no_swiping="{isConnecting}">
                         <Swiper
                             on:slideChange={(e) => {
                                 onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
@@ -197,8 +197,7 @@
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={false}
-                            noSwiping={!isConnecting}
-                            disabled={!isConnecting}
+                            noSwipingClass = 'no_swiping'
                             >
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
