@@ -144,9 +144,9 @@
             elm && setImageSize(elm.firstElementChild, elm.lastElementChild, isBig);
         }
         if(isBig){
-            e.detail[0][0].shortSwipes = true;
+            !e.detail[0][0].shortSwipes && (e.detail[0][0].shortSwipes = true);
         }else{
-            e.detail[0][0].shortSwipes = false;
+            e.detail[0][0].shortSwipes && (e.detail[0][0].shortSwipes = false);
         }
     }
 
