@@ -13,8 +13,6 @@ use LINE\LINEBot\Event\FollowEvent;
 use LINE\LINEBot\Event\UnFollowEvent;
 use LINE\LINEBot\MessageBuilder;
 
-//logを出す
-error_log("hello! LineBot!!");
 
 //チャネルシークレットとチャネルアクセストークンを以下の変数にセット
 $channel_access_token = getenv('CHANNEL_ACCESS_TOKEN');
@@ -105,7 +103,6 @@ foreach ($events as $event) {
                     error_log($msg);
                     $builder->add(new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($msg));
                  }
-                //$bot->replyText($reply_token, 'かえる？');
                 $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
                 $bot->replyMessage($reply_token, $builder);
             }else{

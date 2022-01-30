@@ -12,8 +12,6 @@ class C_task
         /************POSTされたデータを取得***********/
         //  POSTされたJSON文字列を取り出す
         $json = file_get_contents("php://input");
-        ////error_log(json_encode($json));
-
 
         //  JSON文字列をobjectに変換
         //      =>trueにしないといけない
@@ -29,7 +27,7 @@ class C_task
 
         if (!isset($userData['sub']) || $userData['sub'] == "") {
 
-            //返答の形式
+            // ↓返答の正しい形式
             //$aryList = array(array('task' => 'あいうえお'), array('task' => 'かきくけこ'));
             $ret->message = "ユーザー認証に失敗しました。";
         } else { //--------------------データベース接続してデータを取る---------------
@@ -70,8 +68,6 @@ class C_task
         /************POSTされたデータを取得***********/
         //  POSTされたJSON文字列を取り出す
         $json = file_get_contents("php://input");
-        ////error_log(json_encode($json));
-
 
         //  JSON文字列をobjectに変換
         //      =>trueにしないといけない
