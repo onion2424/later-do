@@ -196,8 +196,8 @@
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
-                            shortSwipes={false}
-                            enabled={!isConnecting}
+                            shortSwipes={true}
+                            threshold={100}
                             >
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
