@@ -18,8 +18,8 @@
 	let isLoadEnd = false; //初期ロードが終わっているか
 	let waitPromise; //タスク取得中かどうかを判断するPromise
 	let todos = []; //表示するタスク
-	$: later = (todos || []).filter((val) => !val.isnexttime); 
-	$: nexttime = (todos || []).filter((val) => val.isnexttime);
+	$: later = JSON.parse(JSON.stringify((todos || []).filter((val) => !val.isnexttime)));
+	$: nexttime = JSON.parse(JSON.stringify((todos || []).filter((val) => val.isnexttime)));
 	let ctlIcon; //アイコンを操作するためのクロージャ
 
 	//--------------関数----------------------
