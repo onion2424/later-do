@@ -16,8 +16,8 @@
     const MODE_NEXT = 2;
     //------------プロパティ-------------------
     export let todos;
-    export let mode;
-    export let isConnecting;
+    export let mode:number;
+    export let isConnecting:boolean;
 
     //あとで　と　今度　でタスクを切り替える
     $: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
@@ -197,7 +197,7 @@
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
                             shortSwipes={false}
-                            disabled={isConnecting}
+                            enabled={!isConnecting}
                             >
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
