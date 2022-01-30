@@ -18,12 +18,14 @@
     export let todos = [];
     export let mode;
     //あとで　と　今度　でタスクを切り替える
-    $: shows = JSON.parse(JSON.stringify(mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime)));
+    $: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
 
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
     const dispatch = createEventDispatcher();
     //時間が変更されたかをチェックする
     let todo_cp:string;
+
+    let duration = 0;
 
     //--------------関数----------------------
 
@@ -55,7 +57,8 @@
     }
 
     //**スライドが変更されたとき*/
-    function onSlideChange(idx:number, taskNo:number){
+    async function onSlideChange(idx:number, taskNo:number){
+        duration = 200;
         if(idx == 0){
             //タスクトグル
             toggleTodo(taskNo);
@@ -63,6 +66,8 @@
             //タスク削除
             deleteTodo(taskNo);
         }
+        await tick();
+        duration = 0;
         return;
     }
 
@@ -155,7 +160,7 @@
 
 </script>
         {#each shows as todo (todo.taskno)}
-            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 250}}">
+            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 200}}">
                 <div class="task_wrapper">
                     <div class="task_bottom">
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
