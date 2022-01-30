@@ -132,7 +132,7 @@
         todo_cp = null;
         return;
     }
-    let test;
+    
     //スライド時
     function onProgress(e){
         let elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
@@ -142,12 +142,6 @@
             elm && setImageSize(elm.lastElementChild, elm.firstElementChild, isBig);
         }else{
             elm && setImageSize(elm.firstElementChild, elm.lastElementChild, isBig);
-        }
-        if(isBig){
-            //e.detail[0][0].shortSwipes = true;
-            test = true;
-        }else{
-            test = false;
         }
     }
 
@@ -201,7 +195,7 @@
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
                             initialSlide= {1}
                             longSwipesRatio={LONG_SWIPES_RATIO}
-                            shortSwipes={test}
+                            shortSwipes={false}
                             >
 
                             <SwiperSlide class="task_delete"><span /></SwiperSlide>
