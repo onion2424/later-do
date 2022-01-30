@@ -18,7 +18,7 @@
     export let todos = [];
     export let mode;
     //あとで　と　今度　でタスクを切り替える
-    $: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
+    $: shows = JSON.parse(JSON.stringify(mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime)));
 
     let setImageSize = (elm: HTMLImageElement, progress: number) => {};
     const dispatch = createEventDispatcher();
@@ -155,7 +155,7 @@
 
 </script>
         {#each shows as todo (todo.taskno)}
-            <div class="task" animate:flip="{{duration: 200}}" out:slide|local="{{duration: 300}}">
+            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 250}}">
                 <div class="task_wrapper">
                     <div class="task_bottom">
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
