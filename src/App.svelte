@@ -224,20 +224,22 @@ import { tick } from "svelte";
 			<p>...データ取得中</p>
 		{:then}
 
-			{#if mode === MODE_LATER && later}
+			{#if mode === MODE_LATER && later.length > 0}
 				<Tasks
 					todos={later}
 					mode={MODE_LATER}
-					bind:isConnecting={isConnecting}
+					bind:isAnimating
+					bind:isConnecting
 					on:delete={deleteTodo}
 					on:toggle={toggleTodo}
 					on:setdate={setDateTodo}
 				/>
-			{:else if mode === MODE_NEXT && nexttime}
+			{:else if mode === MODE_NEXT && nexttime.length > 0}
 				<Tasks
 					todos={nexttime}
 					mode={MODE_NEXT}
-					bind:isConnecting={isConnecting}
+					bind:isAnimating
+					bind:isConnecting
 					on:delete={deleteTodo}
 					on:toggle={toggleTodo}
 					on:setdate={setDateTodo}
@@ -277,7 +279,7 @@ import { tick } from "svelte";
 		<li>
 			<button
 				on:click={async (e) => {
-					if(isConnecting) return; //サーバ通信中は動かさない
+					if(isAnimating) return; //サーバ通信中は動かさない
 					mode = MODE_LATER;
 					ctlIcon.setIconColer();
 				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span>
@@ -286,7 +288,7 @@ import { tick } from "svelte";
 		<li>
 			<button
 				on:click={async (e) => {
-					if(isConnecting) return; //サーバ通信中は動かさない
+					if(isAnimating) return; //サーバ通信中は動かさない
 					mode = MODE_NEXT;
 					ctlIcon.setIconColer();
 				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span>

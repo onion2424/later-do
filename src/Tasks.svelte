@@ -14,20 +14,19 @@
     const LONG_SWIPES_RATIO = 0.15;
     const MODE_LATER = 1;
     const MODE_NEXT = 2;
+
     //------------プロパティ-------------------
     export let todos;
     export let mode:number;
     export let isConnecting:boolean;
+    export let isAnimating:boolean;
 
-    //あとで　と　今度　でタスクを切り替える
-    //$: shows = mode == MODE_LATER ? todos.filter((val) => !val.isnexttime) : todos.filter((val) => val.isnexttime);
-
+    //タスクの下のアイコンの大きさを変える
     let setImageSize = (set: HTMLImageElement, vanish: HTMLImageElement, isBig: boolean) => {};
+    //イベント用
     const dispatch = createEventDispatcher();
     //時間が変更されたかをチェックする
     let todo_cp:string;
-    //操作によるアニメーションの時間を管理する 
-    let duration = 0;
 
     //--------------関数----------------------
 
@@ -67,7 +66,6 @@
     //**スライドが変更されたとき*/
     async function onSlideChange(idx:number, taskNo:number){
         if(idx !== 1){ //初期化時に 0 -> 1 に移動する処理があるので無視する
-            duration = 200; //個別にアニメーションの時間を管理するため
             if(idx == 0){
                 //タスクトグル
                 toggleTodo(taskNo);
@@ -180,7 +178,7 @@
 
 </script>
         {#each todos as todo (todo.taskno)}
-            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 200}}" on:outroend="{() => duration = 0}">
+            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 200}}" on:introstart="{() => isAnimating = true}" on:outroend="{() => isAnimating = false}">
                 <div class="task_wrapper">
                     <div class="task_bottom">
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
