@@ -226,7 +226,7 @@ import { tick } from "svelte";
 
 			{#if mode === MODE_LATER && later}
 				<Tasks
-					{todos}
+					todos={later}
 					mode={MODE_LATER}
 					bind:isConnecting={isConnecting}
 					on:delete={deleteTodo}
@@ -235,12 +235,12 @@ import { tick } from "svelte";
 				/>
 			{:else if mode === MODE_NEXT && nexttime}
 				<Tasks
-				{todos}
-				mode={MODE_NEXT}
-				bind:isConnecting={isConnecting}
-				on:delete={deleteTodo}
-				on:toggle={toggleTodo}
-				on:setdate={setDateTodo}
+					todos={nexttime}
+					mode={MODE_NEXT}
+					bind:isConnecting={isConnecting}
+					on:delete={deleteTodo}
+					on:toggle={toggleTodo}
+					on:setdate={setDateTodo}
 				/>
 
 			{:else if isLoadEnd}
