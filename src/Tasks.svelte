@@ -24,8 +24,10 @@
     let setImageSize = (set: HTMLImageElement, vanish: HTMLImageElement, isBig: boolean) => {};
     //イベント用
     const dispatch = createEventDispatcher();
-    //時間が変更されたかをチェックする
+    //時間が変更されたかをチェックするためにコピーを格納する
     let todo_cp:string;
+    //スライドを動かさない
+    let isNoSwiping;
 
     //--------------関数----------------------
 
@@ -116,6 +118,9 @@
     function onFocus(todo){
         todo.time = todo.time ? todo.time : "";
         todo_cp = JSON.stringify(todo);
+
+        //スワイプ不可
+        isNoSwiping = true;
         return;
     }
 
@@ -128,10 +133,11 @@
         }
 
         todo_cp = null;
+        isNoSwiping = false; //スワイプ可
         return;
     }
 
-    //スライド時
+    //スワイプ時
     function onProgress(e){
         let elm = e.detail[0][0].el?.closest(".task_wrapper")?.firstElementChild;
         let progress = 0.5 - e.detail[0][1];
@@ -182,7 +188,7 @@
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
                         <img src="./img/btn_check.png" alt="完了" class="right" width="1px" height="1px"/>
                     </div>
-                    <div class="task_top" class:no_swiping="{isConnecting}">
+                    <div class="task_top" class:no_swiping="{isConnecting || isNoSwiping}">
                         <Swiper
                             on:slideChange={(e) => {
                                 onSlideChange(e.detail[0][0].activeIndex, todo.taskno);

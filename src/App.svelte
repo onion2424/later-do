@@ -168,10 +168,10 @@
 				e.stopPropagation(); //伝播させない
 			}
 		}, true);
-		//選択禁止
-		// body.addEventListener("selectstart", function(e){
-		// 	e.stopPropagation(); //伝播させない
-		// }, true);
+		//選択禁止(cssでも禁止にしている)
+		body.addEventListener("selectstart", function(e){
+			e.stopPropagation(); //伝播させない
+		}, true);
 
 
 
