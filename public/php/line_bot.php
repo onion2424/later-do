@@ -48,7 +48,9 @@ try { //全体を監視
             case ($event instanceof FollowEvent):
                 $message = 'ユーザ登録に失敗しました。もう一度追加し直してください。';
                 try { //個別に例外処理
+                    //ユーザID取得
                     $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
+                    //SQL実行
                     $connection->userDeposit($id);
 
                     //失敗したらログを残す
@@ -69,8 +71,7 @@ try { //全体を監視
                 //何も送れない
                 $message = null;
                 try {
-                    $conn = new PDO($dsn, $url['user'], $url['pass']);
-                    $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                    //ユーザID取得
                     $id = $event->getUserID();
                     //SQL実行
                     $connection->userDelete($id);
@@ -87,7 +88,6 @@ try { //全体を監視
                 // メッセージ受信時
             case ($event instanceof TextMessage):
                 if ($event->getText() == 'ヘルプ') {
-                    error_log('ヘルプ');
                     $builder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
                     // ビルダーにメッセージをすべて追加
                     $message = [
@@ -102,9 +102,10 @@ try { //全体を監視
                 } else {
                     $message = "タスク登録に失敗しました。もう一度送信してください。";
                     try {
-                        $id = $event->getUserID();
-                        $task = $event->getText();
-
+                        $id = $event->getUserID(); //ユーザID取得
+                        $task = $event->getText(); //メッセージ内容取得
+                        //SQL実行
+                        $connection->depositTask($id, $task);
                         //SQL実行
                         if ($connection->status) {
                             $message = "登録完了！";
