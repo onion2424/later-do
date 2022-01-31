@@ -26,7 +26,7 @@ class C_task
         //返答用のクラスをインスタンス化
         $ret = new \httpResponse();
         //DB接続用のクラスをインスタンス化
-        $connection = new \app\public\php\Connection();
+        $connection = new \Connection();
 
         if (!isset($userData['sub']) || $userData['sub'] == "") {
 
@@ -56,6 +56,7 @@ class C_task
                 //     $ret->Contents = $aryList ? $aryList : array();
                 //     $ret->Status = \httpResponse::STATUS_OK;
                 // }
+                
                 //データを取得
                 $ret->Contents = $connection->getTasks($userData['sub']);
                 if($connection->status){
