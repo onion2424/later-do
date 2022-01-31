@@ -23,7 +23,10 @@ class C_task
         //  userIDが存在するかを確認
         //      =>subにセットされている
 
+        //返答用のクラスをインスタンス化
         $ret = new \httpResponse();
+        //DB接続用のクラスをインスタンス化
+        $connection = new \app\public\php\Connection();
 
         if (!isset($userData['sub']) || $userData['sub'] == "") {
 
@@ -34,23 +37,28 @@ class C_task
             //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
             //  登録してなくてもLINE内でURLを開いたらここを通るのでチェックがいる？ - とりあえず速度優先したいからなし
             try {
-                $url = parse_url(getenv('DATABASE_URL'));
-                $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-                $conn = new \PDO($dsn, $url['user'], $url['pass']);
-                //PDOのエラー時に例外(PDOException)が発生するように設定
-                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                // $url = parse_url(getenv('DATABASE_URL'));
+                // $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+                // $conn = new \PDO($dsn, $url['user'], $url['pass']);
+                // //PDOのエラー時に例外(PDOException)が発生するように設定
+                // $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-                //SQL設定
-                $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
-                $stmt = $conn->prepare($sql);
+                // //SQL設定
+                // $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
+                // $stmt = $conn->prepare($sql);
 
-                $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
-                //SQL実行
-                if($stmt->execute()){
-                    $aryList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                // $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
+                // //SQL実行
+                // if($stmt->execute()){
+                //     $aryList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-                    //戻り値設定
-                    $ret->Contents = $aryList ? $aryList : array();
+                //     //戻り値設定
+                //     $ret->Contents = $aryList ? $aryList : array();
+                //     $ret->Status = \httpResponse::STATUS_OK;
+                // }
+                //データを取得
+                $ret->Contents = $connection->getTasks($userData['sub']);
+                if($connection->status){
                     $ret->Status = \httpResponse::STATUS_OK;
                 }
             } catch (\PDOException $e) {
