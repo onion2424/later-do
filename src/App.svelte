@@ -69,7 +69,6 @@
 	//** タスクトグル*/
 	function toggleTodo(e) {
 		let taskNo = e.detail.taskNo;
-		let mode = e.detail.mode;
 
 		//通信部分
 		isConnecting = true;
@@ -136,6 +135,7 @@
 		//件数をセットする関数とアイコンの色を変える関数を返す
 		return {
 			setTaskAmount : function (){
+			//$:later, $:nexttimeの再計算のタイミングとずれるのでtodosから数を取得
 			laterIcon.dataset.num = todos?.filter((val) => !val.isnexttime).length + '';
 			nexttimeIcon.dataset.num = todos?.filter((val) => val.isnexttime).length + '';
 			},
@@ -173,7 +173,7 @@
 			liff.init({
 				liffId: myLiffId,
 			}).then(() => {
-				//idTokenを取得
+				//認証用のidTokenを取得
 				idToken = liff.getIDToken();
 
 				//jsonでPOSTを送ってbodyにとりにいく
@@ -201,6 +201,7 @@
 					});
 			});
 		} 
+		// 確認用
 		// else {
 		// 	todos = [
 		// 		{ time: "今日", task: "あいうえお", isnexttime: false },
@@ -261,7 +262,7 @@
 			LINE外からのこのWEBページの利用はできません。<br/>
 			LINEアプリ内でこのメッセージが表示されているのなら、リロードによってなおる場合があります。
 		</p>
-		<!-- {#if todos.length > 0}
+		<!--確認用 {#if todos.length > 0}
 			<Tasks {todos} bind:mode />
 		{/if} -->
 	{/if}
@@ -272,8 +273,9 @@
 			<button
 				on:click={async (e) => {
 					if(isAnimating) return; //サーバ通信中は動かさない
+					await tick();
 					mode = MODE_LATER;
-					ctlIcon.setIconColer();
+					ctlIcon.setIconColer(); //メニューのアイコンの色を変える
 				}}><div class="img_wrapper"><div><span id="laterIcon" data-num="0"></span></div></div><span>あとで</span>
 			</button>
 		</li>
@@ -281,8 +283,9 @@
 			<button
 				on:click={async (e) => {
 					if(isAnimating) return; //サーバ通信中は動かさない
+					await tick();
 					mode = MODE_NEXT;
-					ctlIcon.setIconColer();
+					ctlIcon.setIconColer(); //メニューのアイコンの色を変える
 				}}><div class="img_wrapper"><div><span id="nexttimeIcon" data-num="0"></span></div></div><span>こんど</span>
 			</button>
 		</li>
