@@ -161,6 +161,11 @@
 		const myLiffId = "1656807318-km8WVpYe";
 		const liff = (window as any).liff;
 		
+		//bodyにマルチタッチ禁止イベントを追加
+		document.getElementsByTagName('body')[0].addEventListener("touch", function(e:TouchEvent){
+			return e.touches.length <= 1;
+		})
+
 		//クロージャを持たせる
 		ctlIcon = setTaskAmount_enclosure();
 		ctlIcon.setIconColer(); //初期選択メニューに色を付ける

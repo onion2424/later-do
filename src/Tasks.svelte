@@ -189,11 +189,7 @@
                                 onSlideChange(e.detail[0][0].activeIndex, todo.taskno);
                             }}
                             on:progress={onProgress}
-                            on:touchStart={(e) => {
-                                console.log(e);
-                                e.detail[0][0].el.classList.add('move');
-
-                                }
+                            on:touchStart={(e) => {e.detail[0][0].el.classList.add('move') }
                             }
                             on:touchEnd={(e) => e.detail[0][0].el.classList.remove('move')}
                             initialSlide= {1}
