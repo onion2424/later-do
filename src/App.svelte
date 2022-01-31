@@ -8,7 +8,6 @@
 	//------------プロパティ-------------------
 	let mode = MODE_LATER; //あとで　か　こんど
 	let isConnecting = false; //サーバーと通信中かどうか
-	let isAnimating;
 
 	// LINE関連
 	let isInClient = false;
@@ -161,12 +160,20 @@
 		const myLiffId = "1656807318-km8WVpYe";
 		const liff = (window as any).liff;
 		
-		//bodyにマルチタッチ禁止イベントを追加
-		document.getElementsByTagName('body')[0].addEventListener("touchstart", function(e:TouchEvent){
+		//bodyにイベント追加
+		//マルチタッチ禁止
+		let body = document.getElementsByTagName('body')[0]
+		body.addEventListener("touchstart", function(e:TouchEvent){
 			if(e.touches.length >= 2){
 				e.stopPropagation(); //伝播させない
 			}
 		}, true);
+		//選択禁止
+		body.addEventListener("selectstart", function(e){
+			e.stopPropagation(); //伝播させない
+		}, true);
+
+
 
 		//クロージャを持たせる
 		ctlIcon = setTaskAmount_enclosure();
@@ -228,7 +235,6 @@
 				<Tasks
 					todos={later}
 					mode={MODE_LATER}
-					bind:isAnimating
 					bind:isConnecting
 					on:delete={deleteTodo}
 					on:toggle={toggleTodo}
@@ -238,7 +244,6 @@
 				<Tasks
 					todos={nexttime}
 					mode={MODE_NEXT}
-					bind:isAnimating
 					bind:isConnecting
 					on:delete={deleteTodo}
 					on:toggle={toggleTodo}
@@ -279,7 +284,7 @@
 		<li>
 			<button
 				on:click={async (e) => {
-					if(isAnimating) return; //サーバ通信中は動かさない
+					if(isConnecting) return; //サーバ通信中は動かさない
 					await tick();
 					mode = MODE_LATER;
 					ctlIcon.setIconColer(); //メニューのアイコンの色を変える
@@ -289,7 +294,7 @@
 		<li>
 			<button
 				on:click={async (e) => {
-					if(isAnimating) return; //サーバ通信中は動かさない
+					if(isConnecting) return; //サーバ通信中は動かさない
 					await tick();
 					mode = MODE_NEXT;
 					ctlIcon.setIconColer(); //メニューのアイコンの色を変える

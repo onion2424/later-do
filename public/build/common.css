@@ -7,15 +7,12 @@ body{
     /*横にしたときの文字拡大を防ぐ*/
     -webkit-text-size-adjust: 100%;
     /*画像、リンク等の長押し時のポップアップ禁止*/
-    /*-webkit-touch-callout: none;*/
+    -webkit-touch-callout: none;
 
-    /*文字選択禁止 https://neos21.net/blog/2017/08/16-01.html/ */
+    /* 文字選択禁止 https://neos21.net/blog/2017/08/16-01.html/ */
     user-select: none; /* CSS3 */
     -moz-user-select: none; /* Firefox */
     -webkit-user-select: none; /* Safari、Chromeなど */
     -ms-user-select: none; /* IE10かららしい */
 }
 
-body span{
-
-}

@@ -19,7 +19,6 @@
     export let todos;
     export let mode:number;
     export let isConnecting:boolean;
-    export let isAnimating:boolean;
 
     //タスクの下のアイコンの大きさを変える
     let setImageSize = (set: HTMLImageElement, vanish: HTMLImageElement, isBig: boolean) => {};
@@ -177,7 +176,7 @@
 
 </script>
         {#each todos as todo (todo.taskno)}
-            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 200}}" on:outrostart="{() => isAnimating = true}" on:outroend="{() => isAnimating = false}">
+            <div class="task" animate:flip="{{duration: 250}}" out:slide|local="{{duration: 200}}" >
                 <div class="task_wrapper">
                     <div class="task_bottom">
                         <img src={mode === MODE_LATER ? "./img/btn_nexttime.png" : "./img/btn_later.png"} alt="次" class="left" width="1px" height="1px"/>
