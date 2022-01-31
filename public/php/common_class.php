@@ -18,7 +18,8 @@
 
   //DB接続用
   class Connection{
-    function __construnt(){
+    function __construct(){
+        error_log('コンストラクタ');
         //envから接続情報を取得
         $url = parse_url(getenv('DATABASE_URL'));
         $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
@@ -29,7 +30,7 @@
     }
 
     //PDOインスタンス
-    private \PDO $conn;
+    private $conn;
     //ステータス管理
     public bool $status;
 
