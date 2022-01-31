@@ -169,9 +169,9 @@
 			}
 		}, true);
 		//選択禁止
-		body.addEventListener("selectstart", function(e){
-			e.stopPropagation(); //伝播させない
-		}, true);
+		// body.addEventListener("selectstart", function(e){
+		// 	e.stopPropagation(); //伝播させない
+		// }, true);
 
 
 
