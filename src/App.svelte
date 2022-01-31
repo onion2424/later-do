@@ -163,8 +163,10 @@
 		
 		//bodyにマルチタッチ禁止イベントを追加
 		document.getElementsByTagName('body')[0].addEventListener("touchstart", function(e:TouchEvent){
-			console.log('touch start');
-			return e.touches.length <= 1;
+			if(e.touches.length >= 2){
+				console.log('multi touch');
+				e.stopPropagation();
+			}
 		}, true);
 
 		//クロージャを持たせる
