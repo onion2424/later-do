@@ -89,8 +89,8 @@
       $stmt = $this->conn->prepare($sql);
 
       //パラメータ設定
-      $stmt->bindParam(1, $userID['sub'], \PDO::PARAM_STR);
-      $stmt->bindParam(2, $taskNo['taskNo'], \PDO::PARAM_INT);
+      $stmt->bindParam(1, $userID, \PDO::PARAM_STR);
+      $stmt->bindParam(2, $taskNo, \PDO::PARAM_INT);
 
      
       //SQL実行
