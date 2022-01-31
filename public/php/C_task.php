@@ -139,11 +139,11 @@ class C_task
                 //DB用インスタンス
                 $connection = new \Connection();
                 //トグル実行
-                $connection->toggleTask($contents['sub'], $contents['taskNo']);
+                $connection->toggleTask($userData['sub'], $contents['taskNo']);
                 if($connection->status){
                     //データを取り直して返す
                     //SQL実行
-                    $array = $connection->getTasks($contents['sub']);
+                    $array = $connection->getTasks($userData['sub']);
                     if($connection->status){
                         //戻り値設定
                         $ret->Contents = $array;
@@ -199,7 +199,7 @@ class C_task
                 if($connection->status){
                     //データを取り直して返す
                     //SQL実行
-                    $array = $connection->getTasks($contents['sub']);
+                    $array = $connection->getTasks($userData['sub']);
                     if($connection->status){
                         //戻り値設定
                         $ret->Contents = $array;

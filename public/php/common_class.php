@@ -85,14 +85,13 @@
       $this->status = false;
 
       //SQL設定
-      $sql = 'CALL TOGGLETASK(?, ?)'; //userID, TaskNo
+      $sql = 'CALL ToggleTask(?, ?)'; //userID, TaskNo
       $stmt = $this->conn->prepare($sql);
 
       //パラメータ設定
       $stmt->bindParam(1, $userID, \PDO::PARAM_STR);
       $stmt->bindParam(2, $taskNo, \PDO::PARAM_INT);
 
-     
       //SQL実行
       if($stmt->execute()){
         //ステータスを設定
