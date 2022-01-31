@@ -64,7 +64,7 @@
         $this->status = false;
 
         //SQL設定
-        $sql = 'CALL DELETETASK(?, ?)'; //userID, TaskNo
+        $sql = 'CALL DeleteTask(?, ?)'; //userID, TaskNo
         $stmt = $this->conn->prepare($sql);
 
         //パラメータ設定
@@ -178,7 +178,7 @@
       //ステータス設定
       $this->status = false;
       //SQL設定
-      $sql = 'CALL userDelete(?)'; //userID
+      $sql = 'CALL UserDelete(?)'; //userID
       $stmt = $this->conn->prepare($sql);
       $stmt->bindParam(1, $userID, PDO::PARAM_STR);
       //SQL実行
@@ -194,7 +194,7 @@
       //ステータス設定
       $this->status = false;
       //SQL設定
-      $sql = 'CALL setTask(?, ?)'; //userID, メッセージ内容
+      $sql = 'CALL SetTask(?, ?)'; //userID, メッセージ内容
       $stmt = $this->conn->prepare($sql);
       //パラメータ設定
       $stmt->bindParam(1, $userID, PDO::PARAM_STR);
