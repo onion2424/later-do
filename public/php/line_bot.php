@@ -33,105 +33,97 @@ $http_request_body = file_get_contents('php://input');
 //署名をチェックし、正当であればリクエストをパースし配列へ、不正であれば例外処理
 $events = $bot->parseEventRequest($http_request_body, $signature);
 
-//データベース情報
-$url = parse_url(getenv('DATABASE_URL'));
-$dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-//リクエストを受理
-foreach ($events as $event) {
-    //スタンプは連打される恐れがあるので先に無視
-    if ($event instanceof StickerMessage) continue;
+try { //全体を監視
+    //DB接続用インスタンス
+    $connection = new \Connection();
+    //リクエストを受理
+    foreach ($events as $event) {
+        //スタンプは連打される恐れがあるので先に無視
+        if ($event instanceof StickerMessage) continue;
 
-    //返信先Token取得
-    $reply_token = $event->getReplyToken();
-    switch ($event) {
-            //友だち登録時/ブロック解除時
-        case ($event instanceof FollowEvent):
-            $message = 'ユーザ登録に失敗しました。もう一度追加し直してください。';
-            try {
-                $conn = new PDO($dsn, $url['user'], $url['pass']);
-                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
-                $sql = 'CALL userDeposit(?)';
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(1, $id, PDO::PARAM_STR);
-                
-                //失敗したらログを残す
-                if ($stmt->execute()) {
-                    $message = 'お友達登録ありがとう！使い方が分からなければ「ヘルプ」と送ってね！デモ登録なので実際に送信はされないよ！';
+        //返信先Token取得
+        $reply_token = $event->getReplyToken();
+        switch ($event) {
+                //友だち登録時/ブロック解除時
+            case ($event instanceof FollowEvent):
+                $message = 'ユーザ登録に失敗しました。もう一度追加し直してください。';
+                try { //個別に例外処理
+                    $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
+                    $connection->userDeposit($id);
+
+                    //失敗したらログを残す
+                    if ($connection->status) {
+                        $message = 'お友達登録ありがとう！使い方が分からなければ「ヘルプ」と送ってね！デモ登録なので実際に送信はされないよ！';
+                    } else {
+                        error_log('ユーザ登録に失敗 : ' . $id);
+                    }
+                } catch (\PDOException $e) {
+                    error_log(\httpResponse::getPDOMessage($e));
+                }
+                //メッセージを送る
+                $response = $bot->replyText($reply_token, $message);
+                break;
+
+                //フォロー解除イベント(ブロック時)
+            case ($event instanceof UnfollowEvent):
+                //何も送れない
+                $message = null;
+                try {
+                    $conn = new PDO($dsn, $url['user'], $url['pass']);
+                    $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                    $id = $event->getUserID();
+                    //SQL実行
+                    $connection->userDelete($id);
+
+                    //失敗したらログを残す
+                    if (!$connection->status) {
+                        error_log('ユーザ削除に失敗 : ' . $id);
+                    }
+                } catch (\PDOException $e) {
+                    error_log(\httpResponse::getPDOMessage($e));
+                }
+                break;
+
+                // メッセージ受信時
+            case ($event instanceof TextMessage):
+                if ($event->getText() == 'ヘルプ') {
+                    error_log('ヘルプ');
+                    $builder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
+                    // ビルダーにメッセージをすべて追加
+                    $message = [
+                        'あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」のように間隔を空けてお知らせするよ！',
+                        '終了したタスクはメニューの一覧から削除できるよ！一覧から今度やるに移した場合は時間が指定できるよ！'
+                    ];
+                    foreach ($message as $msg) {
+                        $builder->add(new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($msg));
+                    }
+                    $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
+                    $bot->replyMessage($reply_token, $builder);
                 } else {
-                    error_log('ユーザ登録に失敗 : ' . $id);
-                }
-            } catch (\PDOException $e) {
-                error_log(\httpResponse::getPDOMessage($e));
-            }
-            //メッセージを送る
-            $response = $bot->replyText($reply_token, $message);
-            break;
+                    $message = "タスク登録に失敗しました。もう一度送信してください。";
+                    try {
+                        $id = $event->getUserID();
+                        $task = $event->getText();
 
-            //フォロー解除イベント(ブロック時)
-        case ($event instanceof UnfollowEvent):
-            //何も送れない
-            $message = null;
-            try {
-                $conn = new PDO($dsn, $url['user'], $url['pass']);
-                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
-                $sql = 'CALL userDelete(?)'; //userID
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(1, $id, PDO::PARAM_STR);
-                
-                //実行 - 失敗したらログを残す
-                if (!$stmt->execute()) {
-                    error_log('ユーザ削除に失敗 : ' . $id);
+                        //SQL実行
+                        if ($connection->status) {
+                            $message = "登録完了！";
+                        }
+                    } catch (\PDOException $e) {
+                        error_log(\httpResponse::getPDOMessage($e));
+                    }
+                    //メッセージを送る
+                    $response = $bot->replyText($reply_token, $message);
+                    break;
                 }
-            } catch (\PDOException $e) {
-                error_log(\httpResponse::getPDOMessage($e));
-            }
-            break;
-
-            // メッセージ受信時
-        case ($event instanceof TextMessage):
-            if($event->getText() == 'ヘルプ'){
-                error_log('ヘルプ');
-                $builder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
-                // ビルダーにメッセージをすべて追加
-                 $message = [
-                     'あとでやろうと思ったことをトークで送ってね！約「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」,「次の日の朝の6時」のように間隔を空けてお知らせするよ！',
-                     '終了したタスクはメニューの一覧から削除できるよ！一覧から今度やるに移した場合は時間が指定できるよ！'
-                 ];
-                 foreach($message as $msg){
-                    error_log($msg);
-                    $builder->add(new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($msg));
-                 }
-                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello');
-                $bot->replyMessage($reply_token, $builder);
-            }else{
-              $message = "タスク登録に失敗しました。もう一度送信してください。";
-              try {
-                  $conn = new PDO($dsn, $url['user'], $url['pass']);
-                  $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                  $id = $event->getUserID(); //https://github.com/line/line-bot-sdk-php/blob/master/src/LINEBot/Event/BaseEvent.php参照
-                  $sql = 'CALL setTask(?, ?)'; //userID, メッセージ内容
-                  //  パラメータをセットする
-                  //  =>変数を入れないといけない
-                  $task = $event->getText();
-                  $stmt = $conn->prepare($sql);
-                  $stmt->bindParam(1, $id, PDO::PARAM_STR);
-                  $stmt->bindParam(2, $task, PDO::PARAM_STR);
-                  
-                  //SQL実行
-                  if ($stmt->execute()) {
-                      $message = "登録完了！";
-                  }
-              } catch (\PDOException $e) {
-                  error_log(\httpResponse::getPDOMessage($e));
-                }
-              //メッセージを送る
-              $response = $bot->replyText($reply_token, $message);
-              break;
-            }
-        default :
-            break;
+            default:
+                break;
+        }
     }
+} catch (\PDOException $e) {
+    error_log(\httpResponse::getPDOMessage($e));
+} catch (Exception $e) {
+    //予期せぬエラー
+    error_log('UnExceptError: ' . $e->getMessage());
 }
 return;

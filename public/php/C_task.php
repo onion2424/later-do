@@ -1,6 +1,9 @@
 <?php
 
 namespace app\public\php;
+
+use LINE\LINEBot\Event\MessageEvent\ContentProvider;
+
 require_once __DIR__ . '/common_class.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -25,41 +28,24 @@ class C_task
 
         //返答用のクラスをインスタンス化
         $ret = new \httpResponse();
-        //DB接続用のクラスをインスタンス化
-        $connection = new \Connection();
 
         if (!isset($userData['sub']) || $userData['sub'] == "") {
 
             // ↓返答の正しい形式
-            //$aryList = array(array('task' => 'あいうえお'), array('task' => 'かきくけこ'));
+            //$array = array(array('task' => 'あいうえお'), array('task' => 'かきくけこ'));
             $ret->message = "ユーザー認証に失敗しました。";
         } else { //--------------------データベース接続してデータを取る---------------
             //  ユーザマスタには友達登録時にセットされるはずなのでチェックはしない
             //  登録してなくてもLINE内でURLを開いたらここを通るのでチェックがいる？ - とりあえず速度優先したいからなし
-            try {
-                // $url = parse_url(getenv('DATABASE_URL'));
-                // $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-                // $conn = new \PDO($dsn, $url['user'], $url['pass']);
-                // //PDOのエラー時に例外(PDOException)が発生するように設定
-                // $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            try {      
+                 //DB接続用のクラスをインスタンス化
+                $connection = new \Connection();
 
-                // //SQL設定
-                // $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
-                // $stmt = $conn->prepare($sql);
-
-                // $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
-                // //SQL実行
-                // if($stmt->execute()){
-                //     $aryList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-                //     //戻り値設定
-                //     $ret->Contents = $aryList ? $aryList : array();
-                //     $ret->Status = \httpResponse::STATUS_OK;
-                // }
-                
                 //データを取得
-                $ret->Contents = $connection->getTasks($userData['sub']);
+                $array= $connection->getTasks($userData['sub']);
                 if($connection->status){
+                    //戻り値を設定
+                    $ret->Contents = $array;
                     $ret->Status = \httpResponse::STATUS_OK;
                 }
             } catch (\PDOException $e) {
@@ -89,38 +75,24 @@ class C_task
         //      =>subにセットされている
 
         $ret = new \httpResponse();
-
-        if (!isset($userData['sub']) || $userData['sub'] == "") {
-
+        if (!($contents['taskNo'] > 0)){
+            $ret->message = "タスクの情報が取得できませんでした。";
+        }else if (!isset($userData['sub']) || $userData['sub'] == "") {
             $ret->message = "ユーザー認証に失敗しました。";
         } else { //--------------------データベース接続してデータを取る---------------
             try {
-                $url = parse_url(getenv('DATABASE_URL'));
-                $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-                $conn = new \PDO($dsn, $url['user'], $url['pass']);
-                //PDOのエラー時に例外(PDOException)が発生するように設定
-                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-                //SQL実行
-                $sql = 'CALL DELETETASK(?, ?)'; //userID, TaskNo
-                $stmt = $conn->prepare($sql);
-
-                $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
-                $stmt->bindParam(2, $contents['taskNo'], \PDO::PARAM_INT);
+                 //DB接続用のクラスをインスタンス化
+                $connection = new \Connection();
                 
+                //削除を実行する
+                $connection->deleteTask($userData['sub'], $contents['taskNo']);
                 //SQL実行
-                if($stmt->execute()){
-                    //データを取り直して返す
-                    $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
-                    $stmt = $conn->prepare($sql);
-
-                    $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
-                    //SQL実行
-                    if($stmt->execute()){
-                        $aryList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-                        //戻り値設定
-                        $ret->Contents = $aryList ? $aryList : array();
+                if($connection->status){
+                    //データを取り直す
+                    $array = $connection->getTasks($userData['sub']);
+                    if($connection->status){
+                        //戻り値を設定
+                        $ret->Contents = $array;
                         $ret->Status = \httpResponse::STATUS_OK;
                     }else{
                         $ret->message = "データ取得に失敗しました。";
@@ -158,38 +130,23 @@ class C_task
         //      =>subにセットされている
 
         $ret = new \httpResponse();
-
-        if (!isset($userData['sub']) || $userData['sub'] == "") {
-
+        if (!($contents['taskNo'] > 0)){
+            $ret->message = "タスクの情報が取得できませんでした。";
+        }else if (!isset($userData['sub']) || $userData['sub'] == "") {
             $ret->message = "ユーザー認証に失敗しました。";
         } else { //--------------------データベース接続してデータを取る---------------
             try {
-                $url = parse_url(getenv('DATABASE_URL'));
-                $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-                $conn = new \PDO($dsn, $url['user'], $url['pass']);
-                //PDOのエラー時に例外(PDOException)が発生するように設定
-                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-                //SQL実行
-                $sql = 'CALL TOGGLETASK(?, ?)'; //userID, TaskNo
-                $stmt = $conn->prepare($sql);
-
-                $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
-                $stmt->bindParam(2, $contents['taskNo'], \PDO::PARAM_INT);
-                
-                //SQL実行
-                if($stmt->execute()){
+                //DB用インスタンス
+                $connection = new \Connection();
+                //トグル実行
+                $connection->toggleTask($contents['sub'], $contents['taskNo']);
+                if($connection->status){
                     //データを取り直して返す
-                    $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
-                    $stmt = $conn->prepare($sql);
-
-                    $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
                     //SQL実行
-                    if($stmt->execute()){
-                        $aryList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
+                    $array = $connection->getTasks($contents['sub']);
+                    if($connection->status){
                         //戻り値設定
-                        $ret->Contents = $aryList ? $aryList : array();
+                        $ret->Contents = $array;
                         $ret->Status = \httpResponse::STATUS_OK;
                     }else{
                         $ret->message = "データ取得に失敗しました。";
@@ -228,39 +185,24 @@ class C_task
         //      =>subにセットされている
 
         $ret = new \httpResponse();
-
-        if (!isset($userData['sub']) || $userData['sub'] == "") {
-
+        if (!($contents['taskNo'] > 0)){
+            $ret->message = "タスクの情報が取得できませんでした。";
+        }else if (!isset($userData['sub']) || $userData['sub'] == "") {
             $ret->message = "ユーザー認証に失敗しました。";
         } else { //--------------------データベース接続してデータを取る---------------
             try {
-                $url = parse_url(getenv('DATABASE_URL'));
-                $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-                $conn = new \PDO($dsn, $url['user'], $url['pass']);
-                //PDOのエラー時に例外(PDOException)が発生するように設定
-                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                //DB接続クラスインスタンス化
+                $connection = new \Connection();
 
-                //SQL実行
-                $sql = 'CALL SetSendTime(?, ?, ?)'; //userID, TaskNo, time
-                $stmt = $conn->prepare($sql);
-
-                $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
-                $stmt->bindParam(2, $contents['taskNo'], \PDO::PARAM_INT);
-                $stmt->bindParam(3, $contents['time'], \PDO::PARAM_STR);
-
-                //SQL実行
-                if($stmt->execute()){
+                //時間設定SQL実行
+                $connection->setDateTask($userData['sub'], $contents['taskNo'], $contents['time']);
+                if($connection->status){
                     //データを取り直して返す
-                    $sql = 'SELECT * FROM GetTasks(?)'; //userIDを入れる
-                    $stmt = $conn->prepare($sql);
-
-                    $stmt->bindParam(1, $userData['sub'], \PDO::PARAM_STR);
                     //SQL実行
-                    if($stmt->execute()){
-                        $aryList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
+                    $array = $connection->getTasks($contents['sub']);
+                    if($connection->status){
                         //戻り値設定
-                        $ret->Contents = $aryList ? $aryList : array();
+                        $ret->Contents = $array;
                         $ret->Status = \httpResponse::STATUS_OK;
                     }else{
                         $ret->message = "データ取得に失敗しました。";

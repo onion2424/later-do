@@ -19,30 +19,24 @@ $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
 
 try {
-    $url = parse_url(getenv('DATABASE_URL'));
-    $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-    $conn = new \PDO($dsn, $url['user'], $url['pass']);
-    //PDOのエラー時に例外(PDOException)が発生するように設定
-    $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    $connection = new \Connection();
 
     //SQL実行
-    $sql = 'SELECT * FROM GetSendMessage()';
-    $stmt = $conn->prepare($sql);
-
-    //SQL実行
-    if ($stmt->execute()) {
-        $aryList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    $array = $connection->getSendMessage();
+    if ($connection->status) {
         //  送信する
-        foreach($aryList as $rec){
+        foreach($array as $rec){
             $to = $rec["userid"];
             $builder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($rec["tasks"]);
             $response = $bot->pushMessage($to, $builder);
         }
-        //  送れたかどうかに関わらず後処理
-        $sql = 'CALL PostProcess()';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
+        //送信の有無にかかわらず後処理
+        $connection->postProcess();
+        if(!$connection->status) error_log('Error: 後処理に失敗');
+    }else{
+        error_log('Error: メッセージの取得に失敗');
     }
+
 } catch (\PDOException $e) {
     error_log(\HttpResponse::getPDOMessage($e));
 }
