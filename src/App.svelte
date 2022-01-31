@@ -165,7 +165,7 @@
 		document.getElementsByTagName('body')[0].addEventListener("touchstart", function(e:TouchEvent){
 			console.log('touch start');
 			return e.touches.length <= 1;
-		})
+		}, true);
 
 		//クロージャを持たせる
 		ctlIcon = setTaskAmount_enclosure();
