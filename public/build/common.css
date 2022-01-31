@@ -6,7 +6,11 @@ body{
     display: flow-root;
     /*横にしたときの文字拡大を防ぐ*/
     -webkit-text-size-adjust: 100%;
-        /* 文字選択禁止*/
-    user-select: none;
+
     -webkit-touch-callout: none;
+}
+
+body span{
+    /* 文字選択禁止*/
+    user-select: none;
 }

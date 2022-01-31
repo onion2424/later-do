@@ -164,8 +164,7 @@
 		//bodyにマルチタッチ禁止イベントを追加
 		document.getElementsByTagName('body')[0].addEventListener("touchstart", function(e:TouchEvent){
 			if(e.touches.length >= 2){
-				console.log('multi touch');
-				e.stopPropagation();
+				e.stopPropagation(); //伝播させない
 			}
 		}, true);
 
