@@ -1,5 +1,9 @@
-<object data="http://yoursite.com/the.pdf" type="image/jpeg" width="700px" height="700px">
-    <embed src="http://yoursite.com/the.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
+![page1](https://user-images.githubusercontent.com/28826492/152041519-ca1dd925-79c7-48bf-a432-be9b0f113e76.jpg)
+![page2](https://user-images.githubusercontent.com/28826492/152041837-ce112e42-4880-4a8b-8aa7-75455949772a.jpg)
+![page3](https://user-images.githubusercontent.com/28826492/152041867-9de3cc86-38ee-410d-991f-73b323f68bef.jpg)
+![page4](https://user-images.githubusercontent.com/28826492/152041891-cf0b3a0e-a1b9-4052-b90d-ab2926087ac7.jpg)
+![page5](https://user-images.githubusercontent.com/28826492/152041911-d5f08a81-6b07-44a6-b23f-7effc3770065.jpg)
+![page6](https://user-images.githubusercontent.com/28826492/152041932-8af22362-d324-4777-8a9b-7248ba2e61b3.jpg)
+![page7](https://user-images.githubusercontent.com/28826492/152041962-0a0daa9c-cc38-4214-903c-f86e1b3d24d6.jpg)
+![page8](https://user-images.githubusercontent.com/28826492/152041977-8dfddaa0-2651-4abe-97c9-8d35ccd1abe7.jpg)
+![page9](https://user-images.githubusercontent.com/28826492/152041996-d5cd286d-6f97-4655-94f3-67d456b62460.jpg)
