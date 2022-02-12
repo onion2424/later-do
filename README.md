@@ -5,6 +5,8 @@
 具体的には、「10分後」,「30分後」,「1時間後」,「3時間後」,「6時間後」, 以降は「次の日の朝６時」にリマインドされます
 ※デモ登録なのでリマインド機能は試せません
 
+
+[概要はこちらのPDFをご覧ください](/あとでやるch.pdf)
 # DEMO
 
 https://user-images.githubusercontent.com/28826492/153728875-5b8b42a7-b8f7-44a5-bb77-69acdf4a3a29.mp4
@@ -15,10 +17,11 @@ https://user-images.githubusercontent.com/28826492/153728875-5b8b42a7-b8f7-44a5-
 
 # Requirement
 
-LINEのお友達登録
+お手数ですがLINEのお友達登録をお願いします
 
 ![M_gainfriends_qr](https://user-images.githubusercontent.com/28826492/153728905-3bffcb38-4b8b-49f6-948f-f7b449202c08.png)
 
+試し追えたらブロックしていただければアカウントに関連する全てのデータが削除されます
 
 # Usage
 
