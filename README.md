@@ -74,7 +74,7 @@ LINEBOTのメッセージ送信に1000通/月の上限があるのでデモ登�
 
 # License
 
-"あとでやるｃｈ"に付随する全てのプログラム is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+"あとでやるｃｈ" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 
 # Readme template 
