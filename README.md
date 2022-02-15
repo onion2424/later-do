@@ -14,11 +14,11 @@ https://user-images.githubusercontent.com/28826492/153728875-5b8b42a7-b8f7-44a5-
 
 # Features
 
-簡単に言うとリマインくんという公式BOTの時間指定がいらなくなったものです
+"リマインくん"という公式BOTの時間指定がいらなくなったものだと思ってください
 
 # Requirement
 
-お手数ですがLINEのお友達登録をお願いします
+お手数ですが試すにはLINEのお友達登録をお願いします
 
 ![M_gainfriends_qr](https://user-images.githubusercontent.com/28826492/153728905-3bffcb38-4b8b-49f6-948f-f7b449202c08.png)
 
