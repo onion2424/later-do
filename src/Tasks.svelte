@@ -153,6 +153,7 @@
     function showTime(str:string){
         const today = new Date();
         const tomorrow = new Date();
+        const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ];
         tomorrow.setDate(today.getDate() + 1);
         let date = new Date(str);
         let ret = "";
@@ -171,8 +172,8 @@
                 //またがないなら m月d日
                 ret += Number(date.getMonth() + 1) + "月" + date.getDate() + "日";
             }
-            //時間を足す
-            ret += " " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(1, 2) + '0';
+            //曜日と時間を足す
+            ret +=" (" + dayOfWeekStr[date.getDay()] + ") " + ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(1, 2) + '0';
         }else{
             ret = "今度";
         }
