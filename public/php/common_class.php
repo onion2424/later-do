@@ -21,11 +21,12 @@
     function __construct(){
         //envから接続情報を取得
         $url = parse_url(getenv('DATABASE_URL'));
-        $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+        $dsn = sprintf('pgsql:host=%s;dbname=%s;port=%s', $url['host'], substr($url['path'], 1), $url['port']);
         $this->conn = new \PDO($dsn, $url['user'], $url['pass']);
         //PDOのエラー時に例外(PDOException)が発生するように設定
         $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         return;
+        postgresql://postgres:onion.6fecfe@db.lftpgdwigcexcrrcpfjj.supabase.co:6543/postgres
     }
 
     //PDOインスタンス
