@@ -25,8 +25,9 @@
         $this->conn = new \PDO($dsn, $url['user'], $url['pass']);
         //PDOのエラー時に例外(PDOException)が発生するように設定
         $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        //エラー回避
+        $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         return;
-        postgresql://postgres:onion.6fecfe@db.lftpgdwigcexcrrcpfjj.supabase.co:6543/postgres
     }
 
     //PDOインスタンス
